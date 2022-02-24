@@ -1,0 +1,15 @@
+/.gradle/
+/.idea/.gitignore
+/.idea/compiler.xml
+/.idea/gradle.xml
+/.idea/jarRepositories.xml
+/.idea/libraries-with-intellij-classes.xml
+/.idea/misc.xml
+/.idea/vcs.xml
+/gradle/wrapper/gradle-wrapper.jar
+/gradle/wrapper/gradle-wrapper.properties
+/build.gradle
+/gradle.properties
+/gradlew
+/gradlew.bat
+/settings.gradle
