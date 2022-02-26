@@ -1,5 +1,6 @@
 package vendor1.vendor
 
+import vendor1.command.RegisterDrink
 import vendor1.drink.Drink
 import vendor1.drink.DrinkFactory
 import vendor1.drink.DrinkName
@@ -22,12 +23,23 @@ class Vendor {
     private val specifications = mutableMapOf<DrinkName, MutableList<DrinkSpecification>>()
 
     /**
+     * 음료수 생성
+     * @param registerDrink RegisterDrink
+     */
+    fun createDrink(registerDrink: RegisterDrink) {
+        when(registerDrink.name) {
+            DrinkName.A -> createADrink(registerDrink.price, registerDrink.count)
+            DrinkName.B -> createBDrink(registerDrink.price, registerDrink.count)
+        }
+    }
+
+    /**
      * A 음료수 생성
      * A 음료수 명세서 생성
      * @param price 음료수 가격
      * @param count 음료수 수량
      */
-    fun createADrink(price: Int, count: Int) {
+    private fun createADrink(price: Int, count: Int) {
         drinks[DrinkName.A] = drinkFactory.createDrink(DrinkName.A, price, count)
         specifications[DrinkName.A] = mutableListOf()
     }
@@ -38,7 +50,7 @@ class Vendor {
      * @param price 음료수 가격
      * @param count 음료수 수량
      */
-    fun createBDrink(price: Int, count: Int) {
+    private fun createBDrink(price: Int, count: Int) {
         drinks[DrinkName.B] = drinkFactory.createDrink(DrinkName.B, price, count)
         specifications[DrinkName.A] = mutableListOf()
     }

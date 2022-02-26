@@ -20,6 +20,8 @@ fun main() = runBlocking {
         while (true) {
             val command = readLine() ?: ""
             vendorOperationService.setVendorStatus(command)
+            vendorOperationService.registerDrink(command)
+            vendorOperationService.buyDrink(command)
             if (command == "exit") {
                 break
             }
