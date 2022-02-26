@@ -1,6 +1,6 @@
 package vendor1.vendor
 
-import vendor1.command.RegisterDrink
+import vendor1.dto.RegisterDrink
 import vendor1.drink.Drink
 import vendor1.drink.DrinkFactory
 import vendor1.drink.DrinkName
@@ -26,12 +26,12 @@ class Vendor {
      * 음료수 생성
      * @param registerDrink RegisterDrink
      */
-    fun createDrink(registerDrink: RegisterDrink) {
+    fun createDrink(registerDrink: RegisterDrink): String {
         when (registerDrink.name) {
             DrinkName.A -> createADrink(registerDrink.price, registerDrink.count)
             DrinkName.B -> createBDrink(registerDrink.price, registerDrink.count)
         }
-        println("[등록된 음료수: $drinks]")
+        return "[등록된 음료수: $drinks]"
     }
 
     /**
@@ -101,14 +101,16 @@ class Vendor {
         drinkSpecifications.add(drinkSpecification)
     }
 
-    fun printSpecification() {
+    fun printSpecification():String {
+        val specificationBuilder = StringBuilder()
         specifications.forEach { (t, u) ->
             var count = 0
             u.forEach { i ->
-                println(i.print())
+                specificationBuilder.append(i.print()).append("\r\n")
                 count++
             }
-            println("[음료수명: $t][판매 개수: $count]")
+            specificationBuilder.append("[음료수명: $t][판매 개수: $count]")
         }
+        return specificationBuilder.toString()
     }
 }

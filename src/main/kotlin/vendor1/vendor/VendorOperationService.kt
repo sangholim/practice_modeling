@@ -1,7 +1,7 @@
 package vendor1.vendor
 
 import vendor1.SingletonClass
-import vendor1.command.*
+import vendor1.dto.*
 import vendor1.mapper
 
 /**
@@ -19,17 +19,17 @@ class VendorOperationService {
      * 음료수 구매 (거스름돈 출력)
      * @param payload 구매할 음료수 커맨드
      */
-    fun buyDrink(payload: String) {
+    fun buyDrink(payload: String): String? {
         try {
             if (vendorStatus != VendorStatus.RUNNING) {
-                return
+                return null
             }
             val buyDrink = entityBinder<BuyDrink>(payload)
             val balance = vendor.buyDrink(buyDrink.name, buyDrink.amount)
-            println("[구입한 음료수: ${buyDrink.name}], [잔여 금액: $balance]")
+            return "[구입한 음료수: ${buyDrink.name}], [잔여 금액: $balance]"
         } catch (e: Exception) {
             //throw RuntimeException("구매시 문제 발생")
-            return
+            return null
         }
     }
 
@@ -37,19 +37,19 @@ class VendorOperationService {
      * 음료수 등록
      * @param payload 등록할 음료수 커맨드
      */
-    fun registerDrink(payload: String) {
+    fun registerDrink(payload: String): String? {
         try {
             if (vendorStatus != VendorStatus.MANAGEMENT) {
-                return
+                return null
             }
             val registerDrink = entityBinder<RegisterDrink>(payload)
             if (registerDrink.type != DrinkManagementType.REGISTER) {
-                return
+                return null
             }
-            vendor.createDrink(registerDrink)
+            return vendor.createDrink(registerDrink)
 
         } catch (e: Exception) {
-            return
+            return null
             //throw RuntimeException("등록시 문제 발생")
         }
     }
@@ -72,18 +72,18 @@ class VendorOperationService {
      * 거래 내역서 출력
      * @param payload String
      */
-    fun printSpecification(payload: String) {
+    fun printSpecification(payload: String):String? {
         try {
             if (vendorStatus != VendorStatus.MANAGEMENT) {
-                return
+                return null
             }
             val printDrinkSpecification = entityBinder<PrintDrinkSpecification>(payload)
             if (printDrinkSpecification.type != DrinkManagementType.SPECIFICATION) {
-                return
+                return null
             }
-            vendor.printSpecification()
+            return vendor.printSpecification()
         } catch (e: Exception) {
-            return
+            return null
         }
     }
 
@@ -91,13 +91,13 @@ class VendorOperationService {
      * 자판기 상태 설정
      * @param payload 자판기 상태 커맨드
      */
-    fun setVendorStatus(payload: String) {
+    fun setVendorStatus(payload: String): String? {
         try {
             val vendorOperation = entityBinder<VendorOperation>(payload)
             this.vendorStatus = vendorOperation.status
-            println("[자판기 상태: $vendorStatus]")
+            return "[자판기 상태: $vendorStatus]"
         } catch (e: Exception) {
-            return
+            return null
         }
     }
 
