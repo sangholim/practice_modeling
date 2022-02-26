@@ -1,5 +1,5 @@
 package vendor1.command
 
-class ChangeDrink(
+class PrintDrinkSpecification(
     val type: DrinkManagementType
 )
