@@ -7,4 +7,5 @@ class BDrinkSpecification(
     val price: Int,
     val createdAt: Instant
 ) : DrinkSpecification {
+    override fun print() = "[음료수명:$name][음료수가격:$price][구매일:$createdAt]"
 }
