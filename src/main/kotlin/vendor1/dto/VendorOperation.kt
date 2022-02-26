@@ -1,4 +1,4 @@
-package vendor1.command
+package vendor1.dto
 
 import vendor1.vendor.VendorStatus
 
