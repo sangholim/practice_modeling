@@ -27,10 +27,11 @@ class Vendor {
      * @param registerDrink RegisterDrink
      */
     fun createDrink(registerDrink: RegisterDrink) {
-        when(registerDrink.name) {
+        when (registerDrink.name) {
             DrinkName.A -> createADrink(registerDrink.price, registerDrink.count)
             DrinkName.B -> createBDrink(registerDrink.price, registerDrink.count)
         }
+        println("[등록된 음료수: $drinks]")
     }
 
     /**
@@ -52,7 +53,7 @@ class Vendor {
      */
     private fun createBDrink(price: Int, count: Int) {
         drinks[DrinkName.B] = drinkFactory.createDrink(DrinkName.B, price, count)
-        specifications[DrinkName.A] = mutableListOf()
+        specifications[DrinkName.B] = mutableListOf()
     }
 
     /**
@@ -98,5 +99,16 @@ class Vendor {
         val drinkSpecifications = specifications[name] ?: throw RuntimeException("존재하지 않는 음료수 입니다")
         val drinkSpecification = drinkSpecificationFactory.createDrinkSpecification(name, drink.price)
         drinkSpecifications.add(drinkSpecification)
+    }
+
+    fun printSpecification() {
+        specifications.forEach { (t, u) ->
+            var count = 0
+            u.forEach { i ->
+                println(i.print())
+                count++
+            }
+            println("[음료수명: $t][판매 개수: $count]")
+        }
     }
 }
