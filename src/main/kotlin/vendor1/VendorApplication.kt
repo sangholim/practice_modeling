@@ -1,28 +1,31 @@
 package vendor1
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import kotlinx.coroutines.*
+import vendor1.command.VendorOperation
 import vendor1.vendor.Vendor
-import vendor1.vendor.VendorStatus
+import vendor1.vendor.VendorOperationService
 
-fun main(args: Array<String>) {
 
-    val status = VendorStatus.RUNNING
-    runningVendor(status)
-    managementVendor(status)
+object SingletonClass {
+    val vendor = Vendor()
+    val vendorOperationService = VendorOperationService()
 }
 
-fun runningVendor(status: VendorStatus) {
-    if (status == VendorStatus.MANAGEMENT) {
-        return
+val mapper = jacksonObjectMapper()
+
+fun main() = runBlocking {
+    val vendorOperationService = SingletonClass.vendorOperationService
+    val job = GlobalScope.launch {
+        while (true) {
+            val command = readLine() ?: ""
+            vendorOperationService.setVendorStatus(command)
+            if (command == "exit") {
+                break
+            }
+        }
     }
-    // 사용자 구매 시나리오
-    //vendor.buyDrink()
+    job.join()
 }
 
-fun managementVendor(status: VendorStatus) {
-    if (status == VendorStatus.RUNNING) {
-        return
-    }
-    // 관리 시나리오
-    //vendor.createADrink()
-    //vendor.createBDrink()
-}
+
