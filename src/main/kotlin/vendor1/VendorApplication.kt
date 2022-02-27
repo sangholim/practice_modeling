@@ -20,12 +20,7 @@ import kotlin.concurrent.thread
 object SingletonClass {
     val vendor = Vendor()
     val vendorOperationService = VendorOperationService()
-    val runningProcessors = flowOf(BuyDrinkCommandProcessor())
-    val managementProcessors = flowOf(
-        PrintSpecificationCommandProcessor(),
-        RegisterCommandProcessor()
-    )
-    val statusProcessor = StatusCommandProcessor()
+    val processorFactory = CommandProcessorFactory()
 }
 
 val mapper = jacksonObjectMapper()
@@ -44,10 +39,7 @@ class ClientListener(
 ) {
     private val reader: InputStream = client.getInputStream()
     private val writer: OutputStream = client.getOutputStream()
-    private val vendorOperationService = SingletonClass.vendorOperationService
-    private val runningProcessors = SingletonClass.runningProcessors
-    private val managementProcessors = SingletonClass.managementProcessors
-    private val statusProcessor = SingletonClass.statusProcessor
+    private val processorFactory = SingletonClass.processorFactory
     private var running = false
 
     fun connect() {
@@ -58,22 +50,18 @@ class ClientListener(
                 val command = read(reader)
 
                 runBlocking {
-                    if (statusProcessor.sendResponse(command, writer)) {
+                    if (processorFactory.statusProcess(command, writer)) {
                         return@runBlocking
                     }
 
                     // CPU 연산 최적화
                     launch(Dispatchers.Default) {
-                        if (vendorOperationService.getVendorStatus() == VendorStatus.RUNNING) {
-                            runningProcessors.collect { it.sendResponse(command, writer) }
-                        }
-                        if (vendorOperationService.getVendorStatus() == VendorStatus.MANAGEMENT) {
-                            managementProcessors.collect { it.sendResponse(command, writer) }
-                        }
+                        processorFactory.runningProcess(command, writer)
+                        processorFactory.managementProcess(command, writer)
                     }
                 }
                 // 프로그램 종료 명령어
-                if (statusProcessor.quit()) {
+                if (processorFactory.quitProcess()) {
                     running = false
                     client.close()
                     println("${client.inetAddress.hostAddress} closed the connection")
