@@ -8,7 +8,7 @@ interface CommandProcessor {
     val vendorOperationService: VendorOperationService
         get() = SingletonClass.vendorOperationService
 
-    suspend fun sendResponse(command: String, outputStream: OutputStream)
+    suspend fun sendResponse(command: String, outputStream: OutputStream): Boolean
 
     fun toResponseData(command: String) = (command + System.lineSeparator()).toByteArray(Charsets.UTF_8)
 }
