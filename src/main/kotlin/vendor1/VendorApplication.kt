@@ -45,7 +45,6 @@ class ClientListener(
         while (running) {
             try {
                 val command = read(reader)
-
                 runBlocking {
                     if (processorFactory.statusProcess(command, writer)) {
                         return@runBlocking
@@ -60,16 +59,16 @@ class ClientListener(
                 // 프로그램 종료 명령어
                 if (processorFactory.quitProcess()) {
                     running = false
+                    reader.close()
+                    writer.close()
                     client.close()
                     println("${client.inetAddress.hostAddress} closed the connection")
                 }
             } catch (e: Exception) {
-                if (e.message?.equals("empty-command") == true) {
-                    continue
-                }
-                e.printStackTrace()
-                writer.write("unknown-error\r\n".toByteArray(Charsets.UTF_8))
-                writer.flush()
+                reader.close()
+                writer.close()
+                client.close()
+                running = false
             }
         }
     }
