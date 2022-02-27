@@ -22,15 +22,13 @@ class VendorOperationService {
     fun buyDrink(payload: String): String? {
         try {
             if (vendorStatus != VendorStatus.RUNNING) {
-                return null
+                throw RuntimeException("invalid status")
             }
             val buyDrink = entityBinder<BuyDrink>(payload)
             val balance = vendor.buyDrink(buyDrink.name, buyDrink.amount)
             return "[구입한 음료수: ${buyDrink.name}], [잔여 금액: $balance]"
         } catch (e: VendorException) {
             return e.message
-        } catch (e: VendorOperationServiceException) {
-          return null
         } catch (e: Exception) {
             e.printStackTrace()
             throw RuntimeException(e.cause)
@@ -44,7 +42,7 @@ class VendorOperationService {
     fun registerDrink(payload: String): String? {
         try {
             if (vendorStatus != VendorStatus.MANAGEMENT) {
-                return null
+                throw RuntimeException("invalid status")
             }
             val registerDrink = entityBinder<RegisterDrink>(payload)
             if (registerDrink.type != DrinkManagementType.REGISTER) {
@@ -64,7 +62,7 @@ class VendorOperationService {
      */
     fun changeDrink(payload: String) {
         if (vendorStatus != VendorStatus.MANAGEMENT) {
-            return
+            throw RuntimeException("invalid status")
         }
         val changeDrink = entityBinder<ChangeDrink>(payload)
         if (changeDrink.type != DrinkManagementType.CHANGE) {
@@ -79,7 +77,7 @@ class VendorOperationService {
     fun printSpecification(payload: String):String? {
         try {
             if (vendorStatus != VendorStatus.MANAGEMENT) {
-                return null
+                throw RuntimeException("invalid status")
             }
             val printDrinkSpecification = entityBinder<PrintDrinkSpecification>(payload)
             if (printDrinkSpecification.type != DrinkManagementType.SPECIFICATION) {
@@ -105,17 +103,16 @@ class VendorOperationService {
         }
     }
 
+    fun getVendorStatus() = vendorStatus
+
     private inline fun <reified T> entityBinder(payload: String): T {
         try {
             return mapper.readValue(payload, T::class.java)
         } catch (e: Exception) {
-            throw VendorOperationServiceException("parse-fail")
+            throw RuntimeException("parse-fail")
         }
-
     }
 
     fun shutdown() = vendorStatus == VendorStatus.SHUTDOWN
 
 }
-
-class VendorOperationServiceException(override val message: String) : RuntimeException()
