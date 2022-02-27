@@ -27,9 +27,13 @@ class VendorOperationService {
             val buyDrink = entityBinder<BuyDrink>(payload)
             val balance = vendor.buyDrink(buyDrink.name, buyDrink.amount)
             return "[구입한 음료수: ${buyDrink.name}], [잔여 금액: $balance]"
+        } catch (e: VendorException) {
+            return e.message
+        } catch (e: VendorOperationServiceException) {
+          return null
         } catch (e: Exception) {
-            //throw RuntimeException("구매시 문제 발생")
-            return null
+            e.printStackTrace()
+            throw RuntimeException(e.cause)
         }
     }
 
@@ -102,9 +106,16 @@ class VendorOperationService {
     }
 
     private inline fun <reified T> entityBinder(payload: String): T {
-        return mapper.readValue(payload, T::class.java)
+        try {
+            return mapper.readValue(payload, T::class.java)
+        } catch (e: Exception) {
+            throw VendorOperationServiceException("parse-fail")
+        }
+
     }
 
     fun shutdown() = vendorStatus == VendorStatus.SHUTDOWN
 
 }
+
+class VendorOperationServiceException(override val message: String) : RuntimeException()

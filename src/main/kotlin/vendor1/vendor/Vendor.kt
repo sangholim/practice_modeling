@@ -65,13 +65,13 @@ class Vendor {
     fun buyDrink(name: DrinkName, amount: Int): Int {
         // 매진 여부
         if (soldOut(name)) {
-            throw RuntimeException("매진입니다")
+            throw VendorException("매진입니다")
         }
         // 음료수 존재 여부
-        val drink = drinks[name] ?: throw RuntimeException("존재하지 않는 음료수 입니다")
+        val drink = drinks[name] ?: throw VendorException("존재하지 않는 음료수 입니다")
         // 금액 확인
         if (amount < drink.price) {
-            throw RuntimeException("금액이 부족합니다")
+            throw VendorException("금액이 부족합니다")
         }
         // 구매
         val balance = amount - drink.price
@@ -86,8 +86,8 @@ class Vendor {
      * @return Boolean
      */
     private fun soldOut(name: DrinkName): Boolean {
-        val drink = drinks[name] ?: throw RuntimeException("존재하지 않는 음료수 입니다")
-        val drinkSpecifications = specifications[name] ?: throw RuntimeException("존재하지 않는 음료수 입니다")
+        val drink = drinks[name] ?: throw VendorException("존재하지 않는 음료수 입니다")
+        val drinkSpecifications = specifications[name] ?: throw VendorException("존재하지 않는 음료수 입니다")
         if (drink.count == drinkSpecifications.size) {
             return true
         }
@@ -114,3 +114,10 @@ class Vendor {
         return specificationBuilder.toString()
     }
 }
+
+/**
+ * 자판기 처리 예상되는 예외 클래스
+ * @property message String
+ * @constructor
+ */
+class VendorException(override val message: String) : RuntimeException(message)
