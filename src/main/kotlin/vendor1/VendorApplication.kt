@@ -1,6 +1,15 @@
 package vendor1
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import vendor1.command.BuyDrinkCommandProcessor
+import vendor1.command.PrintSpecificationCommandProcessor
+import vendor1.command.RegisterCommandProcessor
+import vendor1.command.StatusCommandProcessor
 import vendor1.vendor.Vendor
 import vendor1.vendor.VendorOperationService
 import java.io.*
@@ -13,6 +22,12 @@ import kotlin.concurrent.thread
 object SingletonClass {
     val vendor = Vendor()
     val vendorOperationService = VendorOperationService()
+    val commandProcessors = flowOf(
+        BuyDrinkCommandProcessor(),
+        PrintSpecificationCommandProcessor(),
+        RegisterCommandProcessor(),
+        StatusCommandProcessor()
+    )
 }
 
 val mapper = jacksonObjectMapper()
@@ -32,46 +47,45 @@ class ClientListener(
     private val reader: InputStream = client.getInputStream()
     private val writer: OutputStream = client.getOutputStream()
     private val vendorOperationService = SingletonClass.vendorOperationService
+    private val commandProcessors = SingletonClass.commandProcessors
     private var running = false
 
     fun connect() {
         running = true
         println("Vendor Drink Machine")
         while (running) {
-            val command = read(reader)
-            if (command.isNullOrEmpty()) {
-                continue
-            }
-            val decodeCommand = String(Base64.getDecoder().decode(command))
-            vendorOperationService.setVendorStatus(decodeCommand)?.let {
-                writer.write((it + System.lineSeparator()).toByteArray(Charsets.UTF_8))
-                writer.flush()
-            }
-            vendorOperationService.registerDrink(decodeCommand)?.let {
-                writer.write((it + System.lineSeparator()).toByteArray(Charsets.UTF_8))
-                writer.flush()
-            }
-            vendorOperationService.printSpecification(decodeCommand)?.let {
-                writer.write((it + System.lineSeparator()).toByteArray(Charsets.UTF_8))
-                writer.flush()
-            }
-            vendorOperationService.buyDrink(decodeCommand)?.let {
-                writer.write((it + System.lineSeparator()).toByteArray(Charsets.UTF_8))
-                writer.flush()
-            }
-            writer.write("test${System.lineSeparator()}".toByteArray(Charsets.UTF_8))
-            writer.flush()
-            if (vendorOperationService.shutdown()) {
-                running = false
-                client.close()
-                println("${client.inetAddress.hostAddress} closed the connection")
-                break
-            }
+            try {
+                val command = read(reader)
+                runBlocking {
+                    // CPU 연산 최적화
+                    launch(Dispatchers.Default) {
+                        commandProcessors.collect { it.sendResponse(command, writer) }
+                    }
+                }
 
+                if (vendorOperationService.shutdown()) {
+                    running = false
+                    client.close()
+                    println("${client.inetAddress.hostAddress} closed the connection")
+                    break
+                }
+
+            } catch (e: Exception) {
+                if(e.message?.equals("empty-command") == true){
+                    continue
+                }
+                e.printStackTrace()
+                writer.write("unknown-error\r\n".toByteArray(Charsets.UTF_8))
+                writer.flush()
+            }
         }
     }
 
-    private fun read(inputStream: InputStream) = inputStream.bufferedReader(Charsets.UTF_8).readLine()
+    private fun read(inputStream: InputStream): String {
+        val command = inputStream.bufferedReader(Charsets.UTF_8).readLine()
+        if (command.isNullOrEmpty()) throw RuntimeException("empty-command")
+        return String(Base64.getDecoder().decode(command))
+    }
 }
 
 
