@@ -6,6 +6,7 @@ import vendor1.drink.DrinkFactory
 import vendor1.drink.DrinkName
 import vendor1.specification.DrinkSpecification
 import vendor1.specification.DrinkSpecificationFactory
+import java.time.Instant
 
 /**
  * 자판기
@@ -101,15 +102,14 @@ class Vendor {
         drinkSpecifications.add(drinkSpecification)
     }
 
-    fun printSpecification():String {
+    fun printSpecification(): String {
         val specificationBuilder = StringBuilder()
         specifications.forEach { (t, u) ->
-            var count = 0
+            val count = u.size
             u.forEach { i ->
-                specificationBuilder.append(i.print()).append("\r\n")
-                count++
+                specificationBuilder.append(i.print()).append(System.lineSeparator())
             }
-            specificationBuilder.append("[음료수명: $t][판매 개수: $count]")
+            specificationBuilder.append("[음료수명:$t][총개수:$count][출력일:${Instant.now()}]").append(System.lineSeparator())
         }
         return specificationBuilder.toString()
     }
