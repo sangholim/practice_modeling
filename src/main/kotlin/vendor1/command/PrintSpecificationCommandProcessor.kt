@@ -6,7 +6,7 @@ class PrintSpecificationCommandProcessor : CommandProcessor {
 
     override suspend fun sendResponse(command: String, outputStream: OutputStream): Boolean {
         try {
-            val result = vendorOperationService.printSpecification(command) ?: return false
+            val result = vendorService.printSpecification(command) ?: return false
             outputStream.write(toResponseData(result))
             outputStream.flush()
             return true

@@ -6,7 +6,7 @@ class RegisterCommandProcessor : CommandProcessor {
 
     override suspend fun sendResponse(command: String, outputStream: OutputStream): Boolean {
         try {
-            val result = vendorOperationService.registerDrink(command) ?: return false
+            val result = vendorService.registerDrink(command) ?: return false
             outputStream.write(toResponseData(result))
             outputStream.flush()
             return true

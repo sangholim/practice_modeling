@@ -6,7 +6,7 @@ class StatusCommandProcessor : CommandProcessor {
 
     override suspend fun sendResponse(command: String, outputStream: OutputStream): Boolean {
         try {
-            val result = vendorOperationService.setVendorStatus(command) ?: return false
+            val result = vendorService.setVendorStatus(command) ?: return false
             outputStream.write(toResponseData(result))
             outputStream.flush()
             return true
@@ -15,5 +15,5 @@ class StatusCommandProcessor : CommandProcessor {
         }
     }
 
-    override fun quit(): Boolean = vendorOperationService.quit()
+    override fun quit(): Boolean = vendorService.quit()
 }

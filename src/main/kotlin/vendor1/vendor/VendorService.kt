@@ -9,7 +9,7 @@ import vendor1.mapper
  * 운영시에는 운영 커맨드만 받아서 처리
  * 관리시에는 관리 커맨드만 받아서 처리
  */
-class VendorOperationService {
+class VendorService {
 
     private var vendorStatus: VendorStatus? = null
 

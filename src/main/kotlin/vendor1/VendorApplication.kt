@@ -2,14 +2,11 @@ package vendor1
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import vendor1.command.*
 import vendor1.vendor.Vendor
-import vendor1.vendor.VendorOperationService
-import vendor1.vendor.VendorStatus
+import vendor1.vendor.VendorService
 import java.io.*
 import java.net.ServerSocket
 import java.net.Socket
@@ -19,7 +16,7 @@ import kotlin.concurrent.thread
 
 object SingletonClass {
     val vendor = Vendor()
-    val vendorOperationService = VendorOperationService()
+    val vendorService = VendorService()
     val processorFactory = CommandProcessorFactory()
 }
 

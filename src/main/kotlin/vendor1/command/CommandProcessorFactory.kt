@@ -4,13 +4,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import vendor1.SingletonClass
-import vendor1.vendor.VendorOperationService
+import vendor1.vendor.VendorService
 import vendor1.vendor.VendorStatus
 import java.io.OutputStream
 
 class CommandProcessorFactory {
-    val vendorOperationService: VendorOperationService
-        get() = SingletonClass.vendorOperationService
+    private val vendorService: VendorService
+        get() = SingletonClass.vendorService
 
     companion object {
         private var runningProcessors: Flow<CommandProcessor>? = null
@@ -53,12 +53,12 @@ class CommandProcessorFactory {
 
 
     suspend fun runningProcess(command: String, writer: OutputStream) {
-        if (vendorOperationService.getVendorStatus() != VendorStatus.RUNNING) return
+        if (vendorService.getVendorStatus() != VendorStatus.RUNNING) return
         getRunningInstance()?.collect { it.sendResponse(command, writer) }
     }
 
     suspend fun managementProcess(command: String, writer: OutputStream) {
-        if (vendorOperationService.getVendorStatus() != VendorStatus.MANAGEMENT) return
+        if (vendorService.getVendorStatus() != VendorStatus.MANAGEMENT) return
         getManagementInstance()?.collect { it.sendResponse(command, writer) }
     }
 
