@@ -22,7 +22,7 @@ class CommandProcessorFactory {
                 return runningProcessors
             }
             runningProcessors = flowOf(
-                BuyDrinkCommandProcessor()
+                BuyDrinkProcessor()
             )
             return runningProcessors
         }
