@@ -32,7 +32,7 @@ class ProcessorFactory {
                 return managementProcessors
             }
             managementProcessors = flowOf(
-                RegisterCommandProcessor(), PrintSpecificationCommandProcessor()
+                RegisterCommandProcessor(), PrintSpecificationProcessor()
             )
             return managementProcessors
         }
