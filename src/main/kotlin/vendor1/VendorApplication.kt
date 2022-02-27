@@ -12,6 +12,7 @@ import vendor1.command.RegisterCommandProcessor
 import vendor1.command.StatusCommandProcessor
 import vendor1.vendor.Vendor
 import vendor1.vendor.VendorOperationService
+import vendor1.vendor.VendorStatus
 import java.io.*
 import java.net.ServerSocket
 import java.net.Socket
@@ -22,12 +23,12 @@ import kotlin.concurrent.thread
 object SingletonClass {
     val vendor = Vendor()
     val vendorOperationService = VendorOperationService()
-    val commandProcessors = flowOf(
-        BuyDrinkCommandProcessor(),
+    val runningProcessors = flowOf(BuyDrinkCommandProcessor())
+    val managementProcessors = flowOf(
         PrintSpecificationCommandProcessor(),
-        RegisterCommandProcessor(),
-        StatusCommandProcessor()
+        RegisterCommandProcessor()
     )
+    val statusProcessor = StatusCommandProcessor()
 }
 
 val mapper = jacksonObjectMapper()
@@ -47,7 +48,9 @@ class ClientListener(
     private val reader: InputStream = client.getInputStream()
     private val writer: OutputStream = client.getOutputStream()
     private val vendorOperationService = SingletonClass.vendorOperationService
-    private val commandProcessors = SingletonClass.commandProcessors
+    private val runningProcessors = SingletonClass.runningProcessors
+    private val managementProcessors = SingletonClass.managementProcessors
+    private val statusProcessor = SingletonClass.statusProcessor
     private var running = false
 
     fun connect() {
@@ -56,10 +59,19 @@ class ClientListener(
         while (running) {
             try {
                 val command = read(reader)
+
                 runBlocking {
+                    if (statusProcessor.sendResponse(command, writer)) {
+                        return@runBlocking
+                    }
                     // CPU 연산 최적화
                     launch(Dispatchers.Default) {
-                        commandProcessors.collect { it.sendResponse(command, writer) }
+                        if (vendorOperationService.getVendorStatus() == VendorStatus.RUNNING) {
+                            runningProcessors.collect { it.sendResponse(command, writer) }
+                        }
+                        if (vendorOperationService.getVendorStatus() == VendorStatus.MANAGEMENT) {
+                            managementProcessors.collect { it.sendResponse(command, writer) }
+                        }
                     }
                 }
 
@@ -71,7 +83,7 @@ class ClientListener(
                 }
 
             } catch (e: Exception) {
-                if(e.message?.equals("empty-command") == true){
+                if (e.message?.equals("empty-command") == true) {
                     continue
                 }
                 e.printStackTrace()
