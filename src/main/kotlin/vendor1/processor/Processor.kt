@@ -4,7 +4,7 @@ import vendor1.SingletonClass
 import vendor1.vendor.VendorService
 import java.io.OutputStream
 
-interface CommandProcessor {
+interface Processor {
     val vendorService: VendorService
         get() = SingletonClass.vendorService
 

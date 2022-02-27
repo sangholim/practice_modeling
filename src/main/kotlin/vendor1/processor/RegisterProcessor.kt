@@ -2,7 +2,7 @@ package vendor1.processor
 
 import java.io.OutputStream
 
-class RegisterProcessor : CommandProcessor {
+class RegisterProcessor : Processor {
 
     override suspend fun sendResponse(command: String, outputStream: OutputStream): Boolean {
         try {

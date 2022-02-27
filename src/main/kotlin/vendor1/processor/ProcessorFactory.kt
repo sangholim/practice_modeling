@@ -13,11 +13,11 @@ class ProcessorFactory {
         get() = SingletonClass.vendorService
 
     companion object {
-        private var runningProcessors: Flow<CommandProcessor>? = null
-        private var managementProcessors: Flow<CommandProcessor>? = null
-        private var statusProcessor: CommandProcessor? = null
+        private var runningProcessors: Flow<Processor>? = null
+        private var managementProcessors: Flow<Processor>? = null
+        private var statusProcessor: Processor? = null
 
-        fun getRunningInstance(): Flow<CommandProcessor>? {
+        fun getRunningInstance(): Flow<Processor>? {
             if (runningProcessors != null) {
                 return runningProcessors
             }
@@ -27,7 +27,7 @@ class ProcessorFactory {
             return runningProcessors
         }
 
-        fun getManagementInstance(): Flow<CommandProcessor>? {
+        fun getManagementInstance(): Flow<Processor>? {
             if (managementProcessors != null) {
                 return managementProcessors
             }
@@ -37,7 +37,7 @@ class ProcessorFactory {
             return managementProcessors
         }
 
-        fun getStatusInstance(): CommandProcessor? {
+        fun getStatusInstance(): Processor? {
             if (statusProcessor != null) {
                 return statusProcessor
             }
