@@ -1,6 +1,6 @@
 package vendor1.vendor
 
-import vendor1.SingletonClass
+import vendor1.Config
 import vendor1.dto.*
 import vendor1.mapper
 
@@ -13,7 +13,7 @@ class VendorService {
 
     private var vendorStatus: VendorStatus? = null
 
-    private val vendor = SingletonClass.vendor
+    private val vendor = Config.vendor
 
     /**
      * 음료수 구매 (거스름돈 출력)

@@ -14,7 +14,7 @@ import java.util.*
 import kotlin.concurrent.thread
 
 
-object SingletonClass {
+object Config {
     val vendor = Vendor()
     val vendorService = VendorService()
     val processorFactory = ProcessorFactory()
@@ -36,7 +36,7 @@ class ClientListener(
 ) {
     private val reader: InputStream = client.getInputStream()
     private val writer: OutputStream = client.getOutputStream()
-    private val processorFactory = SingletonClass.processorFactory
+    private val processorFactory = Config.processorFactory
     private var running = false
 
     fun connect() {

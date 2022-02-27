@@ -3,14 +3,14 @@ package vendor1.processor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
-import vendor1.SingletonClass
+import vendor1.Config
 import vendor1.vendor.VendorService
 import vendor1.vendor.VendorStatus
 import java.io.OutputStream
 
 class ProcessorFactory {
     private val vendorService: VendorService
-        get() = SingletonClass.vendorService
+        get() = Config.vendorService
 
     companion object {
         private var runningProcessors: Flow<Processor>? = null
