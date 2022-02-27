@@ -1,4 +1,4 @@
-package vendor1.command
+package vendor1.processor
 
 import vendor1.SingletonClass
 import vendor1.vendor.VendorService

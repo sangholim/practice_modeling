@@ -1,4 +1,4 @@
-package vendor1.command
+package vendor1.processor
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect

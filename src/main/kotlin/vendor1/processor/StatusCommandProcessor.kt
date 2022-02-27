@@ -1,4 +1,4 @@
-package vendor1.command
+package vendor1.processor
 
 import java.io.OutputStream
 

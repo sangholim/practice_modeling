@@ -4,7 +4,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import vendor1.command.*
+import vendor1.processor.*
 import vendor1.vendor.Vendor
 import vendor1.vendor.VendorService
 import java.io.*
