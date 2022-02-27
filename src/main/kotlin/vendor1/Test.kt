@@ -13,6 +13,7 @@ fun main() {
 
     var read: InputStream? = null
     var write: OutputStream? = null
+    var result: String? = ""
     try {
         // 서버로 부터 데이터 읽기
         read = socket.getInputStream()
@@ -20,30 +21,31 @@ fun main() {
         write = socket.getOutputStream()
         // 관리 상태
         val management = convertCommand(VendorOperation(VendorStatus.MANAGEMENT))
-        send(management, write, read)
+        result += send(management, write, read)
         // 상품 A 등록
         val registerADrink = convertCommand(RegisterDrink(DrinkManagementType.REGISTER, DrinkName.A, 4000, 3))
-        send(registerADrink, write, read)
+        result += send(registerADrink, write, read)
         // 상품 B 등록
         val registerBDrink = convertCommand(RegisterDrink(DrinkManagementType.REGISTER, DrinkName.B, 6000, 3))
-        send(registerBDrink, write, read)
+        result += send(registerBDrink, write, read)
         // 운영 상태
         val running = convertCommand(VendorOperation(VendorStatus.RUNNING))
-        send(running, write, read)
-        // 음료수 구매
-        val buyADrink = convertCommand(BuyDrink(DrinkName.A, 5000))
-        send(buyADrink, write, read)
-        val buyBDrink = convertCommand(BuyDrink(DrinkName.B, 5000))
-        send(buyBDrink, write, read)
+        result += send(running, write, read)
+        for(i in 1..3) {
+            // 음료수 구매
+            val buyADrink = convertCommand(BuyDrink(DrinkName.A, 5000))
+            result += send(buyADrink, write, read)
+            val buyBDrink = convertCommand(BuyDrink(DrinkName.B, 7000))
+            result += send(buyBDrink, write, read)
+        }
         // 관리 모드
-        send(management, write, read)
+        result += send(management, write, read)
         // 명세서 출력
         val specification = convertCommand(PrintDrinkSpecification(DrinkManagementType.SPECIFICATION))
-        send(specification, write, read)
-
+        result += send(specification, write, read)
         // 프로그램 종료
         val quit = convertCommand(VendorOperation(VendorStatus.QUIT))
-        send(quit, write, read)
+        result += send(quit, write, read)
 
     } catch (e: Exception) {
         read!!.close()
@@ -55,11 +57,25 @@ fun main() {
         write!!.close()
     }
 
+    println(result)
+
 }
 
-fun send(data: String, outputStream: OutputStream, inputStream: InputStream) {
+fun send(data: String, outputStream: OutputStream, inputStream: InputStream): String {
     sendCommand(data, outputStream)
-    println(inputStream.bufferedReader(Charsets.UTF_8).readLine())
+    val buffer = StringBuffer()
+    val reader = BufferedReader(InputStreamReader(inputStream, Charsets.UTF_8))
+    while (true) {
+        val c = reader.read()
+        if (c < 0) {
+            break
+        }
+        if(responseEOF(c, reader)) {
+            break
+        }
+        buffer.append(c.toChar())
+    }
+    return buffer.toString() + System.lineSeparator()
 }
 
 fun convertCommand(any: Any): String {
@@ -71,3 +87,23 @@ fun sendCommand(data: String, outputStream: OutputStream) {
     outputStream.flush()
 }
 
+/**
+ * 응답값 마지막 부분 체크
+ * window: "\r\n\r\n"
+ * linux: "\n\n"
+ */
+fun responseEOF(currentChar: Int, reader: BufferedReader): Boolean {
+    val lineFeed = 10
+    if(currentChar != lineFeed) {
+        return false
+    }
+    reader.mark(26)
+    if(reader.read() == lineFeed) {
+        return true
+    }
+    if(reader.read() == lineFeed) {
+        return true
+    }
+    reader.reset()
+    return false
+}
