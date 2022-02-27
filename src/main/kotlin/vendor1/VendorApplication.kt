@@ -74,7 +74,7 @@ class ClientListener(
         }
     }
 
-    fun read(inputStream: InputStream): String {
+    private fun read(inputStream: InputStream): String {
         val command = inputStream.bufferedReader(Charsets.UTF_8).readLine()
         if (command.isNullOrEmpty()) throw RuntimeException("empty-command")
         return String(Base64.getDecoder().decode(command))

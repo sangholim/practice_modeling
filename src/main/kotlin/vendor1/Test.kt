@@ -20,38 +20,31 @@ fun main() {
         write = socket.getOutputStream()
         // 관리 상태
         val management = convertCommand(VendorOperation(VendorStatus.MANAGEMENT))
-        sendCommand(management, write)
-        receiveMessage(read)
+        send(management, write, read)
         // 상품 A 등록
         val registerADrink = convertCommand(RegisterDrink(DrinkManagementType.REGISTER, DrinkName.A, 4000, 3))
-        sendCommand(registerADrink, write)
-        receiveMessage(read)
+        send(registerADrink, write, read)
         // 상품 B 등록
         val registerBDrink = convertCommand(RegisterDrink(DrinkManagementType.REGISTER, DrinkName.B, 6000, 3))
-        sendCommand(registerBDrink, write)
-        receiveMessage(read)
+        send(registerBDrink, write, read)
         // 운영 상태
         val running = convertCommand(VendorOperation(VendorStatus.RUNNING))
-        sendCommand(running, write)
-        receiveMessage(read)
+        send(running, write, read)
         // 음료수 구매
         val buyADrink = convertCommand(BuyDrink(DrinkName.A, 5000))
-        sendCommand(buyADrink, write)
-        receiveMessage(read)
+        send(buyADrink, write, read)
         val buyBDrink = convertCommand(BuyDrink(DrinkName.B, 5000))
-        sendCommand(buyBDrink, write)
-        receiveMessage(read)
+        send(buyBDrink, write, read)
         // 관리 모드
-        sendCommand(management, write)
-        receiveMessage(read)
+        send(management, write, read)
         // 명세서 출력
         val specification = convertCommand(PrintDrinkSpecification(DrinkManagementType.SPECIFICATION))
-        sendCommand(specification, write)
-        receiveMessage(read)
+        send(specification, write, read)
+
         // 프로그램 종료
         val quit = convertCommand(VendorOperation(VendorStatus.QUIT))
-        sendCommand(quit, write)
-        receiveMessage(read)
+        send(quit, write, read)
+
     } catch (e: Exception) {
         read!!.close()
         write!!.close()
@@ -64,15 +57,17 @@ fun main() {
 
 }
 
-fun sendCommand(data: String, outputStream: OutputStream) {
-    outputStream.write(data.toByteArray(Charsets.UTF_8))
-    outputStream.flush()
+fun send(data: String, outputStream: OutputStream, inputStream: InputStream) {
+    sendCommand(data, outputStream)
+    println(inputStream.bufferedReader(Charsets.UTF_8).readLine())
 }
 
 fun convertCommand(any: Any): String {
     return Base64.getEncoder().encodeToString(mapper.writeValueAsBytes(any)) + System.lineSeparator()
 }
 
-fun receiveMessage(inputStream: InputStream) {
-    println(inputStream.bufferedReader(Charsets.UTF_8).readLine())
+fun sendCommand(data: String, outputStream: OutputStream) {
+    outputStream.write(data.toByteArray(Charsets.UTF_8))
+    outputStream.flush()
 }
+
