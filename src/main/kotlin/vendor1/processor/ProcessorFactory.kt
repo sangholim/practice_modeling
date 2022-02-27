@@ -8,7 +8,7 @@ import vendor1.vendor.VendorService
 import vendor1.vendor.VendorStatus
 import java.io.OutputStream
 
-class CommandProcessorFactory {
+class ProcessorFactory {
     private val vendorService: VendorService
         get() = SingletonClass.vendorService
 

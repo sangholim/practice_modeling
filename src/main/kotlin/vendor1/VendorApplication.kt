@@ -17,7 +17,7 @@ import kotlin.concurrent.thread
 object SingletonClass {
     val vendor = Vendor()
     val vendorService = VendorService()
-    val processorFactory = CommandProcessorFactory()
+    val processorFactory = ProcessorFactory()
 }
 
 val mapper = jacksonObjectMapper()
