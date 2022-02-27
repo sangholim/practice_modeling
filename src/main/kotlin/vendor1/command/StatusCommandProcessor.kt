@@ -14,4 +14,6 @@ class StatusCommandProcessor : CommandProcessor {
             throw RuntimeException(e.cause)
         }
     }
+
+    override fun quit(): Boolean = vendorOperationService.quit()
 }

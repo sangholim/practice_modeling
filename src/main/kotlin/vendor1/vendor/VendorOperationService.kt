@@ -113,6 +113,6 @@ class VendorOperationService {
         }
     }
 
-    fun shutdown() = vendorStatus == VendorStatus.SHUTDOWN
+    fun quit() = vendorStatus == VendorStatus.QUIT
 
 }

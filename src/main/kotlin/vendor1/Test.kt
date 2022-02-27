@@ -48,6 +48,10 @@ fun main() {
         val specification = convertCommand(PrintDrinkSpecification(DrinkManagementType.SPECIFICATION))
         sendCommand(specification, write)
         receiveMessage(read)
+        // 프로그램 종료
+        val quit = convertCommand(VendorOperation(VendorStatus.QUIT))
+        sendCommand(quit, write)
+        receiveMessage(read)
     } catch (e: Exception) {
         read!!.close()
         write!!.close()

@@ -6,10 +6,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import vendor1.command.BuyDrinkCommandProcessor
-import vendor1.command.PrintSpecificationCommandProcessor
-import vendor1.command.RegisterCommandProcessor
-import vendor1.command.StatusCommandProcessor
+import vendor1.command.*
 import vendor1.vendor.Vendor
 import vendor1.vendor.VendorOperationService
 import vendor1.vendor.VendorStatus
@@ -64,6 +61,7 @@ class ClientListener(
                     if (statusProcessor.sendResponse(command, writer)) {
                         return@runBlocking
                     }
+
                     // CPU 연산 최적화
                     launch(Dispatchers.Default) {
                         if (vendorOperationService.getVendorStatus() == VendorStatus.RUNNING) {
@@ -74,14 +72,12 @@ class ClientListener(
                         }
                     }
                 }
-
-                if (vendorOperationService.shutdown()) {
+                // 프로그램 종료 명령어
+                if (statusProcessor.quit()) {
                     running = false
                     client.close()
                     println("${client.inetAddress.hostAddress} closed the connection")
-                    break
                 }
-
             } catch (e: Exception) {
                 if (e.message?.equals("empty-command") == true) {
                     continue
@@ -93,7 +89,7 @@ class ClientListener(
         }
     }
 
-    private fun read(inputStream: InputStream): String {
+    fun read(inputStream: InputStream): String {
         val command = inputStream.bufferedReader(Charsets.UTF_8).readLine()
         if (command.isNullOrEmpty()) throw RuntimeException("empty-command")
         return String(Base64.getDecoder().decode(command))
