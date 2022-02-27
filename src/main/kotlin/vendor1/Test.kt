@@ -20,28 +20,42 @@ fun main() {
         write = socket.getOutputStream()
         // 관리 상태
         val management = convertCommand(VendorOperation(VendorStatus.MANAGEMENT))
-        //receiveMessage(read)
         sendCommand(management, write)
         receiveMessage(read)
         // 상품 A 등록
         val registerADrink = convertCommand(RegisterDrink(DrinkManagementType.REGISTER, DrinkName.A, 4000, 3))
+        sendCommand(registerADrink, write)
+        receiveMessage(read)
         // 상품 B 등록
         val registerBDrink = convertCommand(RegisterDrink(DrinkManagementType.REGISTER, DrinkName.B, 6000, 3))
+        sendCommand(registerBDrink, write)
+        receiveMessage(read)
         // 운영 상태
         val running = convertCommand(VendorOperation(VendorStatus.RUNNING))
+        sendCommand(running, write)
+        receiveMessage(read)
         // 음료수 구매
         val buyADrink = convertCommand(BuyDrink(DrinkName.A, 5000))
+        sendCommand(buyADrink, write)
+        receiveMessage(read)
         val buyBDrink = convertCommand(BuyDrink(DrinkName.B, 5000))
+        sendCommand(buyBDrink, write)
+        receiveMessage(read)
+        // 관리 모드
+        sendCommand(management, write)
+        receiveMessage(read)
         // 명세서 출력
         val specification = convertCommand(PrintDrinkSpecification(DrinkManagementType.SPECIFICATION))
+        sendCommand(specification, write)
+        receiveMessage(read)
     } catch (e: Exception) {
         read!!.close()
         write!!.close()
         socket.close()
     } finally {
+        socket.close()
         read!!.close()
         write!!.close()
-        socket.close()
     }
 
 }
