@@ -42,7 +42,7 @@ class ProcessorFactory {
                 return statusProcessor
             }
 
-            statusProcessor = StatusCommandProcessor()
+            statusProcessor = StatusProcessor()
             return statusProcessor
         }
 
