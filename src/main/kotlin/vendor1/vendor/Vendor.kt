@@ -14,8 +14,6 @@ import java.time.Instant
  */
 class Vendor {
 
-    private val drinkFactory = DrinkFactory()
-
     private val drinkSpecificationFactory = DrinkSpecificationFactory()
 
     private val drinks = mutableMapOf<DrinkName, Drink>()
@@ -47,7 +45,7 @@ class Vendor {
      * @param price 가격
      */
     private fun modifyADrink(price: Int) {
-        val drink = (drinks[DrinkName.A] ?: throw RuntimeException("not found A drink")) as ADrink
+        val drink = (drinks[DrinkName.A] ?: throw RuntimeException("not found A drink"))
         drinks[DrinkName.A] = drink.copy(price = price)
     }
 
@@ -56,7 +54,7 @@ class Vendor {
      * @param price 가격
      */
     private fun modifyBDrink(price: Int) {
-        val drink = (drinks[DrinkName.B] ?: throw RuntimeException("not found B drink")) as BDrink
+        val drink = (drinks[DrinkName.B] ?: throw RuntimeException("not found B drink"))
         drinks[DrinkName.B] = drink.copy(price = price)
     }
 
@@ -67,7 +65,7 @@ class Vendor {
      * @param count 음료수 수량
      */
     private fun createADrink(price: Int, count: Int) {
-        drinks[DrinkName.A] = drinkFactory.createDrink(DrinkName.A, price, count)
+        drinks[DrinkName.A] = Drink(DrinkName.A, price, count)
         specifications[DrinkName.A] = mutableListOf()
     }
 
@@ -78,7 +76,7 @@ class Vendor {
      * @param count 음료수 수량
      */
     private fun createBDrink(price: Int, count: Int) {
-        drinks[DrinkName.B] = drinkFactory.createDrink(DrinkName.B, price, count)
+        drinks[DrinkName.B] = Drink(DrinkName.B, price, count)
         specifications[DrinkName.B] = mutableListOf()
     }
 
