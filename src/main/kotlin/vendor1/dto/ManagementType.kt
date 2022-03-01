@@ -1,5 +1,5 @@
 package vendor1.dto
 
-enum class DrinkManagementType {
+enum class ManagementType {
     SPECIFICATION, MODIFY, REGISTER
 }

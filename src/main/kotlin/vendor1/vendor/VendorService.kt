@@ -45,7 +45,7 @@ class VendorService {
                 throw RuntimeException("invalid status")
             }
             val registerDrink = entityBinder<RegisterDrink>(payload)
-            if (registerDrink.type != DrinkManagementType.REGISTER) {
+            if (registerDrink.type != ManagementType.REGISTER) {
                 return null
             }
             return vendor.createDrink(registerDrink)
@@ -66,7 +66,7 @@ class VendorService {
                 throw RuntimeException("invalid status")
             }
             val modifyDrink = entityBinder<ModifyDrink>(payload)
-            if (modifyDrink.type != DrinkManagementType.MODIFY) {
+            if (modifyDrink.type != ManagementType.MODIFY) {
                 return null
             }
 
@@ -86,7 +86,7 @@ class VendorService {
                 throw RuntimeException("invalid status")
             }
             val printDrinkSpecification = entityBinder<PrintDrinkSpecification>(payload)
-            if (printDrinkSpecification.type != DrinkManagementType.SPECIFICATION) {
+            if (printDrinkSpecification.type != ManagementType.SPECIFICATION) {
                 return null
             }
             return vendor.printSpecification()

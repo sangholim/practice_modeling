@@ -24,10 +24,10 @@ class VendorTest {
             val management = convertCommand(VendorOperation(VendorStatus.MANAGEMENT))
             result += send(management, write, read)
             // 상품 A 등록
-            val registerADrink = convertCommand(RegisterDrink(DrinkManagementType.REGISTER, DrinkName.A, 4000, 4))
+            val registerADrink = convertCommand(RegisterDrink(ManagementType.REGISTER, DrinkName.A, 4000, 4))
             result += send(registerADrink, write, read)
             // 상품 B 등록
-            val registerBDrink = convertCommand(RegisterDrink(DrinkManagementType.REGISTER, DrinkName.B, 6000, 4))
+            val registerBDrink = convertCommand(RegisterDrink(ManagementType.REGISTER, DrinkName.B, 6000, 4))
             result += send(registerBDrink, write, read)
             // 운영 상태
             val running = convertCommand(VendorOperation(VendorStatus.RUNNING))
@@ -80,10 +80,10 @@ class VendorTest {
             val management = convertCommand(VendorOperation(VendorStatus.MANAGEMENT))
             result += send(management, write, read)
             // 상품 A 수정
-            val modifyADrink = convertCommand(ModifyDrink(DrinkManagementType.MODIFY, DrinkName.A, 2000))
+            val modifyADrink = convertCommand(ModifyDrink(ManagementType.MODIFY, DrinkName.A, 2000))
             result += send(modifyADrink, write, read)
             // 상품 B 수정
-            val modifyBDrink = convertCommand(ModifyDrink(DrinkManagementType.MODIFY, DrinkName.B, 2000))
+            val modifyBDrink = convertCommand(ModifyDrink(ManagementType.MODIFY, DrinkName.B, 2000))
             result += send(modifyBDrink, write, read)
             // 운영 상태
             val running = convertCommand(VendorOperation(VendorStatus.RUNNING))
@@ -110,7 +110,7 @@ class VendorTest {
             val management = convertCommand(VendorOperation(VendorStatus.MANAGEMENT))
             result += send(management, write, read)
             // 명세서 출력
-            val specification = convertCommand(PrintDrinkSpecification(DrinkManagementType.SPECIFICATION))
+            val specification = convertCommand(PrintDrinkSpecification(ManagementType.SPECIFICATION))
             result += send(specification, write, read)
             // 운영 상태
             val running = convertCommand(VendorOperation(VendorStatus.RUNNING))
