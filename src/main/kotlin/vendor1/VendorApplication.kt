@@ -40,16 +40,14 @@ class ClientListener(
     private var running = false
 
     fun connect() {
-        running = true
         println("Vendor Drink Machine")
-        while (running) {
-            try {
+        try {
+            while (true) {
                 val command = read(reader)
                 runBlocking {
                     if (processorFactory.statusProcess(command, writer)) {
                         return@runBlocking
                     }
-
                     // CPU 연산 최적화
                     launch(Dispatchers.Default) {
                         processorFactory.runningProcess(command, writer)
@@ -58,18 +56,14 @@ class ClientListener(
                 }
                 // 프로그램 종료 명령어
                 if (processorFactory.quitProcess(command)) {
-                    running = false
-                    reader.close()
-                    writer.close()
-                    client.close()
-                    println("${client.inetAddress.hostAddress} closed the connection")
+                    throw RuntimeException("${client.inetAddress.hostAddress} closed the connection")
                 }
-            } catch (e: Exception) {
-                reader.close()
-                writer.close()
-                client.close()
-                running = false
             }
+        } catch (e: Exception) {
+            println(e.message)
+            reader.close()
+            writer.close()
+            client.close()
         }
     }
 
