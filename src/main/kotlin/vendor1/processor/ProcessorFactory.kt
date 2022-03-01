@@ -48,20 +48,19 @@ class ProcessorFactory {
 
     }
 
-    suspend fun statusProcess(command: String, writer: OutputStream): Boolean =
-        getStatusInstance()?.sendResponse(command, writer) ?: false
+    suspend fun statusProcess(payload: String, writer: OutputStream): Boolean =
+        getStatusInstance()?.sendResponse(payload, writer) ?: false
 
-
-    suspend fun runningProcess(command: String, writer: OutputStream) {
+    suspend fun runningProcess(payload: String, writer: OutputStream) {
         if (vendorService.getVendorStatus() != VendorStatus.RUNNING) return
-        getRunningInstance()?.collect { it.sendResponse(command, writer) }
+        getRunningInstance()?.collect { it.sendResponse(payload, writer) }
     }
 
-    suspend fun managementProcess(command: String, writer: OutputStream) {
+    suspend fun managementProcess(payload: String, writer: OutputStream) {
         if (vendorService.getVendorStatus() != VendorStatus.MANAGEMENT) return
-        getManagementInstance()?.collect { it.sendResponse(command, writer) }
+        getManagementInstance()?.collect { it.sendResponse(payload, writer) }
     }
 
-    fun quitProcess(): Boolean = getStatusInstance()?.quit() ?: false
+    fun quitProcess(payload: String): Boolean = getStatusInstance()?.quit(payload) ?: false
 
 }

@@ -12,5 +12,5 @@ interface Processor {
 
     fun toResponseData(command: String) = (command + System.lineSeparator() + System.lineSeparator()).toByteArray(Charsets.UTF_8)
 
-    fun quit(): Boolean = false
+    fun quit(payload: String): Boolean = false
 }

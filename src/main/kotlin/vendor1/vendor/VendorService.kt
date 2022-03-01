@@ -74,7 +74,7 @@ class VendorService {
      * 거래 내역서 출력
      * @param payload String
      */
-    fun printSpecification(payload: String):String? {
+    fun printSpecification(payload: String): String? {
         try {
             if (vendorStatus != VendorStatus.MANAGEMENT) {
                 throw RuntimeException("invalid status")
@@ -96,6 +96,9 @@ class VendorService {
     fun setVendorStatus(payload: String): String? {
         try {
             val vendorOperation = entityBinder<VendorOperation>(payload)
+            if (vendorOperation.status == VendorStatus.QUIT) {
+                return null
+            }
             this.vendorStatus = vendorOperation.status
             return "[자판기 상태: $vendorStatus]"
         } catch (e: Exception) {
@@ -113,6 +116,12 @@ class VendorService {
         }
     }
 
-    fun quit() = vendorStatus == VendorStatus.QUIT
-
+    fun quit(payload: String): Boolean {
+        return try {
+            val vendorOperation = entityBinder<VendorOperation>(payload)
+            vendorOperation.status == VendorStatus.QUIT
+        } catch (e: Exception) {
+            false
+        }
+    }
 }

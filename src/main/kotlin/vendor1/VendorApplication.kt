@@ -57,7 +57,7 @@ class ClientListener(
                     }
                 }
                 // 프로그램 종료 명령어
-                if (processorFactory.quitProcess()) {
+                if (processorFactory.quitProcess(command)) {
                     running = false
                     reader.close()
                     writer.close()

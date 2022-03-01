@@ -15,5 +15,5 @@ class StatusProcessor : Processor {
         }
     }
 
-    override fun quit(): Boolean = vendorService.quit()
+    override fun quit(payload: String): Boolean = vendorService.quit(payload)
 }
