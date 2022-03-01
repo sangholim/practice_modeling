@@ -37,12 +37,11 @@ class ClientListener(
     private val reader: InputStream = client.getInputStream()
     private val writer: OutputStream = client.getOutputStream()
     private val processorFactory = Config.processorFactory
-    private var running = false
 
     fun connect() {
         println("Vendor Drink Machine")
-        try {
-            while (true) {
+        listen(
+            {
                 val command = read(reader)
                 runBlocking {
                     if (processorFactory.statusProcess(command, writer)) {
@@ -58,19 +57,29 @@ class ClientListener(
                 if (processorFactory.quitProcess(command)) {
                     throw RuntimeException("${client.inetAddress.hostAddress} closed the connection")
                 }
-            }
-        } catch (e: Exception) {
-            println(e.message)
-            reader.close()
-            writer.close()
-            client.close()
-        }
+            }, {
+                reader.close()
+                writer.close()
+                client.close()
+            })
     }
 
     private fun read(inputStream: InputStream): String {
         val command = inputStream.bufferedReader(Charsets.UTF_8).readLine()
         if (command.isNullOrEmpty()) throw RuntimeException("empty-command")
         return String(Base64.getDecoder().decode(command))
+    }
+
+    private fun listen(action: () -> Unit, exception: () -> Unit) {
+        try {
+            while (true) {
+                action()
+            }
+        } catch (e: Exception) {
+            println(e.message)
+            exception()
+        }
+
     }
 }
 
