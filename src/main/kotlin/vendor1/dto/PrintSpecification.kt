@@ -1,5 +1,5 @@
 package vendor1.dto
 
-class PrintDrinkSpecification(
+class PrintSpecification(
     val type: ManagementType
 )

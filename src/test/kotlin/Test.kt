@@ -110,7 +110,7 @@ class VendorTest {
             val management = convertCommand(VendorOperation(VendorStatus.MANAGEMENT))
             result += send(management, write, read)
             // 명세서 출력
-            val specification = convertCommand(PrintDrinkSpecification(ManagementType.SPECIFICATION))
+            val specification = convertCommand(PrintSpecification(ManagementType.SPECIFICATION))
             result += send(specification, write, read)
             // 운영 상태
             val running = convertCommand(VendorOperation(VendorStatus.RUNNING))

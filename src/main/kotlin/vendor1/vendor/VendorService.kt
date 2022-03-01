@@ -85,8 +85,8 @@ class VendorService {
             if (vendorStatus != VendorStatus.MANAGEMENT) {
                 throw RuntimeException("invalid status")
             }
-            val printDrinkSpecification = entityBinder<PrintDrinkSpecification>(payload)
-            if (printDrinkSpecification.type != ManagementType.SPECIFICATION) {
+            val printSpecification = entityBinder<PrintSpecification>(payload)
+            if (printSpecification.type != ManagementType.SPECIFICATION) {
                 return null
             }
             return vendor.printSpecification()
