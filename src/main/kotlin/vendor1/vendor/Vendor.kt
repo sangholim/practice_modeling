@@ -1,9 +1,8 @@
 package vendor1.vendor
 
+import vendor1.drink.*
 import vendor1.dto.RegisterDrink
-import vendor1.drink.Drink
-import vendor1.drink.DrinkFactory
-import vendor1.drink.DrinkName
+import vendor1.dto.ModifyDrink
 import vendor1.specification.DrinkSpecification
 import vendor1.specification.DrinkSpecificationFactory
 import java.time.Instant
@@ -33,6 +32,32 @@ class Vendor {
             DrinkName.B -> createBDrink(registerDrink.price, registerDrink.count)
         }
         return "[등록된 음료수: $drinks]"
+    }
+
+    fun modifyDrink(modifyDrink: ModifyDrink): String {
+        when (modifyDrink.name) {
+            DrinkName.A -> modifyADrink(modifyDrink.price)
+            DrinkName.B -> modifyBDrink(modifyDrink.price)
+        }
+        return "[변경된 음료수: $drinks]"
+    }
+
+    /**
+     * 음료수 A 가격 수정
+     * @param price 가격
+     */
+    private fun modifyADrink(price: Int) {
+        val drink = (drinks[DrinkName.A] ?: throw RuntimeException("not found A drink")) as ADrink
+        drinks[DrinkName.A] = drink.copy(price = price)
+    }
+
+    /**
+     * 음료수 B 가격 수정
+     * @param price 가격
+     */
+    private fun modifyBDrink(price: Int) {
+        val drink = (drinks[DrinkName.B] ?: throw RuntimeException("not found B drink")) as BDrink
+        drinks[DrinkName.B] = drink.copy(price = price)
     }
 
     /**

@@ -60,13 +60,19 @@ class VendorService {
      * 음료수 변경
      * @param payload 변경할 음료수 데이터
      */
-    fun changeDrink(payload: String) {
-        if (vendorStatus != VendorStatus.MANAGEMENT) {
-            throw RuntimeException("invalid status")
-        }
-        val changeDrink = entityBinder<ChangeDrink>(payload)
-        if (changeDrink.type != DrinkManagementType.CHANGE) {
-            return
+    fun modifyDrink(payload: String): String? {
+        try {
+            if (vendorStatus != VendorStatus.MANAGEMENT) {
+                throw RuntimeException("invalid status")
+            }
+            val modifyDrink = entityBinder<ModifyDrink>(payload)
+            if (modifyDrink.type != DrinkManagementType.MODIFY) {
+                return null
+            }
+
+            return vendor.modifyDrink(modifyDrink)
+        } catch (e: Exception) {
+            return null
         }
     }
 
