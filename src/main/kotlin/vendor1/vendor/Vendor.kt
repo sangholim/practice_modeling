@@ -4,17 +4,14 @@ import vendor1.drink.*
 import vendor1.dto.RegisterDrink
 import vendor1.dto.ModifyDrink
 import vendor1.specification.DrinkSpecification
-import vendor1.specification.DrinkSpecificationFactory
 import java.time.Instant
 
 /**
  * 자판기
- * @property drinkFactory 음료수 생성 팩토리
- * @property drinks 자판기 음료수 관리 맵 데이터
+ * @property drinks 자판기 음료수 관리 데이터
+ * @property specifications 음료수 명세서 데이터
  */
 class Vendor {
-
-    private val drinkSpecificationFactory = DrinkSpecificationFactory()
 
     private val drinks = mutableMapOf<DrinkName, Drink>()
 
@@ -121,7 +118,7 @@ class Vendor {
     private fun createDrinkSpecification(name: DrinkName, drink: Drink) {
         // 명세서 작성
         val drinkSpecifications = specifications[name] ?: throw RuntimeException("존재하지 않는 음료수 입니다")
-        val drinkSpecification = drinkSpecificationFactory.createDrinkSpecification(name, drink.price)
+        val drinkSpecification = DrinkSpecification(name, drink.price)
         drinkSpecifications.add(drinkSpecification)
     }
 
