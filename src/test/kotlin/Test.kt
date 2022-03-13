@@ -20,21 +20,21 @@ class VendorTest {
             val read = it.getInputStream()
             // 서버에 데이터 쓰기
             val write = it.getOutputStream()
+            val authentication = mapper.writeValueAsString(Authentication("test", "test"))
             // 관리 상태
-            val management = convertCommand(VendorOperation(VendorStatus.MANAGEMENT))
-            result += send(management, write, read)
+            val management = mapper.writeValueAsString(VendorOperation(VendorStatus.MANAGEMENT))
+            result += send(convertBase64Command("STATUS", management, authentication), write, read)
             // 상품 A 등록
-            val registerADrink = convertCommand(RegisterDrink(ManagementType.REGISTER, DrinkName.A, 4000, 4))
-            result += send(registerADrink, write, read)
+            val registerADrink = mapper.writeValueAsString(RegisterDrink(DrinkName.A, 4000, 4))
+            result += send(convertBase64Command("REGISTER", registerADrink), write, read)
             // 상품 B 등록
-            val registerBDrink = convertCommand(RegisterDrink(ManagementType.REGISTER, DrinkName.B, 6000, 4))
-            result += send(registerBDrink, write, read)
+            val registerBDrink = mapper.writeValueAsString(RegisterDrink(DrinkName.B, 6000, 4))
+            result += send(convertBase64Command("REGISTER", registerBDrink), write, read)
             // 운영 상태
-            val running = convertCommand(VendorOperation(VendorStatus.RUNNING))
-            result += send(running, write, read)
+            val running = mapper.writeValueAsString(VendorOperation(VendorStatus.RUNNING))
+            result += send(convertBase64Command("STATUS", running, authentication), write, read)
             // 프로그램 종료
-            val quit = convertCommand(VendorOperation(VendorStatus.QUIT))
-            result += send(quit, write, read)
+            result += send(convertBase64Command("QUIT"), write, read)
             println(result)
             write.close()
             read.close()
@@ -52,14 +52,13 @@ class VendorTest {
             val write = it.getOutputStream()
             for (i in 1..2) {
                 // 음료수 구매
-                val buyADrink = convertCommand(BuyDrink(DrinkName.A, 5000))
-                result += send(buyADrink, write, read)
-                val buyBDrink = convertCommand(BuyDrink(DrinkName.B, 7000))
-                result += send(buyBDrink, write, read)
+                val buyADrink = mapper.writeValueAsString(BuyDrink(DrinkName.A, 5000))
+                result += send(convertBase64Command("BUY", buyADrink), write, read)
+                val buyBDrink = mapper.writeValueAsString(BuyDrink(DrinkName.B, 7000))
+                result += send(convertBase64Command("BUY", buyBDrink), write, read)
             }
             // 프로그램 종료
-            val quit = convertCommand(VendorOperation(VendorStatus.QUIT))
-            result += send(quit, write, read)
+            result += send(convertBase64Command("QUIT"), write, read)
             println(result)
             write.close()
             read.close()
@@ -76,21 +75,21 @@ class VendorTest {
             val read = it.getInputStream()
             // 서버에 데이터 쓰기
             val write = it.getOutputStream()
+            val authentication = mapper.writeValueAsString(Authentication("test", "test"))
             // 관리 상태
-            val management = convertCommand(VendorOperation(VendorStatus.MANAGEMENT))
-            result += send(management, write, read)
+            val management = mapper.writeValueAsString(VendorOperation(VendorStatus.MANAGEMENT))
+            result += send(convertBase64Command("STATUS", management, authentication), write, read)
             // 상품 A 수정
-            val modifyADrink = convertCommand(ModifyDrink(ManagementType.MODIFY, DrinkName.A, 2000))
-            result += send(modifyADrink, write, read)
+            val modifyADrink = mapper.writeValueAsString(ModifyDrink(DrinkName.A, 2000))
+            result += send(convertBase64Command("MODIFY", modifyADrink), write, read)
             // 상품 B 수정
-            val modifyBDrink = convertCommand(ModifyDrink(ManagementType.MODIFY, DrinkName.B, 2000))
-            result += send(modifyBDrink, write, read)
+            val modifyBDrink = mapper.writeValueAsString(ModifyDrink(DrinkName.B, 2000))
+            result += send(convertBase64Command("MODIFY", modifyBDrink), write, read)
             // 운영 상태
-            val running = convertCommand(VendorOperation(VendorStatus.RUNNING))
-            result += send(running, write, read)
+            val running = mapper.writeValueAsString(VendorOperation(VendorStatus.RUNNING))
+            result += send(convertBase64Command("STATUS", running, authentication), write, read)
             // 프로그램 종료
-            val quit = convertCommand(VendorOperation(VendorStatus.QUIT))
-            result += send(quit, write, read)
+            result += send(convertBase64Command("QUIT"), write, read)
             println(result)
             write.close()
             read.close()
@@ -106,18 +105,17 @@ class VendorTest {
             val read = it.getInputStream()
             // 서버에 데이터 쓰기
             val write = it.getOutputStream()
+            val authentication = mapper.writeValueAsString(Authentication("test", "test"))
             // 관리 상태
-            val management = convertCommand(VendorOperation(VendorStatus.MANAGEMENT))
-            result += send(management, write, read)
+            val management = mapper.writeValueAsString(VendorOperation(VendorStatus.MANAGEMENT))
+            result += send(convertBase64Command("STATUS", management, authentication), write, read)
             // 명세서 출력
-            val specification = convertCommand(PrintSpecification(ManagementType.SPECIFICATION))
-            result += send(specification, write, read)
+            result += send(convertBase64Command("SPECIFICATION"), write, read)
             // 운영 상태
-            val running = convertCommand(VendorOperation(VendorStatus.RUNNING))
-            result += send(running, write, read)
+            val running = mapper.writeValueAsString(VendorOperation(VendorStatus.RUNNING))
+            result += send(convertBase64Command("STATUS", running, authentication), write, read)
             // 프로그램 종료
-            val quit = convertCommand(VendorOperation(VendorStatus.QUIT))
-            result += send(quit, write, read)
+            result += send(convertBase64Command("QUIT"), write, read)
             println(result)
             write.close()
             read.close()
@@ -141,8 +139,10 @@ class VendorTest {
         return buffer.toString() + System.lineSeparator()
     }
 
-    private fun convertCommand(any: Any): String {
-        return Base64.getEncoder().encodeToString(mapper.writeValueAsBytes(any)) + System.lineSeparator()
+    private fun convertBase64Command(vararg commands:String): String {
+        return Base64.getEncoder().encodeToString(
+            commands.joinToString(prefix = "", postfix = "", separator = " ").toByteArray()
+        ) + System.lineSeparator()
     }
 
     private fun sendCommand(data: String, outputStream: OutputStream) {
