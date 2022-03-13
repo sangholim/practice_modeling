@@ -40,28 +40,18 @@ class ClientListener(
 
     fun connect() {
         println("Vendor Drink Machine")
-        listen(
-            {
-                val command = read(reader)
-                runBlocking {
-                    if (processorFactory.statusProcess(command, writer)) {
-                        return@runBlocking
-                    }
-                    // CPU 연산 최적화
-                    launch(Dispatchers.Default) {
-                        processorFactory.runningProcess(command, writer)
-                        processorFactory.managementProcess(command, writer)
-                    }
+        listen {
+            val command = read(reader)
+            runBlocking {
+                processorFactory.statusProcess(command, writer)
+                // CPU 연산 최적화
+                launch(Dispatchers.Default) {
+                    processorFactory.runningProcess(command, writer)
+                    processorFactory.managementProcess(command, writer)
                 }
-                // 프로그램 종료 명령어
-                if (processorFactory.quitProcess(command)) {
-                    throw RuntimeException("${client.inetAddress.hostAddress} closed the connection")
-                }
-            }, {
-                reader.close()
-                writer.close()
-                client.close()
-            })
+                processorFactory.quitProcess(command, writer)
+            }
+        }
     }
 
     private fun read(inputStream: InputStream): String {
@@ -70,14 +60,16 @@ class ClientListener(
         return String(Base64.getDecoder().decode(command))
     }
 
-    private fun listen(action: () -> Unit, exception: () -> Unit) {
+    private fun listen(action: () -> Unit) {
         try {
             while (true) {
                 action()
             }
         } catch (e: Exception) {
-            println(e.message)
-            exception()
+            println("${client.inetAddress.hostAddress} closed the connection > ${e.message}")
+            reader.close()
+            writer.close()
+            client.close()
         }
 
     }
