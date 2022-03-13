@@ -16,6 +16,7 @@ class ProcessorFactory {
         private var runningProcessors: Flow<Processor>? = null
         private var managementProcessors: Flow<Processor>? = null
         private var statusProcessor: Processor? = null
+        private var quitProcessor: Processor? = null
 
         fun getRunningInstance(): Flow<Processor>? {
             if (runningProcessors != null) {
@@ -32,7 +33,9 @@ class ProcessorFactory {
                 return managementProcessors
             }
             managementProcessors = flowOf(
-                RegisterProcessor(), PrintSpecificationProcessor(), ModifyDrinkProcessor()
+                RegisterProcessor(),
+                ModifyDrinkProcessor(),
+                PrintSpecificationProcessor()
             )
             return managementProcessors
         }
@@ -46,21 +49,32 @@ class ProcessorFactory {
             return statusProcessor
         }
 
+        fun getQuitInstance(): Processor? {
+            if (quitProcessor != null) {
+                return quitProcessor
+            }
+            quitProcessor = QuitProcessor()
+            return quitProcessor
+        }
     }
 
-    suspend fun statusProcess(payload: String, writer: OutputStream): Boolean =
-        getStatusInstance()?.sendResponse(payload, writer) ?: false
+    suspend fun statusProcess(command: String, writer: OutputStream): Boolean =
+        getStatusInstance()?.sendResponse(command, writer) ?: false
 
-    suspend fun runningProcess(payload: String, writer: OutputStream) {
+    suspend fun runningProcess(command: String, writer: OutputStream) {
         if (vendorService.getVendorStatus() != VendorStatus.RUNNING) return
-        getRunningInstance()?.collect { it.sendResponse(payload, writer) }
+        getRunningInstance()?.collect { it.sendResponse(command, writer) }
     }
 
-    suspend fun managementProcess(payload: String, writer: OutputStream) {
+    suspend fun managementProcess(command: String, writer: OutputStream) {
         if (vendorService.getVendorStatus() != VendorStatus.MANAGEMENT) return
-        getManagementInstance()?.collect { it.sendResponse(payload, writer) }
+        getManagementInstance()?.collect { it.sendResponse(command, writer) }
     }
 
-    fun quitProcess(payload: String): Boolean = getStatusInstance()?.quit(payload) ?: false
-
+    suspend fun quitProcess(command: String, writer: OutputStream) {
+        if (getQuitInstance()?.sendResponse(command, writer) == false) {
+            return
+        }
+        throw RuntimeException("QUIT")
+    }
 }

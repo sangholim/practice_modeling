@@ -1,9 +1,26 @@
 package vendor1.processor
 
+import vendor1.dto.Authentication
+import vendor1.dto.VendorOperation
+
 class StatusProcessor : Processor {
 
-    override fun process(command: String): String? =
-        vendorService.setVendorStatus(command)
+    override fun process(command: String): String? {
+        val commands = command.split(" ")
+        val validCommand = Command.valueOf(commands[0])
+        if(validCommand != Command.STATUS) {
+            return null
+        }
+        val authentication = entityBinder<Authentication>(commands[2])
+        isAdmin(authentication)
+        val payload = entityBinder<VendorOperation>(commands[1])
+        return vendorService.setVendorStatus(payload)
+    }
 
-    override fun quit(payload: String): Boolean = vendorService.quit(payload)
+    private fun isAdmin(authentication: Authentication): Boolean {
+        if (!(authentication.username == "test" && authentication.password == "test")) {
+            throw RuntimeException("unauthorized")
+        }
+        return true
+    }
 }
