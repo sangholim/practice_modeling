@@ -1,6 +1,5 @@
-package vendor1.specification
+package vendor1.drink.domain
 
-import vendor1.drink.domain.DrinkName
 import java.time.Instant
 
 /**
