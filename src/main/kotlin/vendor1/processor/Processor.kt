@@ -11,18 +11,18 @@ interface Processor {
 
     /**
      * 커맨드를 처리후 결과값을 받음
-     * @param command 명령어
+     * @param data 명령어
      */
-    fun process(command: String): String?
+    fun process(data: String): String?
 
     /**
      * 커맨드 입력값 받고 처리후, 클라이언트에게 응답값 전송
-     * @param command 명령어
+     * @param data 명령어
      * @param outputStream 응답값 전달용 Stream
      */
-    suspend fun sendResponse(command: String, outputStream: OutputStream): Boolean {
+    suspend fun sendResponse(data: String, outputStream: OutputStream): Boolean {
         try {
-            val result = process(command) ?: return false
+            val result = process(data) ?: return false
             val eof = System.lineSeparator() + System.lineSeparator()
             outputStream.write((result + eof).toByteArray())
             outputStream.flush()
@@ -31,6 +31,19 @@ interface Processor {
             throw RuntimeException(e.message)
         }
     }
+}
+
+inline fun <reified T : Enum<T>> validCommand(command: String, enum: Enum<T>): Boolean {
+    try {
+        val enumCommand = enumValueOf<T>(command)
+        if (enumCommand == enum) {
+            return true
+        }
+    } catch (e: IllegalArgumentException) {
+        // debug
+        println("not found command")
+    }
+    return false
 }
 
 inline fun <reified T> entityBinder(payload: String): T {

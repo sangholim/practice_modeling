@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.jupiter.api.Test
+import vendor1.Command
 import vendor1.account.dto.Authentication
 import vendor1.drink.domain.DrinkName
 import vendor1.drink.dto.BuyDrink
@@ -28,7 +29,7 @@ class VendorTest {
             val authentication = mapper.writeValueAsString(Authentication("test", "test"))
             // 관리 상태
             val management = mapper.writeValueAsString(VendorOperation(VendorStatus.MANAGEMENT))
-            result += send(convertBase64Command(DrinkCommand.STATUS.name, management, authentication), write, read)
+            result += send(convertBase64Command(Command.STATUS.name, management, authentication), write, read)
             // 상품 A 등록
             val registerADrink = mapper.writeValueAsString(RegisterDrink(DrinkName.A, 4000, 4))
             result += send(convertBase64Command(DrinkCommand.DRINK_REGISTER.name, registerADrink), write, read)
@@ -37,9 +38,9 @@ class VendorTest {
             result += send(convertBase64Command(DrinkCommand.DRINK_REGISTER.name, registerBDrink), write, read)
             // 운영 상태
             val running = mapper.writeValueAsString(VendorOperation(VendorStatus.RUNNING))
-            result += send(convertBase64Command(DrinkCommand.STATUS.name, running, authentication), write, read)
+            result += send(convertBase64Command(Command.STATUS.name, running, authentication), write, read)
             // 프로그램 종료
-            result += send(convertBase64Command(DrinkCommand.QUIT.name), write, read)
+            result += send(convertBase64Command(Command.QUIT.name), write, read)
             println(result)
             write.close()
             read.close()
@@ -63,7 +64,7 @@ class VendorTest {
                 result += send(convertBase64Command(DrinkCommand.DRINK_BUY.name, buyBDrink), write, read)
             }
             // 프로그램 종료
-            result += send(convertBase64Command(DrinkCommand.QUIT.name), write, read)
+            result += send(convertBase64Command(Command.QUIT.name), write, read)
             println(result)
             write.close()
             read.close()
@@ -83,7 +84,7 @@ class VendorTest {
             val authentication = mapper.writeValueAsString(Authentication("test", "test"))
             // 관리 상태
             val management = mapper.writeValueAsString(VendorOperation(VendorStatus.MANAGEMENT))
-            result += send(convertBase64Command(DrinkCommand.STATUS.name, management, authentication), write, read)
+            result += send(convertBase64Command(Command.STATUS.name, management, authentication), write, read)
             // 상품 A 수정
             val modifyADrink = mapper.writeValueAsString(ModifyDrink(DrinkName.A, 2000))
             result += send(convertBase64Command(DrinkCommand.DRINK_MODIFY.name, modifyADrink), write, read)
@@ -92,9 +93,9 @@ class VendorTest {
             result += send(convertBase64Command(DrinkCommand.DRINK_MODIFY.name, modifyBDrink), write, read)
             // 운영 상태
             val running = mapper.writeValueAsString(VendorOperation(VendorStatus.RUNNING))
-            result += send(convertBase64Command(DrinkCommand.STATUS.name, running, authentication), write, read)
+            result += send(convertBase64Command(Command.STATUS.name, running, authentication), write, read)
             // 프로그램 종료
-            result += send(convertBase64Command(DrinkCommand.QUIT.name), write, read)
+            result += send(convertBase64Command(Command.QUIT.name), write, read)
             println(result)
             write.close()
             read.close()
@@ -113,14 +114,14 @@ class VendorTest {
             val authentication = mapper.writeValueAsString(Authentication("test", "test"))
             // 관리 상태
             val management = mapper.writeValueAsString(VendorOperation(VendorStatus.MANAGEMENT))
-            result += send(convertBase64Command(DrinkCommand.STATUS.name, management, authentication), write, read)
+            result += send(convertBase64Command(Command.STATUS.name, management, authentication), write, read)
             // 명세서 출력
             result += send(convertBase64Command(DrinkCommand.DRINK_SPECIFICATION.name), write, read)
             // 운영 상태
             val running = mapper.writeValueAsString(VendorOperation(VendorStatus.RUNNING))
-            result += send(convertBase64Command(DrinkCommand.STATUS.name, running, authentication), write, read)
+            result += send(convertBase64Command(Command.STATUS.name, running, authentication), write, read)
             // 프로그램 종료
-            result += send(convertBase64Command(DrinkCommand.QUIT.name), write, read)
+            result += send(convertBase64Command(Command.QUIT.name), write, read)
             println(result)
             write.close()
             read.close()

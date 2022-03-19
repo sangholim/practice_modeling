@@ -1,17 +1,18 @@
 package vendor1.vendor.processor
 
+import vendor1.Command
 import vendor1.account.dto.Authentication
 import vendor1.drink.dto.VendorOperation
 import vendor1.drink.processor.DrinkCommand
 import vendor1.processor.Processor
 import vendor1.processor.entityBinder
+import vendor1.processor.validCommand
 
 class StatusProcessor : Processor {
 
-    override fun process(command: String): String? {
-        val commands = command.split(" ")
-        val validCommand = DrinkCommand.valueOf(commands[0])
-        if(validCommand != DrinkCommand.STATUS) {
+    override fun process(data: String): String? {
+        val commands = data.split(" ")
+        if(!validCommand(commands[0], Command.STATUS)) {
             return null
         }
         val authentication = entityBinder<Authentication>(commands[2])

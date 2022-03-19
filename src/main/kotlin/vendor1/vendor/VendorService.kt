@@ -76,7 +76,4 @@ class VendorService {
         this.vendorStatus = payload.status
         return "[자판기 상태: $vendorStatus]"
     }
-
-    fun getVendorStatus() = vendorStatus
-
 }

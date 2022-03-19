@@ -65,6 +65,7 @@ class ClientListener(
                 action()
             }
         } catch (e: Exception) {
+            e.printStackTrace()
             println("${client.inetAddress.hostAddress} closed the connection > ${e.message}")
             reader.close()
             writer.close()
