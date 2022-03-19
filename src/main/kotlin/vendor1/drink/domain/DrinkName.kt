@@ -1,4 +1,4 @@
-package vendor1.drink
+package vendor1.drink.domain
 
 enum class DrinkName {
     A, B

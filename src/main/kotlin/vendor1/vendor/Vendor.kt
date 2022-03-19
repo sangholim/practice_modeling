@@ -1,6 +1,7 @@
 package vendor1.vendor
 
-import vendor1.drink.*
+import vendor1.drink.domain.Drink
+import vendor1.drink.domain.DrinkName
 import vendor1.drink.dto.RegisterDrink
 import vendor1.drink.dto.ModifyDrink
 import vendor1.specification.DrinkSpecification
