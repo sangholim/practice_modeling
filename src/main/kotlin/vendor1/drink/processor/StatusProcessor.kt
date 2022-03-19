@@ -9,8 +9,8 @@ class StatusProcessor : Processor {
 
     override fun process(command: String): String? {
         val commands = command.split(" ")
-        val validCommand = Command.valueOf(commands[0])
-        if(validCommand != Command.STATUS) {
+        val validCommand = DrinkCommand.valueOf(commands[0])
+        if(validCommand != DrinkCommand.STATUS) {
             return null
         }
         val authentication = entityBinder<Authentication>(commands[2])

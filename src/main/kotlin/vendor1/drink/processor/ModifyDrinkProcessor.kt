@@ -8,8 +8,8 @@ class ModifyDrinkProcessor : Processor {
 
     override fun process(command: String): String? {
         val commands = command.split(" ")
-        val validCommand = Command.valueOf(commands[0])
-        if(validCommand != Command.DRINK_MODIFY) {
+        val validCommand = DrinkCommand.valueOf(commands[0])
+        if(validCommand != DrinkCommand.DRINK_MODIFY) {
             return null
         }
         val payload = entityBinder<ModifyDrink>(commands[1])
