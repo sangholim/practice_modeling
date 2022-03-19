@@ -1,4 +1,4 @@
-package vendor1.dto
+package vendor1.account.dto
 
 import java.io.Serializable
 

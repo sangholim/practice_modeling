@@ -1,6 +1,6 @@
 package vendor1.drink.processor
 
-import vendor1.dto.Authentication
+import vendor1.account.dto.Authentication
 import vendor1.drink.dto.VendorOperation
 import vendor1.processor.Processor
 import vendor1.processor.entityBinder

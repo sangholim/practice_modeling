@@ -1,6 +1,6 @@
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.jupiter.api.Test
-import vendor1.dto.*
+import vendor1.account.dto.Authentication
 import vendor1.drink.domain.DrinkName
 import vendor1.drink.dto.BuyDrink
 import vendor1.drink.dto.ModifyDrink
