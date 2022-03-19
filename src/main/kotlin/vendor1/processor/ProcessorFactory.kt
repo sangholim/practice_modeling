@@ -1,9 +1,10 @@
-package vendor1.drink.processor
+package vendor1.processor
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
-import vendor1.processor.Processor
+import vendor1.drink.processor.*
+import vendor1.vendor.processor.StatusProcessor
 import java.io.OutputStream
 
 class ProcessorFactory {

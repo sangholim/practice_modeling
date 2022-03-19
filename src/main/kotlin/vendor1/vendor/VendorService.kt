@@ -5,7 +5,6 @@ import vendor1.drink.dto.BuyDrink
 import vendor1.drink.dto.ModifyDrink
 import vendor1.drink.dto.RegisterDrink
 import vendor1.drink.dto.VendorOperation
-import vendor1.dto.*
 
 /**
  * 자판기 운영 상태 인벤트 클래스
