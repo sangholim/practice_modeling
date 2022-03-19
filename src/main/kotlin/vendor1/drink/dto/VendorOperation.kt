@@ -1,4 +1,4 @@
-package vendor1.dto
+package vendor1.drink.dto
 
 import vendor1.vendor.VendorStatus
 import java.io.Serializable

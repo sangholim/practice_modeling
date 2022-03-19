@@ -1,4 +1,6 @@
-package vendor1.processor
+package vendor1.drink.processor
+
+import vendor1.processor.Processor
 
 class QuitProcessor : Processor {
     override fun process(command: String): String? {

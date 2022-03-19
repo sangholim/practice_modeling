@@ -4,7 +4,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import vendor1.processor.*
+import vendor1.drink.processor.ProcessorFactory
 import vendor1.vendor.Vendor
 import vendor1.vendor.VendorService
 import java.io.*
@@ -46,8 +46,7 @@ class ClientListener(
                 processorFactory.statusProcess(command, writer)
                 // CPU 연산 최적화
                 launch(Dispatchers.Default) {
-                    processorFactory.runningProcess(command, writer)
-                    processorFactory.managementProcess(command, writer)
+                    processorFactory.process(command, writer)
                 }
                 processorFactory.quitProcess(command, writer)
             }

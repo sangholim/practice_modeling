@@ -1,8 +1,8 @@
 package vendor1.vendor
 
 import vendor1.drink.*
-import vendor1.dto.RegisterDrink
-import vendor1.dto.ModifyDrink
+import vendor1.drink.dto.RegisterDrink
+import vendor1.drink.dto.ModifyDrink
 import vendor1.specification.DrinkSpecification
 import java.time.Instant
 

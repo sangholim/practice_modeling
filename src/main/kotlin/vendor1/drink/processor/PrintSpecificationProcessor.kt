@@ -1,4 +1,7 @@
-package vendor1.processor
+package vendor1.drink.processor
+
+import vendor1.processor.Processor
+import vendor1.processor.entityBinder
 
 class PrintSpecificationProcessor : Processor {
 

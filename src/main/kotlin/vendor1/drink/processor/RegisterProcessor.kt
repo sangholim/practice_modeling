@@ -1,7 +1,8 @@
-package vendor1.processor
+package vendor1.drink.processor
 
-import vendor1.dto.Authentication
-import vendor1.dto.RegisterDrink
+import vendor1.drink.dto.RegisterDrink
+import vendor1.processor.Processor
+import vendor1.processor.entityBinder
 
 class RegisterProcessor : Processor {
 

@@ -1,6 +1,8 @@
-package vendor1.processor
+package vendor1.drink.processor
 
-import vendor1.dto.ModifyDrink
+import vendor1.drink.dto.ModifyDrink
+import vendor1.processor.Processor
+import vendor1.processor.entityBinder
 
 class ModifyDrinkProcessor : Processor {
 
