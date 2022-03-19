@@ -6,6 +6,7 @@ import vendor1.drink.dto.BuyDrink
 import vendor1.drink.dto.ModifyDrink
 import vendor1.drink.dto.RegisterDrink
 import vendor1.drink.dto.VendorOperation
+import vendor1.drink.processor.Command
 import vendor1.vendor.VendorStatus
 import java.io.*
 import java.net.Socket
@@ -27,18 +28,18 @@ class VendorTest {
             val authentication = mapper.writeValueAsString(Authentication("test", "test"))
             // 관리 상태
             val management = mapper.writeValueAsString(VendorOperation(VendorStatus.MANAGEMENT))
-            result += send(convertBase64Command("STATUS", management, authentication), write, read)
+            result += send(convertBase64Command(Command.STATUS.name, management, authentication), write, read)
             // 상품 A 등록
             val registerADrink = mapper.writeValueAsString(RegisterDrink(DrinkName.A, 4000, 4))
-            result += send(convertBase64Command("REGISTER", registerADrink), write, read)
+            result += send(convertBase64Command(Command.REGISTER.name, registerADrink), write, read)
             // 상품 B 등록
             val registerBDrink = mapper.writeValueAsString(RegisterDrink(DrinkName.B, 6000, 4))
-            result += send(convertBase64Command("REGISTER", registerBDrink), write, read)
+            result += send(convertBase64Command(Command.REGISTER.name, registerBDrink), write, read)
             // 운영 상태
             val running = mapper.writeValueAsString(VendorOperation(VendorStatus.RUNNING))
-            result += send(convertBase64Command("STATUS", running, authentication), write, read)
+            result += send(convertBase64Command(Command.STATUS.name, running, authentication), write, read)
             // 프로그램 종료
-            result += send(convertBase64Command("QUIT"), write, read)
+            result += send(convertBase64Command(Command.QUIT.name), write, read)
             println(result)
             write.close()
             read.close()
@@ -57,12 +58,12 @@ class VendorTest {
             for (i in 1..2) {
                 // 음료수 구매
                 val buyADrink = mapper.writeValueAsString(BuyDrink(DrinkName.A, 5000))
-                result += send(convertBase64Command("BUY", buyADrink), write, read)
+                result += send(convertBase64Command(Command.BUY.name, buyADrink), write, read)
                 val buyBDrink = mapper.writeValueAsString(BuyDrink(DrinkName.B, 7000))
-                result += send(convertBase64Command("BUY", buyBDrink), write, read)
+                result += send(convertBase64Command(Command.BUY.name, buyBDrink), write, read)
             }
             // 프로그램 종료
-            result += send(convertBase64Command("QUIT"), write, read)
+            result += send(convertBase64Command(Command.QUIT.name), write, read)
             println(result)
             write.close()
             read.close()
@@ -82,18 +83,18 @@ class VendorTest {
             val authentication = mapper.writeValueAsString(Authentication("test", "test"))
             // 관리 상태
             val management = mapper.writeValueAsString(VendorOperation(VendorStatus.MANAGEMENT))
-            result += send(convertBase64Command("STATUS", management, authentication), write, read)
+            result += send(convertBase64Command(Command.STATUS.name, management, authentication), write, read)
             // 상품 A 수정
             val modifyADrink = mapper.writeValueAsString(ModifyDrink(DrinkName.A, 2000))
-            result += send(convertBase64Command("MODIFY", modifyADrink), write, read)
+            result += send(convertBase64Command(Command.MODIFY.name, modifyADrink), write, read)
             // 상품 B 수정
             val modifyBDrink = mapper.writeValueAsString(ModifyDrink(DrinkName.B, 2000))
-            result += send(convertBase64Command("MODIFY", modifyBDrink), write, read)
+            result += send(convertBase64Command(Command.MODIFY.name, modifyBDrink), write, read)
             // 운영 상태
             val running = mapper.writeValueAsString(VendorOperation(VendorStatus.RUNNING))
-            result += send(convertBase64Command("STATUS", running, authentication), write, read)
+            result += send(convertBase64Command(Command.STATUS.name, running, authentication), write, read)
             // 프로그램 종료
-            result += send(convertBase64Command("QUIT"), write, read)
+            result += send(convertBase64Command(Command.QUIT.name), write, read)
             println(result)
             write.close()
             read.close()
