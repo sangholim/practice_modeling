@@ -1,6 +1,6 @@
 package vendor1.drink.processor
 
 enum class Command {
-    STATUS, REGISTER, MODIFY, SPECIFICATION, BUY, QUIT
+    STATUS, DRINK_REGISTER, DRINK_MODIFY, DRINK_SPECIFICATION, DRINK_BUY, QUIT
 }
 

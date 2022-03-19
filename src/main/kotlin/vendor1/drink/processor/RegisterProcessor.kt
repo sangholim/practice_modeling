@@ -9,7 +9,7 @@ class RegisterProcessor : Processor {
     override fun process(command: String): String? {
         val commands = command.split(" ")
         val validCommand = Command.valueOf(commands[0])
-        if(validCommand != Command.REGISTER) {
+        if(validCommand != Command.DRINK_REGISTER) {
             return null
         }
         val payload = entityBinder<RegisterDrink>(commands[1])
