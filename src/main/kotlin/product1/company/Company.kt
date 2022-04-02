@@ -11,6 +11,11 @@ data class Company (
     val id:String,
 
     /**
+     * 조직명
+     */
+    val name:String,
+
+    /**
      * 조직 이메일
      */
     val email :String,
