@@ -3,22 +3,22 @@ package product1.company
 /**
  * B2B 조직 - (account 역할)
  */
-data class Company (
+data class Company(
 
     /**
      * 고유 번호
      */
-    val id:String,
+    val id: String,
 
     /**
      * 조직명
      */
-    val name:String,
+    val name: String,
 
     /**
      * 조직 이메일
      */
-    val email :String,
+    val email: String,
 
     /**
      * 이메일 인증 여부
