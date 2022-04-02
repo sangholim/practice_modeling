@@ -83,7 +83,7 @@
 + Input expected transactional volume, company size and other qualifying characters
 + Input existing offline account ID to match an online account with an existing offline account
 
-### My Account
+### My Account (Organization)
 + View stored shopping carts and quotes
 + View previous transaction and order history
 + View shipping/tracking numbers from orders

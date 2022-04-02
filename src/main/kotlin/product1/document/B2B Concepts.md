@@ -1,13 +1,14 @@
 ## B2B Concepts
 ### Account Management
 ```
-When selling to organizations, 
-there’s often a need to have multiple layers of accounts. 
+When selling to organizations, there’s often a need to have multiple layers of accounts. 
 There will typically be a “Parent” account for the organization and various levels of “Sub-Accounts” 
 in which company employees can make purchases on behalf of the larger organization.
 ```
 
 ### Inventory Availability Information
+- 재고 회사의 배송일, 재고여부에 따라 상품 구매 결정이 난다.
+- 이 시스템은 고객 유치에 도움을 줄수 있다.
 ```
 Often a buyer’s decision to order from company A vs. 
 company B comes down to who has the inventory and when it can be delivered. 
