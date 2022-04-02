@@ -36,6 +36,16 @@ data class Company(
     val phoneNumberVerified: Boolean,
 
     /**
+     * 인증서
+     */
+    val certificate: String,
+
+    /**
+     * 라이센스
+     */
+    val license: String,
+
+    /**
      * 조직의 주소
      */
     val address: String
