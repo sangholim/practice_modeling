@@ -1,9 +1,9 @@
-package product1.organization
+package product1.company
 
 /**
  * B2B 조직 - (account 역할)
  */
-data class Organization (
+data class Company (
 
     /**
      * 고유 번호
