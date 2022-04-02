@@ -1,4 +1,4 @@
-package product1.company
+package product1.employee
 
 /**
  * B2B 사원 (sub-account)
@@ -52,6 +52,7 @@ data class Employee(
 
     /**
      * 최대 구매량
+     * Company 에서 변경 가능
      */
     val purchaseLimit: Int,
 
