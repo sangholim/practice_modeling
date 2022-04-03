@@ -57,6 +57,11 @@ data class Employee(
     val purchaseLimit: Int,
 
     /**
+     * 조직 서비스 접근 권한
+     */
+    val permissions: List<EmployeePermission>,
+
+    /**
      * 시스템 접근 권한
      */
     val roles: List<String>
