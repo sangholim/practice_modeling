@@ -5,6 +5,7 @@ import java.time.Instant
 /**
  * 조직 결제 관리 클래스
  * 결제 서비스 제공 회사의 승인을 받은 상태여야 한다.
+ * 권한이 있는경우 사원도 생성/수정/제거 가능
  */
 data class CompanyPayment(
 
