@@ -48,7 +48,11 @@ data class Company(
     /**
      * 조직의 주소
      */
-    val address: String
+    val address: String,
 
-    // TODO Balance 잔고
+    /**
+     * 잔고
+     */
+    val balance: Int
+
 )
