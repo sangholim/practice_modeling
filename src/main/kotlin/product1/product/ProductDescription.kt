@@ -1,5 +1,8 @@
 package product1.product
 
+/**
+ * 상품 상세 설명
+ */
 data class ProductDescription(
 
     /**

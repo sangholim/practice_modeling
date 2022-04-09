@@ -2,6 +2,7 @@ package product1.product
 
 /**
  * 선택 가능한 상품 옵션
+ * 물류 서비스와 integration 을 통해 재고 체크 수행
  */
 data class Variant(
 

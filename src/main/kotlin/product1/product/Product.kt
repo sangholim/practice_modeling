@@ -11,7 +11,7 @@ data class Product(
     val id: String,
 
     /**
-     * 조직 번호
+     * 판매자(기업) 번호
      */
     val companyId: String,
 
