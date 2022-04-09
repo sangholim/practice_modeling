@@ -2,7 +2,8 @@ package product1.shipment
 
 /**
  * 지역 배송 설정
- * 지역 배송 기준은 우편번호 범위 기준
+ * 지역 배송 기준 - 우편번호 범위
+ * 판매자(기업) 에서 관리
  */
 data class ResidentialDelivery(
 
