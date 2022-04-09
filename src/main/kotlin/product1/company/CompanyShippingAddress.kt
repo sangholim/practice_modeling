@@ -1,7 +1,9 @@
 package product1.company
 
 /**
- * 조직 배송지
+ * 기업 배송지
+ * 기업 직원이 상품 구매시 받을 배송지
+ * 기업 내에서 관리
  */
 data class CompanyShippingAddress(
 
@@ -11,7 +13,7 @@ data class CompanyShippingAddress(
     val id: String,
 
     /**
-     * 조직 번호
+     * 기업 번호
      */
     val companyId: String,
 
