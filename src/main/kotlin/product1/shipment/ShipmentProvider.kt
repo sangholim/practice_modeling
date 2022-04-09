@@ -1,7 +1,8 @@
 package product1.shipment
 
 /**
- * 조직 배송 업체
+ * 배송 서비스 제공 업체
+ * 마켓 관리자가 관리
  */
 data class ShipmentProvider (
 
@@ -9,11 +10,6 @@ data class ShipmentProvider (
      * 고유 번호
      */
     val id:String,
-
-    /**
-     * 사원 번호
-     */
-    val employeeId: String,
 
     /**
      * 배송지 업체명
