@@ -1,4 +1,4 @@
-package product1.shipment
+package product1.delivery
 
 /**
  * 배송비 상품 조건

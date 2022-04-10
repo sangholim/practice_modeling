@@ -1,4 +1,4 @@
-package product1.shipment
+package product1.delivery
 
 /**
  * 배송비 선결제 설정 (무료 배송비 제외)

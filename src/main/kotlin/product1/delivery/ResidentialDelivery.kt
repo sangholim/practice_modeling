@@ -1,4 +1,4 @@
-package product1.shipment
+package product1.delivery
 
 /**
  * 지역 배송 설정
