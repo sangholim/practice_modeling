@@ -1,22 +1,27 @@
 package product1.shipment
 
 /**
- * 상세 배송비 설정
+ * 배송 상세 설정
  */
-data class DeliveryDetail (
+data class DeliveryDetail(
 
     /**
      * 고유 번호
      */
-    val id :String,
+    val id: String,
 
     /**
-     * 배송비
+     * 상새 배송비 (무료 배송비 제외)
      */
-    val amount: Int,
+    val prices: List<DeliveryPriceDetail>,
 
     /**
-     * 배송비 상품 조건
+     * 배송료 청구 기준
      */
-    val productTerm: DeliveryProductTerm?
+    val billType: DeliveryBillType,
+
+    /**
+     * 배송비 선결제 설정
+     */
+    val paymentType: DeliveryPaymentType
 )
