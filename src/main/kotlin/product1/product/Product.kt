@@ -2,6 +2,7 @@ package product1.product
 
 /**
  * 상품
+ * 배송비는 배송비 정책에 준수한다.
  */
 data class Product(
 
@@ -21,6 +22,11 @@ data class Product(
     val name: String,
 
     /**
+     * 상품 상태
+     */
+    val status: ProductSaleStatus,
+
+    /**
      * 상품 코드
      */
     val code: String,
@@ -31,9 +37,24 @@ data class Product(
     val upc: String,
 
     /**
-     * 기본 가격
+     * 기본 판매 가격
      */
     val price: Int,
+
+    /**
+     * 상품 상세
+     */
+    val description: ProductDescription,
+
+    /**
+     * 진열 상태 노출
+     */
+    val isDisplay: Boolean,
+
+    /**
+     * 판매 상태
+     */
+    val saleStatus: ProductSaleStatus,
 
     /**
      * 상품 옵션 리스트
@@ -41,7 +62,7 @@ data class Product(
     val options: List<ProductOption>,
 
     /**
-     * 상품 상세
+     * 과세율
      */
-    val description: ProductDescription
+    val taxRate: Float
 )
