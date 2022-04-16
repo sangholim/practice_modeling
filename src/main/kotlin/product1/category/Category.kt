@@ -33,8 +33,13 @@ data class Category(
     val depth: Int,
 
     /**
-     * 상위 분류 참조 id
+     * 하위 카테고리 id
      */
-    val children: List<Category>?
+    val subCategoryIds: List<String>?,
+
+    /**
+     * 하위 카테고리들 (조회용)
+     */
+    val subCategories: List<Category>?
 
 )
