@@ -2,6 +2,7 @@ package product1.category
 
 import org.bson.types.ObjectId
 import org.springframework.data.mongodb.core.mapping.Document
+import org.springframework.data.mongodb.core.mapping.MongoId
 
 /**
  * 상품 분류
@@ -13,7 +14,8 @@ data class Category(
     /**
      * 고유 번호
      */
-    val id: ObjectId,
+    @MongoId
+    val id: ObjectId?,
 
     /**
      * 분류명
@@ -39,12 +41,10 @@ data class Category(
     /**
      * 하위 카테고리 id
      */
-    val subCategoryIds: List<String>?,
-
+    val subCategoryIds: List<ObjectId>?,
+) {
     /**
      * 하위 카테고리들 (조회용)
      */
-    @Transient
-    val subCategories: List<Category>?
-
-)
+    val subCategories: List<Category>? = null
+}
