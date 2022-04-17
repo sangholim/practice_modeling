@@ -22,16 +22,25 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation ("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-mustache")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation ("org.springframework.data:spring-data-mongodb:3.3.3")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
     implementation ("org.jetbrains.kotlin:kotlin-stdlib")
+    implementation ("org.testcontainers:testcontainers-bom:1.16.3")
+
     testImplementation ("org.junit.jupiter:junit-jupiter-api:5.7.0")
     testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.7.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    testImplementation ("org.testcontainers:mongodb:1.16.3")
+    testImplementation ("org.testcontainers:testcontainers:1.16.3")
+
+
 }
 
 tasks.register("runVendor") {
