@@ -33,15 +33,15 @@ class CategoryRepositoryTests : AbstractDbIntegrationTests() {
     private fun createCategories() {
         // 1뎁스 카테 고리 생성
         val firstCategory =
-            Category.create("뎁스", listOf(MainDisplayType.FIRST, MainDisplayType.CHILD, MainDisplayType.OTHER), 0)
+            Category.create("뎁스", 0)
 
         val savedFirstCategoryTree = categoryRepository.save(firstCategory).let { category ->
             categoryTreeRepository.save(CategoryTree.create(category))
         }
         // 2뎁스 카테고리 생성
         val secondCategories = listOf(
-            Category.create("2뎁스-1", listOf(MainDisplayType.FIRST, MainDisplayType.CHILD, MainDisplayType.OTHER), 1),
-            Category.create("2뎁스-2", listOf(MainDisplayType.FIRST, MainDisplayType.CHILD, MainDisplayType.OTHER), 1),
+            Category.create("2뎁스-1", 1),
+            Category.create("2뎁스-2", 1),
         )
         val savedSecondCategories = categoryRepository.saveAll(secondCategories).map { category ->
             categoryTreeRepository.save(CategoryTree.create(category, savedFirstCategoryTree.id))
@@ -49,8 +49,8 @@ class CategoryRepositoryTests : AbstractDbIntegrationTests() {
 
         // 3뎁스 카테고리 생성
         val thirdCategories = listOf(
-            Category.create("3뎁스-1", listOf(MainDisplayType.FIRST, MainDisplayType.CHILD, MainDisplayType.OTHER), 2),
-            Category.create("3뎁스-2", listOf(MainDisplayType.FIRST, MainDisplayType.CHILD, MainDisplayType.OTHER), 2),
+            Category.create("3뎁스-1", 2),
+            Category.create("3뎁스-2", 2),
         )
         categoryRepository.saveAll(thirdCategories).map { category ->
             categoryTreeRepository.save(CategoryTree.create(category, savedSecondCategories[0].id))

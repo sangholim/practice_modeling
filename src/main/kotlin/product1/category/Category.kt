@@ -8,8 +8,6 @@ import org.springframework.data.mongodb.core.mapping.MongoId
 
 /**
  * 상품 분류
- * 기본 진열 등록순, 추가 고도화는 나중에
- * 실세로 하위 분류 갯수 정책은 DTO로 관리한다.
  */
 @Document
 data class Category(
@@ -30,11 +28,6 @@ data class Category(
     val isDisplay: Boolean,
 
     /**
-     * 분류 타입
-     */
-    val displayTypes: List<MainDisplayType>,
-
-    /**
      * 분류 깊이
      * 값이 클수록 하위 분류
      */
@@ -49,11 +42,10 @@ data class Category(
     var trees: List<CategoryTree>? = null
 
     companion object {
-        fun create(name: String, displayTypes: List<MainDisplayType>, depth: Int): Category =
+        fun create(name: String, depth: Int): Category =
             Category(
                 name = name,
                 isDisplay = true,
-                displayTypes = displayTypes,
                 depth = depth
             )
     }
