@@ -39,7 +39,7 @@ dependencies {
     testImplementation ("org.junit.jupiter:junit-jupiter-api:5.7.0")
     testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.7.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
     testImplementation ("org.testcontainers:mongodb:1.16.3")
     testImplementation ("org.testcontainers:testcontainers:1.16.3")
 
