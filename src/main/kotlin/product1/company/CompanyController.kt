@@ -1,11 +1,12 @@
 package product1.company
 
+import org.bson.types.ObjectId
 import org.springframework.http.HttpStatus.*
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
-@RequestMapping(value = ["/company"])
+@RequestMapping(value = ["/companies"])
 class CompanyController(
     private val companyService: CompanyService
 ) {
@@ -18,4 +19,13 @@ class CompanyController(
     @ResponseStatus(value = CREATED)
     suspend fun createCompany(@Valid @RequestBody payload: CompanyPayload) =
         companyService.create(payload)
+
+    /**
+     * 기업 조회
+     * @param id 기어 번호
+     */
+    @GetMapping(value = ["/{id}"])
+    @ResponseStatus(value = OK)
+    suspend fun getCompany(@PathVariable id: ObjectId) =
+        companyService.getById(id)
 }

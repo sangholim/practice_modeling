@@ -9,6 +9,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 import product1.company.CompanyController
 import product1.company.CompanyService
+import product1.company.CompanyView
 import product1.fixture.CompanyFixture
 
 @WebFluxTest(CompanyController::class)
@@ -27,18 +28,28 @@ class CompanyControllerTests {
             companyService.create(payload)
         } returns Unit
 
-        webTestClient.post().uri("/company")
+        webTestClient.post().uri("/companies")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(CompanyFixture.createInvalidCompanyPayload())
             .exchange()
             .expectStatus().isBadRequest
 
-        webTestClient.post().uri("/company")
+        webTestClient.post().uri("/companies")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(payload)
             .exchange()
             .expectStatus().isCreated
             .expectBody().isEmpty
+    }
 
+    @Test
+    fun getById() {
+        coEvery {
+            companyService.getById(CompanyFixture.id)
+        } returns CompanyFixture.createCompanyView()
+        webTestClient.get().uri("/companies/${CompanyFixture.id}")
+            .exchange()
+            .expectStatus().isOk
+            .expectBody(CompanyView::class.java)
     }
 }

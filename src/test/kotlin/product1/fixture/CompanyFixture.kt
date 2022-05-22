@@ -3,14 +3,26 @@ package product1.fixture
 import org.bson.types.ObjectId
 import product1.company.Company
 import product1.company.CompanyPayload
+import product1.company.CompanyView
 
 object CompanyFixture {
 
+    val id: ObjectId = ObjectId("507f1f77bcf86cd799439011")
     const val name = "테스트회사"
     const val email = "test@test.com"
     const val phoneNumber = "1112223333"
     const val certificate = "testCertificate"
     const val address = "테스트 동 테스트시"
+
+    fun createCompanyView():CompanyView = CompanyView(
+        id = id,
+        name = name,
+        email = email,
+        phoneNumber = phoneNumber,
+        certificate = certificate,
+        address = address,
+        balance = 0
+    )
 
     fun createInvalidCompanyPayload(): CompanyPayload = CompanyPayload(
         name = "ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ",

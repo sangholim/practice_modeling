@@ -39,6 +39,12 @@ class CompanyRepositoryTests : AbstractDbIntegrationTests() {
     }
 
     @Test
+    fun findById() = runTest {
+        val company = companyRepository.save(CompanyFixture.createCompany())
+        assert(companyRepository.findById(company.id!!)?.id == company.id)
+    }
+
+    @Test
     fun update() = runTest {
         val company = companyRepository.save(CompanyFixture.createCompany())
         val updateCompany = companyRepository.save(company.copy(name = "test123444"))
