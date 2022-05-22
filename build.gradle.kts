@@ -37,6 +37,7 @@ dependencies {
     implementation ("org.jetbrains.kotlin:kotlin-stdlib")
     implementation ("org.testcontainers:testcontainers-bom:1.17.1")
 
+    testImplementation("io.mockk:mockk:1.12.4")
     testImplementation ("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.8.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
