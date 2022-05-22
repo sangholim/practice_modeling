@@ -6,11 +6,19 @@ import product1.company.CompanyPayload
 
 object CompanyFixture {
 
-    const val name = "테스트 회사"
+    const val name = "테스트회사"
     const val email = "test@test.com"
     const val phoneNumber = "1112223333"
     const val certificate = "testCertificate"
     const val address = "테스트 동 테스트시"
+
+    fun createInvalidCompanyPayload(): CompanyPayload = CompanyPayload(
+        name = "ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ",
+        email = "가@가.가",
+        phoneNumber = "가",
+        certificate = "",
+        address = ""
+    )
 
     fun createCompanyPayload(): CompanyPayload = CompanyPayload(
         name = name,
