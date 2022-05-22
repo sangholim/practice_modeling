@@ -1,11 +1,10 @@
 package product1.category
 
+import kotlinx.coroutines.flow.Flow
 import org.bson.types.ObjectId
-import org.springframework.data.mongodb.repository.Aggregation
-import org.springframework.data.mongodb.repository.MongoRepository
-import org.springframework.data.mongodb.repository.Query
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 
-interface CategoryRepository: MongoRepository<Category, ObjectId> {
+interface CategoryRepository: CoroutineCrudRepository<Category, ObjectId> {
 
-    fun findByDepth(depth: Int): List<Category>?
+    fun findByDepth(depth: Int): Flow<Category>
 }

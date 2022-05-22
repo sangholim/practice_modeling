@@ -1,11 +1,14 @@
 package product1.base
 
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.MongoDBContainer
+import product1.config.MongoConfig
 
 @DataMongoTest
+@ContextConfiguration(classes = [MongoConfig::class])
 abstract class AbstractDbIntegrationTests {
 
     companion object {

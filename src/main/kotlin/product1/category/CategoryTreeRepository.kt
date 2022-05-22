@@ -1,6 +1,6 @@
 package product1.category
 
 import org.bson.types.ObjectId
-import org.springframework.data.mongodb.repository.MongoRepository
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 
-interface CategoryTreeRepository: MongoRepository<CategoryTree, ObjectId>
+interface CategoryTreeRepository: CoroutineCrudRepository<CategoryTree, ObjectId>

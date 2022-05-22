@@ -1,11 +1,17 @@
 package product1.repository
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import product1.base.AbstractDbIntegrationTests
 import product1.category.*
 
+@ExperimentalCoroutinesApi
 class CategoryRepositoryTests : AbstractDbIntegrationTests() {
 
     @Autowired
@@ -15,22 +21,22 @@ class CategoryRepositoryTests : AbstractDbIntegrationTests() {
     private lateinit var categoryTreeRepository: CategoryTreeRepository
 
     @BeforeEach
-    fun setUp() {
+    fun setUp() = runTest {
         categoryRepository.deleteAll()
         categoryTreeRepository.deleteAll()
     }
 
     @Test
-    fun categoriesTest() {
+    fun categoriesTest()= runTest {
         createCategories()
-        val trees = categoryRepository.findByDepth(0)!!.flatMap { it.trees!! }
-        assert(trees.size == 5)
+        val trees = categoryRepository.findByDepth(0).map { it.trees!! }
+        assert(trees.count() == 5)
     }
 
     /**
      * 계층형으로 상품 분류 리스트 가져오기
      */
-    private fun createCategories() {
+    private suspend fun createCategories() {
         // 1뎁스 카테 고리 생성
         val firstCategory =
             Category.create("뎁스", 0)
@@ -45,7 +51,7 @@ class CategoryRepositoryTests : AbstractDbIntegrationTests() {
         )
         val savedSecondCategories = categoryRepository.saveAll(secondCategories).map { category ->
             categoryTreeRepository.save(CategoryTree.create(category, savedFirstCategoryTree.id))
-        }
+        }.toList()
 
         // 3뎁스 카테고리 생성
         val thirdCategories = listOf(
