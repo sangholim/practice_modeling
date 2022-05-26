@@ -24,7 +24,9 @@ repositories {
 
 dependencies {
     kapt("org.springframework.boot:spring-boot-configuration-processor")
-    implementation ("org.springframework.boot:spring-boot-starter-amqp")
+    //implementation ("org.springframework.boot:spring-boot-starter-amqp")
+    implementation("org.springframework.cloud:spring-cloud-starter-stream-rabbit:3.2.3")
+    implementation("org.springframework.cloud:spring-cloud-stream-binder-rabbit:3.2.3")
     implementation ("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
     implementation("org.springframework.boot:spring-boot-starter-mustache")
     implementation("org.springframework.boot:spring-boot-starter-webflux")

@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
 import product1.company.CompanyMessage
 
-@Profile(value = ["amqp"])
-@Configuration
+//@Profile(value = ["amqp"])
+//@Configuration
 class AMQPConfig {
 
     private val topicExchange = "spring-boot-exchange"
