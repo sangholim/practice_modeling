@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 
 @Profile(value = ["stream"])
 @Service
@@ -13,7 +14,7 @@ class CompanyChannel(
 ) {
 
     @Bean
-    fun consumeCompany() = { stream: Flux<CompanyPayload> ->
+    fun consumeCompany(): (Flux<CompanyPayload>) -> Mono<Void> = { stream ->
         stream.concatMap { payload ->
             mono {
                 val result = company.create2(payload)
@@ -21,4 +22,5 @@ class CompanyChannel(
             }
         }.then()
     }
+
 }
