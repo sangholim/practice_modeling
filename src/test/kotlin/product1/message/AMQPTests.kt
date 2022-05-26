@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.context.ActiveProfiles
 import product1.base.AbstractIntegrationTests
 import product1.company.CompanyRepository
 import product1.fixture.CompanyFixture
@@ -21,7 +22,8 @@ import product1.fixture.CompanyFixture
  */
 @Disabled
 @ExperimentalCoroutinesApi
-class CompanyMessageTests: AbstractIntegrationTests() {
+@ActiveProfiles(value = ["local","amqp"])
+class AMQPTests: AbstractIntegrationTests() {
 
     private val topicExchange = "spring-boot-exchange"
 

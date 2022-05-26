@@ -9,10 +9,12 @@ import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import product1.company.CompanyMessage
 
+@Profile(value = ["amqp"])
 @Configuration
-class QueueConfig {
+class AMQPConfig {
 
     private val topicExchange = "spring-boot-exchange"
 
