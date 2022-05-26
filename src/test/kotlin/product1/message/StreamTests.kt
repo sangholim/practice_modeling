@@ -1,7 +1,6 @@
 package product1.message
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.springframework.amqp.rabbit.core.RabbitTemplate
@@ -30,6 +29,5 @@ class StreamTests: AbstractIntegrationTests() {
     fun test() = runTest {
         rabbitTemplate.messageConverter = Jackson2JsonMessageConverter()
         rabbitTemplate.convertAndSend("company", "company", CompanyFixture.createCompanyPayload())
-        println(companyRepository.findAll().count())
     }
 }
