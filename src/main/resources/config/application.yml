@@ -3,13 +3,17 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017/product
   cloud:
-    #function: receivePayload
+    function:
+      definition: consumeCompany
     stream:
       bindings:
-        output:
-          group: company-queue
+        consumeCompany-in-0:
+          binder: rabbit
           destination: company
-        input:
           group: company-queue
-          destination: company
-
+          durableSubscription: true
+  rabbitmq:
+    host: localhost # rabbitMQ host
+    port: 5672 # default port
+    username: guest # default username
+    password: guest # default password

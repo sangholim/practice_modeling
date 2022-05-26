@@ -8,7 +8,7 @@ import org.testcontainers.containers.RabbitMQContainer
 
 @SpringBootTest
 class AbstractIntegrationTests {
-    /*
+
     companion object {
         val mongoDB = MongoDBContainer("mongo:4.0").apply {
             this.start()
@@ -25,5 +25,5 @@ class AbstractIntegrationTests {
             registry.add("spring.rabbitmq.port") { rabbit.getMappedPort(5672) }
         }
     }
-     */
+
 }
