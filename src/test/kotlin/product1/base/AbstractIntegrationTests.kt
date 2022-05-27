@@ -13,7 +13,10 @@ class AbstractIntegrationTests {
         val mongoDB = MongoDBContainer("mongo:4.0").apply {
             this.start()
         }
-        val rabbit = RabbitMQContainer("rabbitmq:3-management").withExposedPorts(5672, 15672).apply {
+        val rabbit = RabbitMQContainer("rabbitmq:3-management")
+            .withUser("admin","admin")
+            .withPermission("/", "admin", ".*", ".*", ".*")
+            .withExposedPorts(5672, 15672).apply {
             this.start()
         }
 

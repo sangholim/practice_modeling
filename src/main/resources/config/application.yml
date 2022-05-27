@@ -13,7 +13,7 @@ spring:
           group: company-queue
           durableSubscription: true
   rabbitmq:
-    host: localhost # rabbitMQ host
-    port: 5672 # default port
-    username: guest # default username
-    password: guest # default password
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
