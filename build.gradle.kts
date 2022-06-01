@@ -24,8 +24,8 @@ repositories {
 
 dependencies {
     kapt("org.springframework.boot:spring-boot-configuration-processor")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation ("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
+    implementation("org.springframework.cloud:spring-cloud-starter-stream-rabbit:3.2.3")
     implementation("org.springframework.boot:spring-boot-starter-mustache")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -45,6 +45,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
     testImplementation ("org.testcontainers:mongodb:1.17.1")
+    testImplementation ("org.testcontainers:rabbitmq:1.17.1")
     testImplementation ("org.testcontainers:testcontainers:1.16.3")
 
 

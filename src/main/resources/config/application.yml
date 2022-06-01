@@ -1,0 +1,29 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/product
+  cloud:
+    function:
+      definition: consume|produce|route
+    stream:
+      bindings:
+        consume-in-0:
+          binder: rabbit
+          ## destination = rabbitMQ exchange 와 같다
+          destination: user-destination
+          ## group = rabbitMQ queue 와 같다
+          group: user-queue
+        produce-out-0:
+          binder: rabbit
+          ## destination = rabbitMQ exchange 와 같다
+          destination: user-destination
+        route-in-0:
+          binder: rabbit
+          ## destination = rabbitMQ exchange 와 같다
+          destination: route-destination
+          ## group = rabbitMQ queue 와 같다
+          group: route-queue
+        route-out-0:
+          binder: rabbit
+          ## destination = rabbitMQ exchange 와 같다
+          destination: user-destination
