@@ -60,12 +60,6 @@ data class Employee(
     val password: String,
 
     /**
-     * 최대 구매량
-     * Company 에서 변경 가능
-     */
-    val purchaseLimit: Int,
-
-    /**
      * 조직 서비스 접근 권한
      */
     val permissions: List<EmployeePermission>,
