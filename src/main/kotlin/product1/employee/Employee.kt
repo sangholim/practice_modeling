@@ -5,6 +5,7 @@ import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.MongoId
+import product1.config.Constants
 import java.time.Instant
 
 /**
@@ -22,7 +23,7 @@ data class Employee(
     /**
      * 회사 번호
      */
-    val companyId: String,
+    val companyId: ObjectId,
 
     /**
      * 사원명
@@ -80,4 +81,19 @@ data class Employee(
      */
     @LastModifiedDate
     val modifiedAt: Instant? = null
-)
+) {
+    companion object {
+        fun create(companyId: ObjectId, payload: EmployeePayload) = Employee(
+            companyId = companyId,
+            name = payload.name,
+            position = payload.position,
+            email = payload.email,
+            emailVerified = true,
+            phoneNumber = payload.phoneNumber,
+            phoneNumberVerified = true,
+            password = payload.phoneNumber,
+            permissions = listOf(EmployeePermission.PAYMENT, EmployeePermission.SHIPPING_ADDRESS),
+            roles = listOf(Constants.USER)
+        )
+    }
+}

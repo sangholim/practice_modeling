@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
 @EnableReactiveMongoRepositories(
     value = [
         "product1.company",
+        "product1.employee",
         "product1.category",
     ]
 )
