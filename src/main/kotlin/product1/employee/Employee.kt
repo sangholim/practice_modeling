@@ -1,14 +1,23 @@
 package product1.employee
 
+import org.bson.types.ObjectId
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.mongodb.core.mapping.Document
+import org.springframework.data.mongodb.core.mapping.MongoId
+import java.time.Instant
+
 /**
  * B2B 사원 (sub-account)
  */
+@Document
 data class Employee(
 
     /**
      * 고유 번호
      */
-    val id: String,
+    @MongoId
+    val id: ObjectId? = null,
 
     /**
      * 회사 번호
@@ -64,5 +73,17 @@ data class Employee(
     /**
      * 시스템 접근 권한
      */
-    val roles: List<String>
+    val roles: List<String>,
+
+    /**
+     * 생성일
+     */
+    @CreatedDate
+    val createAt: Instant? = null,
+
+    /**
+     * 수정일
+     */
+    @LastModifiedDate
+    val modifiedAt: Instant? = null
 )

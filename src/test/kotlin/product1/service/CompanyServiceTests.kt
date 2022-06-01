@@ -54,6 +54,10 @@ class CompanyServiceTests {
         } returns false
 
         coEvery {
+            companyRepository.existsByName(CompanyFixture.name)
+        } returns false
+
+        coEvery {
             companyRepository.save(CompanyFixture.createCompany())
         } returns CompanyFixture.createCompany(ObjectId.get())
 

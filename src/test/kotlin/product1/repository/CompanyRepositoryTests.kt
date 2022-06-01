@@ -63,4 +63,10 @@ class CompanyRepositoryTests : AbstractDbIntegrationTests() {
         save()
         assert(companyRepository.existsByCertificate(CompanyFixture.certificate))
     }
+
+    @Test
+    fun existsByName() = runTest {
+        save()
+        assert(companyRepository.existsByName(CompanyFixture.name))
+    }
 }

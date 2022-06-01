@@ -22,7 +22,7 @@ class CompanyController(
 
     /**
      * 기업 조회
-     * @param id 기어 번호
+     * @param id 기업 번호
      */
     @GetMapping(value = ["/{id}"])
     @ResponseStatus(value = OK)
