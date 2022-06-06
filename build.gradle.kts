@@ -24,6 +24,7 @@ repositories {
 
 dependencies {
     kapt("org.springframework.boot:spring-boot-configuration-processor")
+    implementation("io.projectreactor.rabbitmq:reactor-rabbitmq:1.5.4")
     implementation ("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
     implementation("org.springframework.cloud:spring-cloud-starter-stream-rabbit:3.2.3")
     implementation("org.springframework.boot:spring-boot-starter-mustache")
@@ -47,7 +48,14 @@ dependencies {
     testImplementation ("org.testcontainers:mongodb:1.17.1")
     testImplementation ("org.testcontainers:rabbitmq:1.17.1")
     testImplementation ("org.testcontainers:testcontainers:1.16.3")
-
+    testImplementation("org.springframework.cloud:spring-cloud-stream:3.2.3") {
+        artifact {
+            name = "spring-cloud-stream"
+            extension = "jar"
+            type ="test-jar"
+            classifier = "test-binder"
+        }
+    }
 
 }
 
