@@ -6,11 +6,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import product1.base.AbstractDbIntegrationTests
 import product1.category.*
 
+@Disabled
 @ExperimentalCoroutinesApi
 class CategoryRepositoryTests : AbstractDbIntegrationTests() {
 

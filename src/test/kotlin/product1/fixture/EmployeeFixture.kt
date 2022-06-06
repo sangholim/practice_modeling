@@ -1,7 +1,6 @@
 package product1.fixture
 
 import org.bson.types.ObjectId
-import product1.employee.Employee
 import product1.employee.EmployeePayload
 
 object EmployeeFixture {
@@ -24,5 +23,14 @@ object EmployeeFixture {
         email = EMAIL,
         phoneNumber = PHONE_NUMBER,
         password = PASSWORD
+    )
+
+
+    fun createInvalidEmployeePayload() = EmployeePayload(
+        name = "0",
+        position = "0",
+        email = "a",
+        phoneNumber = "a",
+        password = "aaaaaaaaaaaaaa"
     )
 }
