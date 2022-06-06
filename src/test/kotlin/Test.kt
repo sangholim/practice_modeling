@@ -1,4 +1,5 @@
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import vendor1.Command
 import vendor1.account.dto.Authentication
@@ -15,6 +16,7 @@ import java.util.*
 
 val mapper = jacksonObjectMapper()
 
+@Disabled
 class VendorTest {
 
     @Test
