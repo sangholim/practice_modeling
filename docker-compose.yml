@@ -15,6 +15,6 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-    environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: admin
+    volumes:
+      - "./docker/rabbitMQ/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro"
+      - "./docker/rabbitMQ/definitions.json:/etc/rabbitmq/definitions.json:ro"

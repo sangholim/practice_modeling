@@ -1,0 +1,78 @@
+{
+  "users": [
+    {
+      "name": "admin",
+      "password": "admin",
+      "tags": "administrator"
+    },
+    {
+      "name": "client",
+      "password": "client",
+      "tags": ""
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "client",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "admin",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "parameters": [],
+  "policies": [
+    {
+      "vhost": "/",
+      "name": "DLX",
+      "pattern": ".*",
+      "apply-to": "queues",
+      "definition": {
+        "dead-letter-exchange": "dead_letter"
+      },
+      "priority": 0
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "product",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "queues": [
+    {
+      "name": "product.account",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "product",
+      "vhost": "/",
+      "destination": "product.account",
+      "destination_type": "queue",
+      "routing_key": "product.account",
+      "arguments": {}
+    }
+  ]
+}
