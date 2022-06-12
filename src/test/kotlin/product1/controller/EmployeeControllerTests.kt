@@ -22,7 +22,7 @@ class EmployeeControllerTests {
     lateinit var employeeService: EmployeeService
 
     @Test
-    fun createCompany() {
+    fun createEmployee() {
         val companyId = CompanyFixture.id
         val payload = EmployeeFixture.createEmployeePayload()
         coEvery {
