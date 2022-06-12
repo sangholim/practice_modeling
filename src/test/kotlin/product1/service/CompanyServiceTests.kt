@@ -61,6 +61,6 @@ class CompanyServiceTests {
             companyRepository.save(CompanyFixture.createCompany())
         } returns CompanyFixture.createCompany(ObjectId.get())
 
-        companyService.create(payload)
+        companyService.createCompany(payload)
     }
 }

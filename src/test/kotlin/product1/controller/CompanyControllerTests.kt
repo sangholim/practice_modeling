@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 import product1.company.CompanyController
+import product1.company.CompanyFacadeService
 import product1.company.CompanyService
 import product1.company.CompanyView
 import product1.fixture.CompanyFixture
@@ -19,13 +20,16 @@ class CompanyControllerTests {
     private lateinit var webTestClient: WebTestClient
 
     @MockkBean
+    lateinit var companyFacadeService: CompanyFacadeService
+
+    @MockkBean
     lateinit var companyService: CompanyService
 
     @Test
     fun createCompany() {
         val payload = CompanyFixture.createCompanyPayload()
         coEvery {
-            companyService.create(payload)
+            companyFacadeService.createCompany(payload)
         } returns Unit
 
         webTestClient.post().uri("/companies")

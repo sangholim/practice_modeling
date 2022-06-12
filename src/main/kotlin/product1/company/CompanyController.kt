@@ -8,17 +8,18 @@ import javax.validation.Valid
 @RestController
 @RequestMapping(value = ["/companies"])
 class CompanyController(
+    private val companyFacadeService: CompanyFacadeService,
     private val companyService: CompanyService
 ) {
 
     /**
-     * 기업 생성
+     * 기업 생성후, 관리자 생성 
      * @param payload 기업 생성 필드 데이터
      */
     @PostMapping
     @ResponseStatus(value = CREATED)
     suspend fun createCompany(@Valid @RequestBody payload: CompanyPayload) =
-        companyService.create(payload)
+        companyFacadeService.createCompany(payload)
 
     /**
      * 기업 조회
