@@ -21,6 +21,13 @@ object ShippingAddressFixture {
         line2 = ""
     )
 
+    fun createInvalidRequiredParams() = ShippingAddressPayload(
+        name = RandomStringUtils.randomAlphabetic(30),
+        firstRecipient = RandomStringUtils.randomAlphabetic(30),
+        firstPhoneNumber = RandomStringUtils.randomNumeric(30),
+        zipCode = RandomStringUtils.randomNumeric(30),
+        line1 = ""
+    )
 
     fun createPayload() = ShippingAddressPayload(
         name = RandomStringUtils.randomAlphabetic(20),

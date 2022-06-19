@@ -33,13 +33,14 @@ class EmployeeControllerTests {
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(EmployeeFixture.createInvalidEmployeePayload())
             .exchange()
-            .expectStatus().isBadRequest
+            .expectStatus().is5xxServerError
 
         webTestClient.post().uri("/companies/$companyId/employees")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(EmployeeFixture.createInvalidEmployeePayload())
             .exchange()
             .expectStatus().isBadRequest
+            .expectBody().jsonPath("$.fields.length()").isEqualTo(5)
 
         webTestClient.post().uri("/companies/$companyId/employees")
             .contentType(MediaType.APPLICATION_JSON)

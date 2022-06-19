@@ -51,6 +51,16 @@ class ShippingAddressControllerTests {
             .bodyValue(ShippingAddressFixture.createInvalidParams())
             .exchange()
             .expectStatus().isBadRequest
+            .expectBody()
+            .jsonPath("$.fields.length()").isEqualTo(7)
+
+        webTestClient.post()
+            .uri("/companies/${companyId}/shipping-addresses")
+            .bodyValue(ShippingAddressFixture.createInvalidRequiredParams())
+            .exchange()
+            .expectStatus().isBadRequest
+            .expectBody()
+            .jsonPath("$.fields.length()").isEqualTo(5)
 
         webTestClient.post()
             .uri("/companies/${companyId}/shipping-addresses")
@@ -75,6 +85,16 @@ class ShippingAddressControllerTests {
             .bodyValue(ShippingAddressFixture.createInvalidParams())
             .exchange()
             .expectStatus().isBadRequest
+            .expectBody()
+            .jsonPath("$.fields.length()").isEqualTo(7)
+
+        webTestClient.put()
+            .uri("/companies/${CompanyFixture.id}/shipping-addresses/$id")
+            .bodyValue(ShippingAddressFixture.createInvalidRequiredParams())
+            .exchange()
+            .expectStatus().isBadRequest
+            .expectBody()
+            .jsonPath("$.fields.length()").isEqualTo(5)
 
         webTestClient.put()
             .uri("/companies/${CompanyFixture.id}/shipping-addresses/$id")
