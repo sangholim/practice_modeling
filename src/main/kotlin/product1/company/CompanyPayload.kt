@@ -32,12 +32,12 @@ data class CompanyPayload (
     /**
      * 인증서
      */
-    @field:NotBlank(message = "올바르지 않은 형십입니다")
+    @field:NotBlank(message = "올바르지 않은 형식입니다")
     val certificate: String,
 
     /**
      * 조직의 주소
      */
-    @field:NotBlank(message = "올바르지 않은 형십입니다")
+    @field:NotBlank(message = "올바르지 않은 형식입니다")
     val address: String,
 ): java.io.Serializable
