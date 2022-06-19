@@ -44,7 +44,7 @@ data class ShippingAddress(
     /**
      * 전화번호2
      */
-    val secondPhoneNUmber: String? = null,
+    val secondPhoneNumber: String? = null,
 
     /**
      * 우편번호
@@ -83,7 +83,7 @@ data class ShippingAddress(
         firstRecipient = payload.firstRecipient,
         secondRecipient = payload.secondRecipient,
         firstPhoneNumber = payload.firstPhoneNumber,
-        secondPhoneNUmber = payload.secondPhoneNumber,
+        secondPhoneNumber = payload.secondPhoneNumber,
         zipCode = payload.zipCode,
         line1 = payload.line1,
         line2 = payload.line2
@@ -103,7 +103,7 @@ data class ShippingAddress(
                 firstRecipient = payload.firstRecipient,
                 secondRecipient = payload.secondRecipient,
                 firstPhoneNumber = payload.firstPhoneNumber,
-                secondPhoneNUmber = payload.secondPhoneNumber,
+                secondPhoneNumber = payload.secondPhoneNumber,
                 zipCode = payload.zipCode,
                 line1 = payload.line1,
                 line2 = payload.line2

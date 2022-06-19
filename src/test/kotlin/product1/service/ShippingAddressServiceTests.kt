@@ -74,10 +74,9 @@ class ShippingAddressServiceTests {
     fun delete() = runTest {
         val id = ShippingAddressFixture.id
         val companyId = CompanyFixture.id
-        val original = ShippingAddress.create(companyId, ShippingAddressFixture.createPayload()).copy(id = id)
         coEvery {
             shippingAddressRepository.findById(id)
-        } returns original
+        } returns ShippingAddressFixture.createShippingAddress(companyId).copy(id = id)
 
         coEvery {
             shippingAddressRepository.deleteById(id)
@@ -91,7 +90,7 @@ class ShippingAddressServiceTests {
         val companyId = CompanyFixture.id
         coEvery {
             shippingAddressRepository.findByCompanyId(companyId)
-        } returns flowOf(ShippingAddress.create(companyId, ShippingAddressFixture.createPayload()))
+        } returns flowOf(ShippingAddressFixture.createShippingAddress(companyId))
 
         val result = shippingAddressService.getShippingAddresses(companyId)
         assert(result.count { it.companyId == companyId } > 0)
