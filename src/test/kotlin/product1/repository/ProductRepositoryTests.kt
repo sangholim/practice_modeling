@@ -10,7 +10,7 @@ import product1.base.AbstractDbIntegrationTests
 import product1.fixture.CompanyFixture
 import product1.fixture.ProductFixture
 import product1.product.domain.Product
-import product1.product.repository.ProductRepository
+import product1.product.ProductRepository
 
 @ExperimentalCoroutinesApi
 class ProductRepositoryTests : AbstractDbIntegrationTests() {

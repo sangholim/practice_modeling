@@ -1,3 +1,12 @@
 spring:
   config:
     import: file:src/main/resources/config/application.yml
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              ReactiveMongoTemplate: DEBUG

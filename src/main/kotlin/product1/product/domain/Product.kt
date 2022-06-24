@@ -3,9 +3,7 @@ package product1.product.domain
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
-import org.springframework.data.annotation.ReadOnlyProperty
 import org.springframework.data.mongodb.core.mapping.Document
-import org.springframework.data.mongodb.core.mapping.DocumentReference
 import org.springframework.data.mongodb.core.mapping.MongoId
 import product1.product.dto.ProductPayload
 import java.time.Instant
@@ -50,18 +48,14 @@ data class Product(
     val price: Int,
 
     /**
-     * 상품 상세
+     * 상품 설명
      */
-    @ReadOnlyProperty
-    @DocumentReference
-    val description: ProductDescription? = null,
+    val description: ProductDescription,
 
     /**
-     * 상풉 옵션
+     * 상품 옵션
      */
-    @ReadOnlyProperty
-    @DocumentReference
-    val options: List<ProductOption>? = null,
+    val options: List<ProductOption>,
 
     /**
      * 생성일
@@ -81,7 +75,9 @@ data class Product(
             status = ProductStatus.READY,
             name = payload.name,
             code = UUID.randomUUID().toString(),
-            price = payload.price
+            price = payload.price,
+            description = ProductDescription.create(payload.description),
+            options = payload.options.map (ProductOption::create)
         )
     }
 }

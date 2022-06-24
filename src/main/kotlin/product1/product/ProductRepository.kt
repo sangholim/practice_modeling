@@ -1,4 +1,4 @@
-package product1.product.repository
+package product1.product
 
 import org.bson.types.ObjectId
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
