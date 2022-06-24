@@ -1,11 +1,14 @@
 package product1.fixture
 
+import org.bson.types.ObjectId
 import org.testcontainers.shaded.org.apache.commons.lang.RandomStringUtils
 import product1.product.domain.ProductOptionType
 import product1.product.dto.ProductPayload
 import kotlin.random.Random
 
 object ProductFixture {
+
+    val ID = ObjectId.get()
 
     fun createPayload() = ProductPayload(
         name = RandomStringUtils.randomAlphabetic(10),
