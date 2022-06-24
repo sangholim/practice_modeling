@@ -1,4 +1,4 @@
-package product1.product
+package product1.product.domain
 
 /**
  * 상품 옵션 타입

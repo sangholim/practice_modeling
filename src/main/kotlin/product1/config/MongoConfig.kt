@@ -18,6 +18,7 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
         "product1.employee",
         "product1.category",
         "product1.shippingaddress",
+        "product1.product",
     ]
 )
 @EnableReactiveMongoAuditing

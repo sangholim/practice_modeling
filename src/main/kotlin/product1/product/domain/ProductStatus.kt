@@ -1,9 +1,9 @@
-package product1.product
+package product1.product.domain
 
 /**
  * 상품 상태
  */
-enum class ProductSaleStatus {
+enum class ProductStatus {
 
     /**
      * 상품 등록시 대기
