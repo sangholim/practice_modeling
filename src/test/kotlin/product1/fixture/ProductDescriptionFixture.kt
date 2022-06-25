@@ -1,12 +1,24 @@
 package product1.fixture
 
 import org.testcontainers.shaded.org.apache.commons.lang.RandomStringUtils
-import product1.product.dto.ProductDescriptionPayload
+import product1.product.domain.ProductDescription
 
 object ProductDescriptionFixture {
 
-    fun createPayload() = ProductDescriptionPayload(
-        images = listOf(RandomStringUtils.randomAlphabetic(10), RandomStringUtils.randomAlphabetic(10)),
-        contents = listOf(RandomStringUtils.randomAlphabetic(10), RandomStringUtils.randomAlphabetic(10)),
+    fun create() = ProductDescription(
+        images = listOf(
+            "main-${RandomStringUtils.randomAlphabetic(5)}",
+            RandomStringUtils.randomAlphabetic(5),
+            RandomStringUtils.randomAlphabetic(5),
+            RandomStringUtils.randomAlphabetic(5),
+            RandomStringUtils.randomAlphabetic(5)
+        ),
+        contents = listOf(
+            "main-${RandomStringUtils.randomAlphabetic(5)}",
+            RandomStringUtils.randomAlphabetic(5),
+            RandomStringUtils.randomAlphabetic(5),
+            RandomStringUtils.randomAlphabetic(5),
+            RandomStringUtils.randomAlphabetic(5)
+        )
     )
 }

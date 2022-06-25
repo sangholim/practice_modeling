@@ -1,8 +1,5 @@
 package product1.product.domain
 
-import product1.product.dto.ProductOptionPayload
-import java.util.*
-
 /**
  * 상품 옵션
  */
@@ -14,26 +11,23 @@ data class ProductOption(
     val type: ProductOptionType,
 
     /**
-     * 상품 옵션 코드
+     * 옵션명
+     * 추가 옵션인 경우: 추가옵션 텍스트 고정
      */
-    val code: String,
+    val name: String,
 
     /**
-     * 상품 옵션 변경값 리스트
+     * 옵션값
      */
-    val variants: List<Variant>? = null,
+    val value: String,
+
+    /**
+     * 옵션 코드
+     */
+    val code: String,
 
     /**
      * 상품 옵션 가격
      */
     val price: Int
-) {
-    companion object {
-        fun create(payload: ProductOptionPayload) = ProductOption(
-            type = payload.type,
-            code = UUID.randomUUID().toString(),
-            price = payload.price,
-            variants = payload.variants?.map (Variant::create)
-        )
-    }
-}
+)

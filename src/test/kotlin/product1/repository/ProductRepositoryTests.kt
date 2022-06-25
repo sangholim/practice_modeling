@@ -25,25 +25,13 @@ class ProductRepositoryTests : AbstractDbIntegrationTests() {
 
     @Test
     fun save() = runTest {
-        val product = save(CompanyFixture.id)
-        assert(product.id != null && product.description == null && product.options == null)
+        val companyId = CompanyFixture.id
+        val product = save(companyId)
+        assert(product.id != null)
     }
 
-    @Test
-    fun findById() = runTest {
-        val id = save(CompanyFixture.id).id!!
-        assert(productRepository.findById(id) != null)
+    private suspend fun save(companyId: ObjectId): Product {
+        val payload = ProductFixture.createPayload()
+        return productRepository.save(Product.create(companyId, payload))
     }
-
-    @Test
-    fun delete() = runTest {
-        val id = save(CompanyFixture.id).id!!
-        productRepository.deleteById(id)
-        assert(productRepository.findById(id) == null)
-    }
-
-    private suspend fun save(companyId: ObjectId): Product = productRepository.save(
-        Product.create(companyId, ProductFixture.createPayload())
-    )
-
 }

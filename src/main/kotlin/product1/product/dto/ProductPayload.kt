@@ -1,5 +1,8 @@
 package product1.product.dto
 
+import product1.product.domain.ProductDescription
+import product1.product.domain.ProductOption
+
 /**
  * 상품 요청 필드
  */
@@ -15,9 +18,10 @@ data class ProductPayload(
     /**
      * 상품 설명
      */
-    val description: ProductDescriptionPayload,
+    val description: ProductDescription,
+
     /**
      * 상품 옵션
      */
-    val options: List<ProductOptionPayload>
+    val options: List<ProductOption>
 )

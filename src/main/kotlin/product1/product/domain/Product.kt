@@ -72,12 +72,12 @@ data class Product(
     companion object {
         fun create(companyId: ObjectId, payload: ProductPayload) = Product(
             companyId = companyId,
-            status = ProductStatus.READY,
             name = payload.name,
+            status = ProductStatus.READY,
             code = UUID.randomUUID().toString(),
             price = payload.price,
-            description = ProductDescription.create(payload.description),
-            options = payload.options.map (ProductOption::create)
+            description = payload.description,
+            options = payload.options
         )
     }
 }
