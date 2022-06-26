@@ -10,6 +10,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import product1.product.fixture.ProductFixture
 import product1.product.ProductController
 import product1.product.ProductService
+import product1.product.dto.ProductSummaryView
 import product1.product.dto.ProductView
 
 @WebFluxTest(ProductController::class)
@@ -33,7 +34,7 @@ class ProductControllerTests {
             .uri("/products")
             .exchange()
             .expectStatus().isOk
-            .expectBodyList(ProductView::class.java)
+            .expectBodyList(ProductSummaryView::class.java)
     }
 
     @Test

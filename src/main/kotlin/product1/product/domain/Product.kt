@@ -58,6 +58,11 @@ data class Product(
     val options: List<ProductOption>,
 
     /**
+     * 추가 상품
+     */
+    val extras: List<ProductOption>?,
+
+    /**
      * 생성일
      */
     @CreatedDate
@@ -77,7 +82,8 @@ data class Product(
             code = UUID.randomUUID().toString(),
             price = payload.price,
             description = payload.description,
-            options = payload.options
+            options = payload.options,
+            extras = payload.extras
         )
     }
 }

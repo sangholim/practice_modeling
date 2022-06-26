@@ -12,7 +12,7 @@ object ProductFixture {
 
     fun createProducts(): List<Product> {
         val list = mutableListOf<Product>()
-        for(i in 1..16) {
+        for (i in 1..16) {
             val payload = createPayload()
             val product = Product.create(COMPANY_ID, payload).copy(id = ObjectId.get())
             list.add(product)
@@ -21,9 +21,10 @@ object ProductFixture {
     }
 
     fun createPayload() = ProductPayload(
-        name =TestDataLoader.generateAlphabet(10),
+        name = TestDataLoader.generateAlphabet(10),
         price = Random.nextInt(100, 110) * 100,
         description = ProductDescriptionFixture.create(),
-        options = ProductOptionFixture.createOptions()
+        options = ProductOptionFixture.createOptions(),
+        extras = ProductOptionFixture.createExtras()
     )
 }

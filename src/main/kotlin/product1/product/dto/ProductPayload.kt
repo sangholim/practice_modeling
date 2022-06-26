@@ -23,5 +23,10 @@ data class ProductPayload(
     /**
      * 상품 옵션
      */
-    val options: List<ProductOption>
+    val options: List<ProductOption>,
+
+    /**
+     * 상품 추가
+     */
+    val extras: List<ProductOption>?
 )

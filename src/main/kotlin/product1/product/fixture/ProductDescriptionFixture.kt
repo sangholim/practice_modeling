@@ -7,18 +7,18 @@ object ProductDescriptionFixture {
 
     fun create() = ProductDescription(
         images = listOf(
-            "main-${TestDataLoader.generateAlphabet(5)}",
-            TestDataLoader.generateAlphabet(5),
-            TestDataLoader.generateAlphabet(5),
-            TestDataLoader.generateAlphabet(5),
-            TestDataLoader.generateAlphabet(5)
+            "http://main-image-${TestDataLoader.generateAlphabet(5)}",
+            "http://image-${TestDataLoader.generateAlphabet(5)}",
+            "http://image-${TestDataLoader.generateAlphabet(5)}",
+            "http://image-${TestDataLoader.generateAlphabet(5)}",
+            "http://image-${TestDataLoader.generateAlphabet(5)}"
         ),
         contents = listOf(
-            TestDataLoader.generateAlphabet(5),
-            TestDataLoader.generateAlphabet(5),
-            TestDataLoader.generateAlphabet(5),
-            TestDataLoader.generateAlphabet(5),
-            TestDataLoader.generateAlphabet(5)
+            "http://content-${TestDataLoader.generateAlphabet(5)}",
+            "http://content-${TestDataLoader.generateAlphabet(5)}",
+            "http://content-${TestDataLoader.generateAlphabet(5)}",
+            "http://content-${TestDataLoader.generateAlphabet(5)}",
+            "http://content-${TestDataLoader.generateAlphabet(5)}"
         )
     )
 }

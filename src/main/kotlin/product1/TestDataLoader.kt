@@ -5,9 +5,11 @@ import kotlinx.coroutines.runBlocking
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.context.annotation.Profile
+import org.springframework.stereotype.Component
 import product1.product.ProductRepository
 import product1.product.fixture.ProductFixture
 
+@Component
 @Profile(value = ["dev"])
 class TestDataLoader(
     private val productRepository: ProductRepository

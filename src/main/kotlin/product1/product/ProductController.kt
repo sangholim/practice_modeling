@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import product1.product.domain.Product
+import product1.product.dto.ProductSummaryView
 import product1.product.dto.ProductView
+import product1.product.dto.toProductSummaryView
 import product1.product.dto.toProductView
 
 @RestController
@@ -21,7 +23,7 @@ class ProductController(
      * 상품 리스트 조회
      */
     @GetMapping(value = [""])
-    fun getProducts(): Flow<ProductView> = productService.getProducts().map(Product::toProductView)
+    fun getProducts(): Flow<ProductSummaryView> = productService.getProducts().map(Product::toProductSummaryView)
 
     /**
      * 상품 조회

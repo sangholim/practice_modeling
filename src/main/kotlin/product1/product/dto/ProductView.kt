@@ -42,6 +42,8 @@ data class ProductView(
      * 옵션명 기준 분류된 상품 옵션들
      */
     val options: Map<String, List<ProductOption>>,
+
+    val extras: List<ProductOption>?
 )
 
 fun Product.toProductView() = ProductView(
@@ -50,5 +52,6 @@ fun Product.toProductView() = ProductView(
     status = status,
     price = price,
     description = description,
-    options = options.groupBy { it.name }
+    options = options.groupBy { it.name },
+    extras = extras
 )

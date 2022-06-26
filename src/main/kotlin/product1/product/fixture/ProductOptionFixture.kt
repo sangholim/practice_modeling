@@ -9,14 +9,14 @@ object ProductOptionFixture {
 
     private val OPTION_NAMES = listOf("size", "color")
 
-    fun createOptions(): List<ProductOption> {
-        val list = mutableListOf<ProductOption>()
-        for (i in 1..10) {
-            val index = i % 2
-            list.add(createByTypeAndName(ProductOptionType.COMBINATION, OPTION_NAMES[index]))
-            list.add(createByTypeAndName(ProductOptionType.EXTRA, "추가 상품"))
-        }
-        return list
+    fun createOptions(): List<ProductOption> = List(10) {
+        val index = it % 2
+        createByTypeAndName(ProductOptionType.COMBINATION, OPTION_NAMES[index])
+    }
+
+
+    fun createExtras(): List<ProductOption> = List(10) {
+        createByTypeAndName(ProductOptionType.EXTRA, "추가 상품")
     }
 
     private fun createByTypeAndName(type: ProductOptionType, name: String) = ProductOption(
