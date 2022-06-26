@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.test.web.reactive.server.WebTestClient
-import product1.fixture.ProductFixture
+import product1.product.fixture.ProductFixture
 import product1.product.ProductController
 import product1.product.ProductService
 import product1.product.dto.ProductView

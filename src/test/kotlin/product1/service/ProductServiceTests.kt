@@ -12,7 +12,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import product1.fixture.ProductFixture
+import product1.product.fixture.ProductFixture
 import product1.product.ProductRepository
 import product1.product.ProductService
 

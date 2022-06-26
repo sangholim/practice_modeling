@@ -80,6 +80,6 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-tasks.withType<org.springframework.boot.gradle.tasks.run.BootRun> {
-    this.main = "product1.ProductApplicationKt"
+springBoot{
+    this.mainClass.set("product1.ProductApplicationKt")
 }

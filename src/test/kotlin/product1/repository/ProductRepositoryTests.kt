@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import product1.base.AbstractDbIntegrationTests
 import product1.fixture.CompanyFixture
-import product1.fixture.ProductFixture
+import product1.product.fixture.ProductFixture
 import product1.product.domain.Product
 import product1.product.ProductRepository
 
