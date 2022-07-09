@@ -1,10 +1,7 @@
 package product1.product.dto
 
 import org.bson.types.ObjectId
-import product1.product.domain.Product
-import product1.product.domain.ProductDescription
-import product1.product.domain.ProductOption
-import product1.product.domain.ProductStatus
+import product1.product.domain.*
 
 /**
  * 상품 응답 데이터
@@ -38,11 +35,13 @@ data class ProductView(
     val description: ProductDescription,
 
     /**
-     * 상품 옵션
-     * 옵션명 기준 분류된 상품 옵션들
+     * 조합형 상품 옵션
      */
-    val options: Map<String, List<ProductOption>>,
+    val options: List<ProductOption>,
 
+    /**
+     * 추가 상품 옵션 리스트
+     */
     val extras: List<ProductOption>?
 )
 
@@ -52,6 +51,6 @@ fun Product.toProductView() = ProductView(
     status = status,
     price = price,
     description = description,
-    options = options.groupBy { it.name },
+    options = options,
     extras = extras
 )

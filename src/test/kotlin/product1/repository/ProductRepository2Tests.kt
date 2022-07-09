@@ -2,18 +2,15 @@ package product1.repository
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.bson.types.ObjectId
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import product1.base.AbstractDbIntegrationTests
-import product1.fixture.CompanyFixture
-import product1.product.fixture.ProductFixture
-import product1.product.domain.Product
 import product1.product.ProductRepository
+import product1.product.fixture.ProductFixture
 
 @ExperimentalCoroutinesApi
-class ProductRepositoryTests : AbstractDbIntegrationTests() {
+class ProductRepository2Tests : AbstractDbIntegrationTests() {
 
     @Autowired
     private lateinit var productRepository: ProductRepository
@@ -25,13 +22,8 @@ class ProductRepositoryTests : AbstractDbIntegrationTests() {
 
     @Test
     fun save() = runTest {
-        val companyId = CompanyFixture.id
-        val product = save(companyId)
+        val product = productRepository.save(ProductFixture.createProduct2())
         assert(product.id != null)
     }
 
-    private suspend fun save(companyId: ObjectId): Product {
-        val payload = ProductFixture.createPayload()
-        return productRepository.save(Product.create(companyId, payload))
-    }
 }

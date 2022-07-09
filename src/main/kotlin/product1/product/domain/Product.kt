@@ -5,7 +5,6 @@ import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.MongoId
-import product1.product.dto.ProductPayload
 import java.time.Instant
 import java.util.*
 
@@ -75,15 +74,33 @@ data class Product(
     val modifiedAt: Instant? = null
 ) {
     companion object {
-        fun create(companyId: ObjectId, payload: ProductPayload) = Product(
-            companyId = companyId,
-            name = payload.name,
-            status = ProductStatus.READY,
-            code = UUID.randomUUID().toString(),
-            price = payload.price,
-            description = payload.description,
-            options = payload.options,
-            extras = payload.extras
-        )
+        /**
+         * 상품 생성
+         * @param companyId 기업 번호
+         * @param name 상품명
+         * @param price 상품 기본 가격
+         * @param description 상품설명
+         * @param options 옵션리스트
+         * @param extras 추가상품리스트
+         * @return Product2
+         */
+        fun of(
+            companyId: ObjectId,
+            name: String,
+            price: Int,
+            description: ProductDescription,
+            options: List<ProductOption>,
+            extras: List<ProductOption>?
+        ): Product =
+            Product(
+                companyId = companyId,
+                name = name,
+                status = ProductStatus.READY,
+                code = UUID.randomUUID().toString(),
+                price = price,
+                description = description,
+                options = options,
+                extras = extras
+            )
     }
 }

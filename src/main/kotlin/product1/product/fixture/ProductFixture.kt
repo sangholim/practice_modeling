@@ -10,21 +10,20 @@ object ProductFixture {
 
     val COMPANY_ID = ObjectId.get()
 
-    fun createProducts(): List<Product> {
-        val list = mutableListOf<Product>()
-        for (i in 1..16) {
-            val payload = createPayload()
-            val product = Product.create(COMPANY_ID, payload).copy(id = ObjectId.get())
-            list.add(product)
-        }
-        return list
-    }
+    fun createProduct2(): Product = Product.of(
+        ObjectId.get(),
+        "test",
+        Random.nextInt(100, 110) * 200,
+        ProductDescriptionFixture.create(),
+        ProductOptionFixture.getProductOptions(),
+        null
+    )
 
     fun createPayload() = ProductPayload(
         name = TestDataLoader.generateAlphabet(10),
         price = Random.nextInt(100, 110) * 100,
         description = ProductDescriptionFixture.create(),
-        options = ProductOptionFixture.createOptions(),
-        extras = ProductOptionFixture.createExtras()
+        options = ProductOptionFixture.getProductOptions(),
+        extras = null
     )
 }

@@ -1,30 +1,46 @@
 package product1.product.fixture
 
-import product1.TestDataLoader
 import product1.product.domain.ProductOption
-import product1.product.domain.ProductOptionType
+import product1.product.domain.ProductOptionValue
 import kotlin.random.Random
 
 object ProductOptionFixture {
 
-    private val OPTION_NAMES = listOf("size", "color")
+    private val NAMES = listOf("size", "color", "design")
 
-    fun createOptions(): List<ProductOption> = List(10) {
-        val index = it % 2
-        createByTypeAndName(ProductOptionType.COMBINATION, OPTION_NAMES[index])
-    }
+    private val SIZES = listOf("L", "M", "S")
 
+    private val COLORS = listOf("WHITE", "BLACK", "GREEN")
 
-    fun createExtras(): List<ProductOption> = List(10) {
-        createByTypeAndName(ProductOptionType.EXTRA, "추가 상품")
-    }
+    private val DESIGNS = listOf("STRIPED", "PLAIN", "DOTTED")
 
-    private fun createByTypeAndName(type: ProductOptionType, name: String) = ProductOption(
-        type = type,
-        name = name,
-        value = TestDataLoader.generateAlphabet(5),
-        code = TestDataLoader.generateAlphabet(5),
-        price = Random.nextInt(1, 100) * 100
+    private val OPTION_MAP = mapOf(
+        "size" to SIZES,
+        "color" to COLORS,
+        "design" to DESIGNS
     )
 
+    private val OPTION_NAMES = listOf("size", "color")
+
+    fun getProductOptions(): List<ProductOption> {
+        while (true) {
+            createProductOptions().let { productOptions ->
+                if (productOptions.isDuplicatedCode()) return@let
+                return productOptions
+            }
+        }
+    }
+
+    private fun List<ProductOption>.isDuplicatedCode(): Boolean =
+        flatMap { it.values }.groupingBy { it.code }.eachCount().filter { it.value > 1 }.isNotEmpty()
+
+    private fun createProductOptions(): List<ProductOption> = OPTION_MAP.map { option ->
+        val name = option.key
+        val values = option.value
+        ProductOption.ofCOMBINATION(name, values.createProductOptionValues())
+    }
+
+    private fun List<String>.createProductOptionValues(): List<ProductOptionValue> = map { value ->
+        ProductOptionValue.of(value, Random.nextInt(2, 5) * 100)
+    }
 }

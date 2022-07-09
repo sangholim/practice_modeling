@@ -2,7 +2,7 @@ package product1.controller
 
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.coEvery
-import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flowOf
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
@@ -25,10 +25,10 @@ class ProductControllerTests {
 
     @Test
     fun getProducts() {
-        val products = ProductFixture.createProducts()
+        val products = ProductFixture.createProduct2()
         coEvery {
             productService.getProducts()
-        } returns products.asFlow()
+        } returns flowOf(products)
 
         webTestClient.get()
             .uri("/products")
@@ -39,7 +39,7 @@ class ProductControllerTests {
 
     @Test
     fun getProduct() {
-        val product = ProductFixture.createProducts().first()
+        val product = ProductFixture.createProduct2()
         coEvery {
             productService.getProduct(product.id!!)
         } returns product

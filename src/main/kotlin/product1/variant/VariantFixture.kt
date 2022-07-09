@@ -6,7 +6,7 @@ import kotlin.random.Random
 
 object VariantFixture {
 
-    private val names = listOf("size", "color", "design")
+    private val NAMES = listOf("size", "color", "design")
 
     private val SIZES = listOf("L", "M", "S")
 
@@ -35,9 +35,13 @@ object VariantFixture {
     }
 
 
+
     fun createVariant(): Variant = Variant(
         id = ObjectId.get(),
+        productId = ObjectId.get(),
+        name = "asdad",
         options = createOption(),
+        code = "",
         sku = UUID.randomUUID().toString(),
         price = Random.nextInt(10, 20) * 1000,
         stock = Random.nextInt(10, 50)
@@ -46,7 +50,7 @@ object VariantFixture {
     private fun createOption(): Set<VariantOption> =
         List(3) { position ->
             val randomValue = Random.nextInt(0, 2)
-            val name = names[position]
+            val name = NAMES[position]
             val value = VARIANT_MAP[name]!![randomValue]
             VariantOption(name, value)
         }.toSet()

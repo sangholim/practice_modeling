@@ -11,23 +11,44 @@ data class ProductOption(
     val type: ProductOptionType,
 
     /**
-     * 옵션명
-     * 추가 옵션인 경우: 추가옵션 텍스트 고정
+     * 상품 옵션명
      */
     val name: String,
 
     /**
-     * 옵션값
+     * 상품 옵션값 리스트
      */
-    val value: String,
+    val values: List<ProductOptionValue>
+) {
+    companion object {
+        /**
+         * 상품 옵션 생성
+         * @param type 옵션 구분
+         * @param name 옵션명
+         * @param values 옵션값 리스트
+         */
+        private fun of(type: ProductOptionType, name: String, values: List<ProductOptionValue>): ProductOption =
+            ProductOption(
+                type = type,
+                name = name,
+                values = values
+            )
 
-    /**
-     * 옵션 코드
-     */
-    val code: String,
+        /**
+         * 조합 옵션 생성
+         * @param name 옵션명
+         * @param values 옵션값 리스트
+         */
+        fun ofCOMBINATION(name: String, values: List<ProductOptionValue>): ProductOption =
+            of(ProductOptionType.COMBINATION, name, values)
 
-    /**
-     * 상품 옵션 가격
-     */
-    val price: Int
-)
+        /**
+         * 추가 옵션 생성
+         * @param name 옵션명
+         * @param values 옵션값 리스트
+         */
+        fun ofExtra(name: String, values: List<ProductOptionValue>): ProductOption =
+            of(ProductOptionType.EXTRA, name, values)
+
+    }
+}

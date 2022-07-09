@@ -1,6 +1,5 @@
 package product1
 
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
@@ -8,11 +7,13 @@ import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import product1.product.ProductRepository
 import product1.product.fixture.ProductFixture
+import product1.variant.VariantRepository
 
 @Component
 @Profile(value = ["dev"])
 class TestDataLoader(
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
+    private val variantRepository: VariantRepository
 ) : ApplicationRunner {
 
     override fun run(args: ApplicationArguments?) = runBlocking {
@@ -21,7 +22,11 @@ class TestDataLoader(
 
     private suspend fun generateProducts() {
         productRepository.deleteAll()
-        productRepository.saveAll(ProductFixture.createProducts()).collect()
+        val products = productRepository.save(ProductFixture.createProduct2())
+    }
+
+    private suspend fun generateVariants() {
+        variantRepository.deleteAll()
     }
 
     companion object {
