@@ -5,7 +5,9 @@ import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.MongoId
+import product1.product.domain.Product
 import java.time.Instant
+import java.util.*
 
 /**
  * 상품 정보
@@ -31,7 +33,7 @@ data class Variant(
     /**
      * 재고 상품 옵션
      */
-    val options: Set<VariantOption>,
+    val options: List<VariantOption>,
 
     /**
      * 상품 옵션 고유 코드
@@ -64,4 +66,27 @@ data class Variant(
      */
     @LastModifiedDate
     val modifiedAt: Instant? = null
-)
+) {
+    companion object {
+        /**
+         * 상품 구성 객체 생성
+         * @param product 상품 정보
+         * @param options 상품 구성 옵션 리스트
+         * @param stock 재고
+         */
+        fun of(product: Product, options: List<VariantOption>, stock: Int): Variant {
+            val name = "${product.name} - ${options.joinToString("/") { it.value }}"
+            val code = options.joinToString("-") { it.code }
+            val price = product.price + options.sumOf { it.price }
+            return Variant(
+                productId = product.id!!,
+                name = name,
+                options = options,
+                code = code,
+                sku = UUID.randomUUID().toString(),
+                price = price,
+                stock = stock
+            )
+        }
+    }
+}

@@ -1,5 +1,6 @@
 package product1.product.fixture
 
+import product1.product.domain.Product
 import product1.product.domain.ProductOption
 import product1.product.domain.ProductOptionValue
 import kotlin.random.Random
@@ -21,6 +22,20 @@ object ProductOptionFixture {
     )
 
     private val OPTION_NAMES = listOf("size", "color")
+
+    /**
+     * 상품 옵션 좌표 리스트 생성
+     */
+    fun Product.createOptionPoints(): List<List<Int>> =
+        this.options.createPoints()
+
+    private fun List<ProductOption>.createPoints(): List<List<Int>> =
+        List(size) { index ->
+            val option = this[index]
+            val optionValues = option.values
+            List(optionValues.size) { it }
+        }
+
 
     fun getProductOptions(): List<ProductOption> {
         while (true) {

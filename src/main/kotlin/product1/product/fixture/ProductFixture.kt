@@ -8,16 +8,16 @@ import kotlin.random.Random
 
 object ProductFixture {
 
-    val COMPANY_ID = ObjectId.get()
+    private val COMPANY_ID = ObjectId.get()
 
     fun createProduct2(): Product = Product.of(
-        ObjectId.get(),
+        COMPANY_ID,
         "test",
         Random.nextInt(100, 110) * 200,
         ProductDescriptionFixture.create(),
         ProductOptionFixture.getProductOptions(),
         null
-    )
+    ).copy(id = ObjectId.get())
 
     fun createPayload() = ProductPayload(
         name = TestDataLoader.generateAlphabet(10),
