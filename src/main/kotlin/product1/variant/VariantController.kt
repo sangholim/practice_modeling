@@ -19,5 +19,5 @@ class VariantController(
      */
     @GetMapping(value = ["/{productId}/variants/code/{code}"])
     suspend fun getVariantByCode(@PathVariable productId: ObjectId, @PathVariable code: String): Variant? =
-        variantService.getVariantByProductIdAndCode(productId, code)
+        variantService.getVariantByCode(productId, code)
 }

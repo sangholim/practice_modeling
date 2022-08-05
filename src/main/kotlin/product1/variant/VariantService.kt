@@ -14,7 +14,7 @@ class VariantService(
      * @param productId 상품 번호
      * @param code 코드 (구분자 ,)
      */
-    suspend fun getVariantByProductIdAndCode(productId: ObjectId, code: String): Variant? {
+    suspend fun getVariantByCode(productId: ObjectId, code: String): Variant? {
         return variantRepository.findByProductId(productId).firstOrNull { it.code == code }
     }
 }
