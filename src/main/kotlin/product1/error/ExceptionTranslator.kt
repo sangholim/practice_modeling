@@ -12,7 +12,7 @@ class ExceptionTranslator {
 
     @ExceptionHandler(ResponseStatusException::class)
     fun handleResponseStatusException(e: ResponseStatusException): ResponseEntity<ErrorBody> =
-        ResponseEntity.badRequest().body(ErrorBody.create(e))
+        ResponseEntity.status(e.status).body(ErrorBody.create(e))
 
     @ExceptionHandler(WebExchangeBindException::class)
     fun handleWebExchangeBindException(e: WebExchangeBindException): ResponseEntity<ErrorBody> =
