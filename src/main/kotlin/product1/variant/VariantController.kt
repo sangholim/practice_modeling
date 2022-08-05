@@ -20,14 +20,4 @@ class VariantController(
     @GetMapping(value = ["/{productId}/variants/code/{code}"])
     suspend fun getVariantByCode(@PathVariable productId: ObjectId, @PathVariable code: String): Variant? =
         variantService.getVariantByProductIdAndCode(productId, code)
-
-
-    /**
-     * 옵션 상품 조회
-     * @productId 상품 번호
-     * @param id 옵션 상품 번호
-     */
-    @GetMapping(value = ["/{productId}/variants/{id}"])
-    suspend fun getVariant(@PathVariable productId: ObjectId, id: ObjectId): Variant? = null
-
 }
