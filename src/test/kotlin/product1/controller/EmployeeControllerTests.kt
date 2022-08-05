@@ -33,7 +33,7 @@ class EmployeeControllerTests {
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(EmployeeFixture.createInvalidEmployeePayload())
             .exchange()
-            .expectStatus().is5xxServerError
+            .expectStatus().isNotFound
 
         webTestClient.post().uri("/companies/$companyId/employees")
             .contentType(MediaType.APPLICATION_JSON)
