@@ -18,6 +18,6 @@ class VariantController(
      * @param code '-' 구분자로 구성된  옵션 상품 코드
      */
     @GetMapping(value = ["/{productId}/variants/code/{code}"])
-    suspend fun getVariantByCode(@PathVariable productId: ObjectId, @PathVariable code: String): Variant? =
+    suspend fun getVariantByCode(@PathVariable productId: ObjectId, @PathVariable code: String): Variant =
         variantService.getVariantByCode(productId, code)
 }
