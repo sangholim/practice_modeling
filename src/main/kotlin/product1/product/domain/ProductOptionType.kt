@@ -6,9 +6,9 @@ package product1.product.domain
 enum class ProductOptionType {
 
     /**
-     * 옵션형
+     * 필수 상품
      */
-    COMBINATION,
+    PRIMARY,
 
     /**
      * 추가 상품

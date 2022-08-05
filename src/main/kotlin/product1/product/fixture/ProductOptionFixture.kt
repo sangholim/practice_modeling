@@ -52,7 +52,7 @@ object ProductOptionFixture {
     private fun createProductOptions(): List<ProductOption> = OPTION_MAP.map { option ->
         val name = option.key
         val values = option.value
-        ProductOption.ofCOMBINATION(name, values.createProductOptionValues())
+        ProductOption.ofPrimary(name, values.createProductOptionValues())
     }
 
     private fun List<String>.createProductOptionValues(): List<ProductOptionValue> = map { value ->

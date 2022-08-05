@@ -35,12 +35,12 @@ data class ProductOption(
             )
 
         /**
-         * 조합 옵션 생성
+         * 필수 옵션 생성
          * @param name 옵션명
          * @param values 옵션값 리스트
          */
-        fun ofCOMBINATION(name: String, values: List<ProductOptionValue>): ProductOption =
-            of(ProductOptionType.COMBINATION, name, values)
+        fun ofPrimary(name: String, values: List<ProductOptionValue>): ProductOption =
+            of(ProductOptionType.PRIMARY, name, values)
 
         /**
          * 추가 옵션 생성
