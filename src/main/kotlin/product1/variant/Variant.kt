@@ -26,7 +26,7 @@ data class Variant(
     val productId: ObjectId,
 
     /**
-     * 상품명 (xxx- x/y/z)
+     * 상품명 (옵션1/옵션2/옵션3)
      */
     val name: String,
 
@@ -75,7 +75,7 @@ data class Variant(
          * @param stock 재고
          */
         fun of(product: Product, options: List<VariantOption>, stock: Int): Variant {
-            val name = "${product.name} - ${options.joinToString("/") { it.value }}"
+            val name = options.joinToString("/") { it.value }
             val code = options.joinToString("-") { it.code }
             val price = product.price + options.sumOf { it.price }
             return Variant(
