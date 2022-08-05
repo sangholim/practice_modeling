@@ -25,7 +25,7 @@ class ProductControllerTests {
 
     @Test
     fun getProducts() {
-        val products = ProductFixture.createProduct2()
+        val products = ProductFixture.createProduct()
         coEvery {
             productService.getProducts()
         } returns flowOf(products)
@@ -39,7 +39,7 @@ class ProductControllerTests {
 
     @Test
     fun getProduct() {
-        val product = ProductFixture.createProduct2()
+        val product = ProductFixture.createProduct()
         coEvery {
             productService.getProduct(product.id!!)
         } returns product

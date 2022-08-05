@@ -33,7 +33,7 @@ class ProductServiceTests {
 
     @Test
     fun getProducts() = runTest {
-        val list = flowOf(ProductFixture.createProduct2())
+        val list = flowOf(ProductFixture.createProduct())
         coEvery {
             productRepository.findAll()
         } returns list

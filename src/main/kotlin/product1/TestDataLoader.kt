@@ -25,7 +25,7 @@ class TestDataLoader(
 
     private suspend fun generateProducts() {
         productRepository.deleteAll()
-        productRepository.save(ProductFixture.createProduct2())
+        productRepository.save(ProductFixture.createProduct())
     }
 
     private suspend fun generateVariants() {

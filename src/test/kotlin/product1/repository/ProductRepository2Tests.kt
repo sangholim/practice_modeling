@@ -22,7 +22,7 @@ class ProductRepository2Tests : AbstractDbIntegrationTests() {
 
     @Test
     fun save() = runTest {
-        val product = productRepository.save(ProductFixture.createProduct2())
+        val product = productRepository.save(ProductFixture.createProduct())
         assert(product.id != null)
     }
 

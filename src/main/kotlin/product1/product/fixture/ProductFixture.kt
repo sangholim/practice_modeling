@@ -10,7 +10,7 @@ object ProductFixture {
 
     private val COMPANY_ID = ObjectId.get()
 
-    fun createProduct2(): Product = Product.of(
+    fun createProduct(): Product = Product.of(
         COMPANY_ID,
         "test",
         Random.nextInt(100, 110) * 200,
