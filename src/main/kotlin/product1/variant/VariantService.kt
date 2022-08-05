@@ -14,7 +14,7 @@ class VariantService(
     /**
      * 코드로 옵션 상품 조회
      * @param productId 상품 번호
-     * @param code 코드 (구분자 ,)
+     * @param code 코드
      */
     suspend fun getVariantByCode(productId: ObjectId, code: String): Variant {
         return variantRepository.findByProductId(productId).firstOrNull { it.code == code } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
