@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import org.springframework.http.HttpStatus
 import org.springframework.validation.FieldError
 import org.springframework.web.bind.support.WebExchangeBindException
+import org.springframework.web.server.ResponseStatusException
 import java.time.Instant
 
 class ErrorBody(
@@ -15,6 +16,11 @@ class ErrorBody(
     val fields: List<SimpleFieldError>? = null
 ) {
     companion object {
+        fun create(exception: ResponseStatusException) = ErrorBody(
+            status = exception.status.value(),
+            message = exception.status.reasonPhrase
+        )
+
         fun create(exception: WebExchangeBindException) = ErrorBody(
             status = exception.status.value(),
             message = exception.status.reasonPhrase,
