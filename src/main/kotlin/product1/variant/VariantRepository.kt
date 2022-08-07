@@ -8,5 +8,5 @@ interface VariantRepository : CoroutineCrudRepository<Variant, ObjectId> {
 
     fun findByProductId(productId: ObjectId): Flow<Variant>
 
-    fun findByIdsIn(ids: List<ObjectId>)
+    fun findByIdsIn(ids: List<ObjectId>): Flow<Variant>
 }
