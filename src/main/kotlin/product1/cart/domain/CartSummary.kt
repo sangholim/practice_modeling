@@ -1,4 +1,4 @@
-package product1.cart
+package product1.cart.domain
 
 /**
  * 장바구니 금액 요약

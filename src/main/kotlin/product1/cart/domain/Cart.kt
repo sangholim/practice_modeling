@@ -1,4 +1,4 @@
-package product1.cart
+package product1.cart.domain
 
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.CreatedDate
