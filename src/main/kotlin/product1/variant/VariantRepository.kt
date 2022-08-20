@@ -9,4 +9,6 @@ interface VariantRepository : CoroutineCrudRepository<Variant, ObjectId> {
     fun findByProductId(productId: ObjectId): Flow<Variant>
 
     fun findByIdsIn(ids: List<ObjectId>): Flow<Variant>
+
+    suspend fun findByIdAndProductId(id: ObjectId, productId: ObjectId): Variant?
 }

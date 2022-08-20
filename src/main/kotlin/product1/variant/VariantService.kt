@@ -22,10 +22,8 @@ class VariantService(
     }
 
     /**
-     * 옵션 상품 번호들을 포함하는
-     * 옵션 상품 데이터 조회
-     *
-     * @param ids 옵션 상품 번호 리스트
+     * 옵션 상품 조회
+     * @param id 옵션 상품 번호
      */
-    fun getVariantsByIds(ids: List<ObjectId>): Flow<Variant> = variantRepository.findByIdsIn(ids)
+    suspend fun getVariantByIdAndProductId(id: ObjectId, productId: ObjectId): Variant? = variantRepository.findByIdAndProductId(id, productId)
 }

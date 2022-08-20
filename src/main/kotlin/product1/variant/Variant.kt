@@ -67,6 +67,13 @@ data class Variant(
     @LastModifiedDate
     val modifiedAt: Instant? = null
 ) {
+
+    /**
+     * 옵션 상품 존재 여부
+     * @param count 수량
+     */
+    fun isExist(count: Int): Boolean = stock >= count
+
     companion object {
         /**
          * 상품 구성 객체 생성
