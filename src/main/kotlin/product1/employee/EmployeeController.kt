@@ -8,11 +8,12 @@ import javax.validation.Valid
 @RestController
 @RequestMapping(value = ["/companies/{companyId}"])
 class EmployeeController(
-    private val employeeService: EmployeeService
+    private val employeeFacadeService: EmployeeFacadeService
 ) {
 
     @PostMapping(value = ["/employees"])
     @ResponseStatus(value = HttpStatus.CREATED)
-    suspend fun createEmployee(@PathVariable companyId: ObjectId, @Valid @RequestBody payload: EmployeePayload) =
-        employeeService.create(companyId, payload)
+    suspend fun createEmployee(@PathVariable companyId: ObjectId, @Valid @RequestBody payload: EmployeePayload) {
+        employeeFacadeService.createEmployee(companyId, payload)
+    }
 }

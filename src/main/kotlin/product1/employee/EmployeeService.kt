@@ -14,26 +14,26 @@ class EmployeeService(
      * 사원 생성
      * @param payload 사원 생성 필드
      */
-    suspend fun create(companyId: ObjectId, payload: EmployeePayload) {
+    suspend fun create(companyId: ObjectId, payload: EmployeePayload): Employee {
         val employee = Employee.create(companyId, payload)
-        create(employee)
+        return create(employee)
     }
 
     /**
      * 기업 관리자 생성
      */
-    suspend fun createCompanyManager(company: Company) {
+    suspend fun createCompanyManager(company: Company): Employee {
         val manager = company.createManager()
-        create(manager)
+        return create(manager)
     }
 
     /**
      * 직원 데이터 생성
      */
-    private suspend fun create(employee: Employee) {
+    private suspend fun create(employee: Employee): Employee {
         require(!employeeRepository.existsByCompanyIdAndEmail(employee.companyId, employee.email)) { "이미 가입된 이메일입니다." }
         require(!employeeRepository.existsByCompanyIdAndName(employee.companyId, employee.name)) { "이미 가입된 이름입니다." }
-        employeeRepository.save(employee)
+        return employeeRepository.save(employee)
     }
 }
 

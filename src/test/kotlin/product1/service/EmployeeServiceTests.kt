@@ -47,9 +47,11 @@ class EmployeeServiceTests {
 
         coEvery {
             employeeRepository.save(model)
-        } returns model.copy(id = EmployeeFixture.ID)
+        } returns model
 
-        employeeService.create(companyId, payload)
+        val result = employeeService.create(companyId, payload)
+
+        assert(model == result)
 
     }
 

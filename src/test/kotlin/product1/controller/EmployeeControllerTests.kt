@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
+import product1.employee.Employee
 import product1.employee.EmployeeController
+import product1.employee.EmployeeFacadeService
 import product1.employee.EmployeeService
 import product1.fixture.CompanyFixture
 import product1.fixture.EmployeeFixture
@@ -19,15 +21,16 @@ class EmployeeControllerTests {
     private lateinit var webTestClient: WebTestClient
 
     @MockkBean
-    lateinit var employeeService: EmployeeService
+    lateinit var employeeFacadeService: EmployeeFacadeService
 
     @Test
     fun createEmployee() {
         val companyId = CompanyFixture.id
         val payload = EmployeeFixture.createEmployeePayload()
+        val employee = Employee.create(companyId, payload)
         coEvery {
-            employeeService.create(companyId, payload)
-        } returns Unit
+            employeeFacadeService.createEmployee(companyId, payload)
+        } returns employee
 
         webTestClient.post().uri("/companies/abcd/employees")
             .contentType(MediaType.APPLICATION_JSON)
