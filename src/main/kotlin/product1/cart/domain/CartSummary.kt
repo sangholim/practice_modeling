@@ -22,5 +22,17 @@ data class CartSummary(
     /**
      * 결제 총 금액
      */
-    val total: Int
-)
+    val total: Int = subtotal + shippingAmount - discountAmount
+) {
+    companion object {
+
+        /**
+         * 장바구니 금액 요약 데이터 생성
+         */
+        fun of(): CartSummary = CartSummary(
+            subtotal = 0,
+            shippingAmount = 5000,
+            discountAmount = 0
+        )
+    }
+}

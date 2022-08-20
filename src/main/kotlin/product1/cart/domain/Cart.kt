@@ -20,6 +20,11 @@ data class Cart(
     val id: ObjectId? = null,
 
     /**
+     * 직원 번호
+     */
+    val employeeId: ObjectId,
+
+    /**
      * 구매 항목
      */
     val lineItems: List<LineItem>,
@@ -41,4 +46,18 @@ data class Cart(
     @LastModifiedDate
     val modifiedAt: Instant? = null
 
-)
+) {
+
+    companion object {
+
+        /**
+         * 빈 장바구니 생성
+         * @param employeeId 회원 번호
+         */
+        fun of(employeeId: ObjectId): Cart = Cart(
+            employeeId = employeeId,
+            lineItems = listOf(),
+            summary = CartSummary.of()
+        )
+    }
+}
