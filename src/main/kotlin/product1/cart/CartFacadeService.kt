@@ -30,11 +30,17 @@ class CartFacadeService(
     suspend fun addLineItem(employeeId: ObjectId, payload: LineItemPayload): Cart {
         val cart = cartService.getCart(employeeId) ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST)
         val product = productService.getProduct(payload.productId)
+        val variants = payload.items.map {
+            variantService.getVariantByIdAndProductId(it.variantId, payload.productId) ?: throw ResponseStatusException(
+                HttpStatus.NOT_FOUND
+            )
+        }
         // 장바구니에 담는 옵션 상품들
         val items = payload.items.map { item ->
-            val variant = getAvailableVariant(item.variantId, product.id!!, item.count)
+            val variant = variants.first { item.variantId == it.id }
             Item.of(product, variant, item.count)
         }
+
         /**
          * 구매 항목 없는 경우 - 구매 항목 추가
          *
@@ -45,18 +51,5 @@ class CartFacadeService(
         val lineItem = cart.findLineItem(payload.productId)?.addItems(items) ?:
             return cartService.updateCart(cart.addLineItem(LineItem.of(product, items)))
         return cartService.updateCart(cart.updateLineItem(lineItem))
-    }
-
-    /**
-     * 이용 가능한 상품 데이터 얻기
-     * @param variantId 상품 번호
-     * @param productId 상품 기본 정보 번호
-     * @param count 상품 수량
-     */
-    private suspend fun getAvailableVariant(variantId: ObjectId, productId: ObjectId, count: Int): Variant {
-        val variant = variantService.getVariantByIdAndProductId(variantId, productId)
-            ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
-        if (!variant.isExist(count)) throw ResponseStatusException(HttpStatus.BAD_REQUEST)
-        return variant
     }
 }
