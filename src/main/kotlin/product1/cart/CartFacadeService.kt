@@ -56,7 +56,7 @@ class CartFacadeService(
     private suspend fun getAvailableVariant(variantId: ObjectId, productId: ObjectId, count: Int): Variant {
         val variant = variantService.getVariantByIdAndProductId(variantId, productId)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
-        if (variant.isExist(count)) throw ResponseStatusException(HttpStatus.BAD_REQUEST)
+        if (!variant.isExist(count)) throw ResponseStatusException(HttpStatus.BAD_REQUEST)
         return variant
     }
 }
