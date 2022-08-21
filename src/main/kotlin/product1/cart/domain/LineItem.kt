@@ -28,6 +28,24 @@ data class LineItem(
     val items: List<Item>
 
 ) {
+
+    fun sumOfTotal() = items.sumOf { it.total }
+
+    /**
+     * 옵션 상품 담기
+     * @param items 옵션 상품들
+     */
+    fun addItems(items: List<Item>): LineItem {
+        val variantIds = this.items.map { it.variantId }
+        val addItems = items.filter { !variantIds.contains(it.variantId) }
+        val updateItems = this.items.map { item ->
+            val updateItem = items.firstOrNull { item.variantId == it.variantId } ?: return@map item
+            item.addCount(updateItem.count)
+        }
+        return copy(items = updateItems.plus(addItems))
+    }
+
+
     companion object {
         /**
          * 상품 구매 항목 생성
