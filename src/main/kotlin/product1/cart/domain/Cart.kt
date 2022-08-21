@@ -48,6 +48,35 @@ data class Cart(
 
 ) {
 
+    /**
+     * 구매 항목 조회
+     * @param productId 구매 항목
+     */
+    fun findLineItem(productId: ObjectId): LineItem? = lineItems.firstOrNull { it.productId == productId }
+
+    /**
+     * 구매 항목 추가
+     * @param lineItem 구매 항목
+     */
+    fun addLineItem(lineItem: LineItem): Cart {
+        val newLineItems = this.lineItems.plus(lineItem)
+        val summary = CartSummary.of(newLineItems)
+        return copy(lineItems = newLineItems, summary = summary)
+    }
+
+    /**
+     * 구매 항목 업데이트
+     * @param lineItem 구매 항목
+     */
+    fun updateLineItem(lineItem: LineItem): Cart {
+        val updateLineItems = this.lineItems.map {
+            if(it.productId != lineItem.productId) return@map it
+            lineItem
+        }
+        val summary = CartSummary.of(updateLineItems)
+        return copy(summary = summary, lineItems = updateLineItems)
+    }
+
     companion object {
 
         /**
