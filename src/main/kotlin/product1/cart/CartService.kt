@@ -3,8 +3,6 @@ package product1.cart
 import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
 import product1.cart.domain.Cart
-import product1.cart.domain.CartSummary
-import product1.cart.domain.LineItem
 
 @Service
 class CartService(
@@ -25,5 +23,9 @@ class CartService(
     suspend fun createCart(employeeId: ObjectId): Cart =
         cartRepository.save(Cart.of(employeeId))
 
-
+    /**
+     * 직원 장바구니 업데이트
+     */
+    suspend fun updateCart(cart: Cart): Cart =
+        cartRepository.save(cart)
 }
