@@ -55,27 +55,26 @@ data class Cart(
     fun findLineItem(productId: ObjectId): LineItem? = lineItems.firstOrNull { it.productId == productId }
 
     /**
-     * 구매 항목 추가
+     * 구매 항목 업데이트
+     * 카트에 구매 항목이 없는 경우 - 새로 추가
+     * 카트에 구매 항목이 있는 경우 - 구매 항목내에 필드 업데이트
+     *
+     * 업데이트 후, 장바구니 금액 요약 데이터 갱신
      * @param lineItem 구매 항목
      */
     fun addLineItem(lineItem: LineItem): Cart {
-        val newLineItems = this.lineItems.plus(lineItem)
-        val summary = CartSummary.of(newLineItems)
-        return copy(lineItems = newLineItems, summary = summary)
+        val linetItems = this.lineItems.toMutableList()
+        val index = linetItems.indexOfFirst { it.productId == lineItem.productId }
+        if (index == -1) return copy(lineItems = linetItems.plus(lineItem), summary = CartSummary.of(linetItems))
+        linetItems[index] = lineItem
+        return copy(lineItems = lineItems, summary = CartSummary.of(linetItems))
     }
 
     /**
-     * 구매 항목 업데이트
-     * @param lineItem 구매 항목
+     * 장바구니 요약 업데이트
      */
-    fun updateLineItem(lineItem: LineItem): Cart {
-        val updateLineItems = this.lineItems.map {
-            if(it.productId != lineItem.productId) return@map it
-            lineItem
-        }
-        val summary = CartSummary.of(updateLineItems)
-        return copy(summary = summary, lineItems = updateLineItems)
-    }
+    fun updateSummary(): Cart =
+        copy(summary = CartSummary.of(this.lineItems))
 
     companion object {
 
