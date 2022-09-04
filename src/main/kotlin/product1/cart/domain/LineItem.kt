@@ -29,6 +29,9 @@ data class LineItem(
 
 ) {
 
+    /**
+     * 옵션 상품들 금액 합산
+     */
     fun sumOfTotal() = items.sumOf { it.total }
 
     /**
@@ -44,7 +47,6 @@ data class LineItem(
         }
         return copy(items = updateItems.plus(addItems))
     }
-
 
     companion object {
         /**
