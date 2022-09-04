@@ -27,7 +27,7 @@ data class Item(
     /**
      * 총 금액
      */
-    val total: Int
+    val price: Int
 ) {
 
     fun addCount(count: Int): Item = copy(count = this.count + count)
@@ -43,7 +43,7 @@ data class Item(
             variantId = variant.id!!,
             name = name,
             count = count,
-            total = variant.price * count
+            price = variant.price
         )
 
         /**
@@ -56,7 +56,7 @@ data class Item(
             variantId = variant.id!!,
             name = "${product.name} - ${variant.name}",
             count = count,
-            total = variant.price * count
+            price = variant.price
         )
     }
 }
