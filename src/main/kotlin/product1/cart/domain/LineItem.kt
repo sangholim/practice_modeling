@@ -32,7 +32,7 @@ data class LineItem(
     /**
      * 옵션 상품들 금액 합산
      */
-    fun sumOfTotal() = items.sumOf { it.price }
+    fun total() = items.sumOf { it.price * it.count }
 
     /**
      * 옵션 상품 담기

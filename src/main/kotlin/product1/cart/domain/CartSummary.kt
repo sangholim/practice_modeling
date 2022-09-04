@@ -41,7 +41,7 @@ data class CartSummary(
          * @param lineItems 구매 항목
          */
         fun of(lineItems: List<LineItem>): CartSummary = CartSummary(
-            subtotal = lineItems.sumOf { it.sumOfTotal() },
+            subtotal = lineItems.sumOf { it.total() },
             shippingAmount = 5000,
             discountAmount = 0
         )
