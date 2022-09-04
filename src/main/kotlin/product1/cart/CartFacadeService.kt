@@ -43,7 +43,7 @@ class CartFacadeService(
 
         val items = payload.items.map { item ->
             val variant = variants.first { item.variantId == it.id }
-            Item.of(product, variant, item.count)
+            Item.of(variant, item.count)
         }
 
         val lineItem = cart.findLineItem(payload.productId)?.addItems(items) ?: LineItem.of(product, items)

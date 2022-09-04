@@ -1,7 +1,6 @@
 package product1.cart.domain
 
 import org.bson.types.ObjectId
-import product1.product.domain.Product
 import product1.variant.Variant
 
 /**
@@ -48,13 +47,12 @@ data class Item(
 
         /**
          * 옵션 상품 항목 데이터 생성
-         * @param product Product
-         * @param variant Variant
-         * @param count Int
+         * @param variant 옵셩 상품
+         * @param count 수량
          */
-        fun of(product: Product, variant: Variant, count: Int): Item = Item(
+        fun of(variant: Variant, count: Int): Item = Item(
             variantId = variant.id!!,
-            name = "${product.name} - ${variant.name}",
+            name = variant.name,
             count = count,
             price = variant.price
         )
