@@ -47,7 +47,9 @@ class TestDataLoader(
 
     private suspend fun generateProducts() {
         productRepository.deleteAll()
-        productRepository.save(ProductFixture.createProduct())
+        productRepository.saveAll(List(5) {
+            ProductFixture.createProduct()
+        }).collect()
     }
 
     private suspend fun generateVariants() {

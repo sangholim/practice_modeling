@@ -12,7 +12,7 @@ object ProductFixture {
 
     fun createProduct(): Product = Product.of(
         COMPANY_ID,
-        "test",
+        TestDataLoader.generateAlphabet(10),
         Random.nextInt(100, 110) * 200,
         ProductDescriptionFixture.create(),
         ProductOptionFixture.getProductOptions(),
