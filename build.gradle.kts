@@ -47,7 +47,7 @@ dependencies {
     testImplementation ("io.kotest.extensions:kotest-extensions-testcontainers:1.3.4")
     testImplementation ("io.kotest:kotest-runner-junit5-jvm:5.4.2")
 
-    testImplementation("io.mockk:mockk:1.12.7")
+    testImplementation("io.mockk:mockk:1.13.2")
     testImplementation("com.ninja-squad:springmockk:3.1.1")
     testImplementation ("org.junit.jupiter:junit-jupiter-api:5.9.0")
     testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.9.0")
