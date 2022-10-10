@@ -40,4 +40,4 @@ data class CompanyPayload (
      */
     @field:NotBlank(message = "올바르지 않은 형식입니다")
     val address: String,
-): java.io.Serializable
+)
