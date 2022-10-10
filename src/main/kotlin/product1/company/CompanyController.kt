@@ -8,8 +8,7 @@ import javax.validation.Valid
 @RestController
 @RequestMapping(value = ["/companies"])
 class CompanyController(
-    private val companyFacadeService: CompanyFacadeService,
-    private val companyService: CompanyService
+    private val companyFacadeService: CompanyFacadeService
 ) {
 
     /**
@@ -18,8 +17,9 @@ class CompanyController(
      */
     @PostMapping
     @ResponseStatus(value = CREATED)
-    suspend fun createCompany(@Valid @RequestBody payload: CompanyPayload) =
+    suspend fun createCompany(@Valid @RequestBody payload: CompanyPayload) {
         companyFacadeService.createCompany(payload)
+    }
 
     /**
      * 기업 조회
@@ -28,5 +28,5 @@ class CompanyController(
     @GetMapping(value = ["/{id}"])
     @ResponseStatus(value = OK)
     suspend fun getCompany(@PathVariable id: ObjectId) =
-        companyService.getById(id)
+        companyFacadeService.getById(id).toCompanyView()
 }
