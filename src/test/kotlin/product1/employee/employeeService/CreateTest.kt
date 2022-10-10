@@ -6,17 +6,17 @@ import io.kotest.matchers.shouldBe
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.mockk
+import org.bson.types.ObjectId
 import product1.employee.Employee
 import product1.employee.EmployeeRepository
 import product1.employee.EmployeeService
-import product1.fixture.CompanyFixture
 import product1.fixture.EmployeeFixture
 import java.lang.IllegalArgumentException
 
 class CreateTest : BehaviorSpec({
     val employeeRepository: EmployeeRepository = mockk()
     val employeeService = EmployeeService(employeeRepository)
-    val companyId = CompanyFixture.id
+    val companyId = ObjectId.get()
     val payload = EmployeeFixture.createEmployeePayload()
 
     beforeTest {

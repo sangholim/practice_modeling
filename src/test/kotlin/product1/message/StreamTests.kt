@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ActiveProfiles
 import product1.base.AbstractIntegrationTests
 import product1.company.CompanyRepository
-import product1.fixture.CompanyFixture
+import product1.fixture.companyPayload
 
 
 /**
@@ -28,6 +28,6 @@ class StreamTests: AbstractIntegrationTests() {
     @Test
     fun test() = runTest {
         rabbitTemplate.messageConverter = Jackson2JsonMessageConverter()
-        rabbitTemplate.convertAndSend("company", "company", CompanyFixture.createCompanyPayload())
+        rabbitTemplate.convertAndSend("company", "company", companyPayload())
     }
 }

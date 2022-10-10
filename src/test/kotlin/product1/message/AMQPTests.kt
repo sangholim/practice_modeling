@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ActiveProfiles
 import product1.base.AbstractIntegrationTests
 import product1.company.CompanyRepository
-import product1.fixture.CompanyFixture
+import product1.fixture.companyPayload
 
 /**
  * amqp 테스트 결과
@@ -37,7 +37,7 @@ class AMQPTests: AbstractIntegrationTests() {
 
     @Test
     fun test() = runTest {
-        rabbitTemplate.convertAndSend(topicExchange, routingKey, CompanyFixture.createCompanyPayload())
+        rabbitTemplate.convertAndSend(topicExchange, routingKey, companyPayload())
 
         assert(companyRepository.findAll().count() > 0)
     }

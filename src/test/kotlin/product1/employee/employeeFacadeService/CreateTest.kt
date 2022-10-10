@@ -5,18 +5,18 @@ import io.kotest.matchers.shouldBe
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.mockk
+import org.bson.types.ObjectId
 import product1.cart.CartService
 import product1.employee.Employee
 import product1.employee.EmployeeFacadeService
 import product1.employee.EmployeeService
-import product1.fixture.CompanyFixture
 import product1.fixture.EmployeeFixture
 
 class CreateTest : BehaviorSpec({
     val employeeService: EmployeeService = mockk()
     val cartService: CartService = mockk(relaxed = true)
     val employeeFacadeService = EmployeeFacadeService(employeeService, cartService)
-    val companyId = CompanyFixture.id
+    val companyId = ObjectId.get()
     val employeeId = EmployeeFixture.ID
 
     beforeTest {

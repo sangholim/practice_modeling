@@ -9,12 +9,19 @@ import io.mockk.mockk
 import product1.company.Company
 import product1.company.CompanyRepository
 import product1.company.CompanyService
-import product1.fixture.CompanyFixture
+import product1.fixture.companyPayload
 
 class CreateCompanyTest : BehaviorSpec({
     val companyRepository: CompanyRepository = mockk()
     val companyService = CompanyService(companyRepository)
-    val payload =CompanyFixture.createCompanyPayload()
+    val payload = companyPayload {
+        name = "조직"
+        email = "xxx@xxx"
+        phoneNumber = "00012341234"
+        certificate = "증명서"
+        address = "주소"
+    }
+
     beforeTest {
         clearAllMocks()
     }
