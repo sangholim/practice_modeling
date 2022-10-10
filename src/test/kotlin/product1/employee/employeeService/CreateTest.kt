@@ -10,14 +10,20 @@ import org.bson.types.ObjectId
 import product1.employee.Employee
 import product1.employee.EmployeeRepository
 import product1.employee.EmployeeService
-import product1.fixture.EmployeeFixture
+import product1.fixture.employeePayload
 import java.lang.IllegalArgumentException
 
 class CreateTest : BehaviorSpec({
     val employeeRepository: EmployeeRepository = mockk()
     val employeeService = EmployeeService(employeeRepository)
     val companyId = ObjectId.get()
-    val payload = EmployeeFixture.createEmployeePayload()
+    val payload = employeePayload {
+        name = "직웝"
+        position = "직위"
+        email = "xx@xx.com"
+        phoneNumber = "0001341234"
+        password = "test1234!"
+    }
 
     beforeTest {
         clearAllMocks()
