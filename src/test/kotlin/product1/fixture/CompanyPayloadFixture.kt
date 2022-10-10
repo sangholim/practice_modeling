@@ -5,6 +5,21 @@ import product1.company.Company
 import product1.company.CompanyPayload
 import product1.company.CompanyView
 
+inline fun companyPayload(block: CompanyPayloadBuilder.() -> Unit = {}) =
+    CompanyPayloadBuilder().apply(block).build()
+class CompanyPayloadBuilder {
+
+    var name: String = ""
+    var email: String = ""
+    var phoneNumber: String = ""
+    var certificate: String = ""
+    var address: String = ""
+
+    fun build() = CompanyPayload(
+        name, email, phoneNumber, certificate, address
+    )
+}
+
 object CompanyFixture {
 
     val id: ObjectId = ObjectId("507f1f77bcf86cd799439011")
@@ -14,7 +29,7 @@ object CompanyFixture {
     const val certificate = "testCertificate"
     const val address = "테스트 동 테스트시"
 
-    fun createCompanyView():CompanyView = CompanyView(
+    fun createCompanyView(): CompanyView = CompanyView(
         id = id,
         name = name,
         email = email,
