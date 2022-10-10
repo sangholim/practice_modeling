@@ -24,8 +24,8 @@ class CompanyService(
      * 회사 조회
      * @param id 회사 고유 번호
      */
-    suspend fun getById(id: ObjectId): CompanyView? =
-        companyRepository.findById(id)?.toCompanyView()
+    suspend fun getById(id: ObjectId): Company? =
+        companyRepository.findById(id)
 
     /**
      * 이메일, 휴대폰 번호 인증 여부, 인증 프로세스 생성후 리팩토링
