@@ -2,7 +2,9 @@ package product1.product
 
 import kotlinx.coroutines.flow.Flow
 import org.bson.types.ObjectId
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.web.server.ResponseStatusException
 import product1.product.domain.Product
 
 @Service
@@ -19,5 +21,7 @@ class ProductService(
      * 상품 조회
      * @param id 상품 번호
      */
-    suspend fun getProduct(id: ObjectId): Product = productRepository.findById(id) ?: throw Exception("not found product")
+    suspend fun getProduct(id: ObjectId): Product = productRepository.findById(id) ?: throw ResponseStatusException(
+        HttpStatus.NOT_FOUND
+    )
 }
