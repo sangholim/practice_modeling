@@ -36,7 +36,7 @@ class CartFacadeService(
             val product = productService.getProduct(payload.productId)
             val lineItem = payload.items.createLineItem(cart, product)
             cartService.updateCart(cart.addLineItem(lineItem).updateSummary())
-        } ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST)
+        } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
     /**
      * 구매 항목 생성
