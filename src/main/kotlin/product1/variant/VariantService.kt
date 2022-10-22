@@ -1,6 +1,5 @@
 package product1.variant
 
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import org.bson.types.ObjectId
 import org.springframework.http.HttpStatus
@@ -24,6 +23,14 @@ class VariantService(
     /**
      * 옵션 상품 조회
      * @param id 옵션 상품 번호
+     * @param productId 상품 번호
      */
     suspend fun getVariantByIdAndProductId(id: ObjectId, productId: ObjectId): Variant? = variantRepository.findByIdAndProductId(id, productId)
+
+    /**
+     * 옵션 상품 조회
+     * @param id 옵션 상품 번호
+     */
+    suspend fun getById(id: ObjectId): Variant? = variantRepository.findById(id)
+
 }
