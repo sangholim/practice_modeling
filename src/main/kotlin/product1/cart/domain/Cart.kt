@@ -63,11 +63,10 @@ data class Cart(
      * @param lineItem 구매 항목
      */
     fun addLineItem(lineItem: LineItem): Cart {
-        val lineItems = this.lineItems.toMutableList()
-        val index = lineItems.indexOfFirst { it.productId == lineItem.productId }
-        if (index == -1) return copy(lineItems = lineItems.plus(lineItem), summary = CartSummary.of(lineItems))
-        lineItems[index] = lineItem
-        return copy(lineItems = lineItems, summary = CartSummary.of(lineItems))
+        val updateLineItems = findLineItem(lineItem.productId)
+            ?.let(lineItems::minus)?.plus(lineItem)
+            ?: lineItems.plus(lineItem)
+        return copy(lineItems = updateLineItems)
     }
 
     /**
