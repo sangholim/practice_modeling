@@ -72,7 +72,7 @@ class AddLineItemTest : BehaviorSpec({
             coEvery { cartService.getCart(employeeId) } returns emptyCart
             coEvery { productService.getProduct(productId) } returns product
             payload.items.forEach {
-                coEvery { variantService.getVariantByIdAndProductId(it.variantId, productId) } returns null
+                coEvery { variantService.getById(it.variantId) } returns null
             }
             val result = shouldThrow<ResponseStatusException> {
                 cartFacadeService.addLineItem(employeeId, payload)
@@ -105,10 +105,7 @@ class AddLineItemTest : BehaviorSpec({
             coEvery { productService.getProduct(productId) } returns product
             payload.items.forEach { item ->
                 coEvery {
-                    variantService.getVariantByIdAndProductId(
-                        item.variantId,
-                        productId
-                    )
+                    variantService.getById(item.variantId)
                 } returns variants.first { it.id!! == item.variantId }
             }
             coEvery { cartService.updateCart(updateCart) } returns updateCart
@@ -151,10 +148,7 @@ class AddLineItemTest : BehaviorSpec({
             coEvery { productService.getProduct(productId) } returns product
             payload.items.forEach { item ->
                 coEvery {
-                    variantService.getVariantByIdAndProductId(
-                        item.variantId,
-                        productId
-                    )
+                    variantService.getById(item.variantId)
                 } returns variants.first { it.id!! == item.variantId }
             }
             coEvery { cartService.updateCart(updateCart) } returns updateCart

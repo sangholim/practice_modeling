@@ -49,22 +49,15 @@ class CartFacadeService(
      */
     private suspend fun List<ItemPayload>.createLineItem(cart: Cart, product: Product): LineItem =
         this.map { item ->
-            item.createItem(product.id!!)
+            createItem(item)
         }.let { items ->
             cart.findLineItem(product.id!!)?.addItems(items) ?: LineItem.of(product, items)
         }
 
-    /**
-     * 옵션 상품 항목 생성
-     *
-     * 옵션 상품이 존재하는 경우 - 구매 항목 생성
-     *
-     * @param productId 상품 번호
-     */
-    private suspend fun ItemPayload.createItem(productId: ObjectId): Item =
-        variantService.getVariantByIdAndProductId(this.variantId, productId)
+    private suspend fun createItem(payload: ItemPayload): Item =
+        variantService.getById(payload.variantId)
             ?.let { variant ->
-                Item.of(variant, this.count)
+                Item.of(variant, payload.count)
             } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
 }
