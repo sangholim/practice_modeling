@@ -42,8 +42,8 @@ data class LineItem(
         val variantIds = this.items.map { it.variantId }
         val addItems = items.filter { !variantIds.contains(it.variantId) }
         val updateItems = this.items.map { item ->
-            val updateItem = items.firstOrNull { item.variantId == it.variantId } ?: return@map item
-            item.addCount(updateItem.count)
+            val count = items.firstOrNull { item.variantId == it.variantId }?.count ?: 0
+            item.addCount(count)
         }
         return copy(items = updateItems.plus(addItems))
     }
