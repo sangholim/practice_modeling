@@ -38,6 +38,26 @@ class CartFacadeService(
             cartService.updateCart(cart.addLineItem(lineItem).updateSummary())
         } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
+
+    /**
+     * 구매 항목 제거
+     *
+     * 장바구니 조회
+     * 구매 항목 제거
+     * 결제 내역 갱신
+     *
+     * @param employeeId 고객 번호
+     * @param productId 상품 번호
+     */
+    suspend fun deleteLineItem(employeeId: ObjectId, productId: ObjectId): Cart =
+        cartService.getCart(employeeId)
+            ?.deleteLineItem(productId)
+            ?.updateSummary()
+            ?.apply {
+                cartService.updateCart(this)
+            }
+            ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+
     /**
      * 구매 항목 생성
      *
