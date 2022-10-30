@@ -70,6 +70,16 @@ data class Cart(
     }
 
     /**
+     * 구매 항목 제거
+     * @param productId 상품 번호
+     */
+    fun deleteLineItem(productId: ObjectId): Cart? =
+        findLineItem(productId)?.let { lineItem ->
+            val updateLineItems = lineItems.minus(lineItem)
+            copy(lineItems = updateLineItems)
+        }
+
+    /**
      * 장바구니 요약 업데이트
      */
     fun updateSummary(): Cart =
