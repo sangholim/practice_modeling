@@ -20,7 +20,18 @@ class CartController(
      */
     @PostMapping(value = ["/{employeeId}/lineItem"])
     @ResponseStatus(value = HttpStatus.CREATED)
-    suspend fun addLineItem(@PathVariable employeeId: ObjectId, @Valid @RequestBody payload: LineItemPayload): Cart =
+    suspend fun addLineItem(
+        @PathVariable employeeId: ObjectId,
+        @Valid @RequestBody payload: LineItemPayload
+    ): Cart =
         cartFacadeService.addLineItem(employeeId, payload)
 
+    @DeleteMapping(value = ["/{employeeId}/lineItems/{productId}"])
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    suspend fun deleteLineItem(
+        @PathVariable employeeId: ObjectId,
+        @PathVariable productId: ObjectId,
+    ) {
+        cartFacadeService.deleteLineItem(employeeId, productId)
+    }
 }
