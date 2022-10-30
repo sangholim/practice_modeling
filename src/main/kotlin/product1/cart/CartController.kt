@@ -18,7 +18,7 @@ class CartController(
      * @param employeeId 직원번호
      * @param payload 구매 항목 필드 데이터
      */
-    @PostMapping(value = ["/{employeeId}/lineItem"])
+    @PostMapping(value = ["/{employeeId}/lineItems"])
     @ResponseStatus(value = HttpStatus.CREATED)
     suspend fun addLineItem(
         @PathVariable employeeId: ObjectId,
